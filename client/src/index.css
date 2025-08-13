@@ -4,48 +4,81 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --ring: 215 20.2% 65.1%;
+    /* Sage Brand Colors */
+    --sage-50: hsl(75, 20%, 95%);
+    --sage-100: hsl(75, 20%, 90%);
+    --sage-200: hsl(75, 20%, 80%);
+    --sage-300: hsl(75, 20%, 70%);
+    --sage-400: hsl(75, 20%, 60%);
+    --sage-500: hsl(75, 20%, 50%); /* Primary sage green #8A9A5B */
+    --sage-600: hsl(75, 20%, 40%);
+    --sage-700: hsl(75, 20%, 30%);
+    --sage-800: hsl(75, 20%, 20%);
+    --sage-900: hsl(75, 20%, 10%);
+
+    /* Forest Accent Colors */
+    --forest-50: hsl(165, 95%, 95%);
+    --forest-100: hsl(165, 95%, 90%);
+    --forest-200: hsl(165, 95%, 80%);
+    --forest-300: hsl(165, 95%, 70%);
+    --forest-400: hsl(165, 95%, 60%);
+    --forest-500: hsl(165, 95%, 50%);
+    --forest-600: hsl(165, 95%, 40%);
+    --forest-700: hsl(165, 95%, 30%);
+    --forest-800: hsl(165, 95%, 20%);
+    --forest-900: hsl(165, 95%, 8%); /* Forest accent #052D24 */
+
+    /* Cream Background */
+    --cream-50: hsl(45, 50%, 97%); /* Cream background #F7F5EF */
+    --cream-100: hsl(45, 50%, 94%);
+    --cream-200: hsl(45, 50%, 88%);
+    --cream-300: hsl(45, 50%, 82%);
+    --cream-400: hsl(45, 50%, 76%);
+    --cream-500: hsl(45, 50%, 70%);
+
+    /* Shadcn/UI Variables with Sage Theme */
+    --background: var(--cream-50);
+    --foreground: var(--forest-900);
+    --muted: var(--sage-100);
+    --muted-foreground: var(--sage-600);
+    --popover: var(--cream-50);
+    --popover-foreground: var(--forest-900);
+    --card: var(--cream-50);
+    --card-foreground: var(--forest-900);
+    --border: var(--sage-200);
+    --input: var(--sage-200);
+    --primary: var(--sage-500);
+    --primary-foreground: var(--cream-50);
+    --secondary: var(--sage-100);
+    --secondary-foreground: var(--sage-700);
+    --accent: var(--sage-100);
+    --accent-foreground: var(--sage-700);
+    --destructive: hsl(0, 84.2%, 60.2%);
+    --destructive-foreground: var(--cream-50);
+    --ring: var(--sage-400);
     --radius: 0.5rem;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --ring: 215 20.2% 65.1%;
+    --background: var(--forest-900);
+    --foreground: var(--cream-50);
+    --muted: var(--forest-800);
+    --muted-foreground: var(--sage-300);
+    --popover: var(--forest-900);
+    --popover-foreground: var(--cream-50);
+    --card: var(--forest-900);
+    --card-foreground: var(--cream-50);
+    --border: var(--forest-700);
+    --input: var(--forest-700);
+    --primary: var(--sage-400);
+    --primary-foreground: var(--forest-900);
+    --secondary: var(--forest-800);
+    --secondary-foreground: var(--sage-200);
+    --accent: var(--forest-800);
+    --accent-foreground: var(--sage-200);
+    --destructive: hsl(0, 62.8%, 30.6%);
+    --destructive-foreground: var(--cream-50);
+    --ring: var(--sage-500);
   }
 
   * { @apply border-border; }
