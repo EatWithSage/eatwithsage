@@ -9,9 +9,7 @@ export default defineConfig({
     host: '0.0.0.0',
     port: 5173,
     strictPort: false,
-    hmr: {
-      port: 5174
-    },
+    hmr: false,
     cors: true,
     open: false,
     // Use polling for file watching in container environments
