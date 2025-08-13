@@ -38,6 +38,15 @@ export default function DemoForm({ variant = "primary", className = "" }: DemoFo
               className="meetings-iframe-container" 
               data-src="https://meetings-na2.hubspot.com/dave-milliken?embed=true"
               data-testid="hubspot-meeting-scheduler"
+              style={{
+                border: '0',
+                borderWidth: '0',
+                borderStyle: 'none',
+                boxShadow: 'none',
+                outline: 'none',
+                margin: '0',
+                padding: '0'
+              }}
             ></div>
           </div>
         </div>
@@ -52,6 +61,15 @@ export default function DemoForm({ variant = "primary", className = "" }: DemoFo
         className="meetings-iframe-container" 
         data-src="https://meetings-na2.hubspot.com/dave-milliken?embed=true"
         data-testid="hubspot-meeting-scheduler-secondary"
+        style={{
+          border: '0',
+          borderWidth: '0',
+          borderStyle: 'none',
+          boxShadow: 'none',
+          outline: 'none',
+          margin: '0',
+          padding: '0'
+        }}
       ></div>
     </div>
   );
