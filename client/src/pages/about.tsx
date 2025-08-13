@@ -2,8 +2,10 @@ import Navigation from "@/components/layout/navigation";
 import Footer from "@/components/layout/footer";
 import AboutTimeline from "@/components/sections/about-timeline";
 import FinalCTA from "@/components/sections/final-cta";
+import { useScrollToTop } from "@/hooks/use-scroll-to-top";
 
 export default function About() {
+  useScrollToTop();
   return (
     <>
       <title>About Us - The Sage Story</title>

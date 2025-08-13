@@ -2,8 +2,10 @@ import Navigation from "@/components/layout/navigation";
 import Footer from "@/components/layout/footer";
 import DemoForm from "@/components/sections/demo-form";
 import { Package, TrendingDown, BookOpen, RefreshCw, CheckCircle } from "lucide-react";
+import { useScrollToTop } from "@/hooks/use-scroll-to-top";
 
 export default function MealKitsIndustry() {
+  useScrollToTop();
   const benefits = [
     "Reduce customer churn by up to 35%",
     "Increase meal kit satisfaction scores",
@@ -21,11 +23,13 @@ export default function MealKitsIndustry() {
         <Navigation />
         <main>
           {/* Hero Section */}
-          <section className="pt-60 pb-20 bg-gradient-to-br from-sage-50 to-cream-50">
+          <section className="py-20 bg-gradient-to-br from-sage-50 to-cream-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="lg:grid lg:grid-cols-12 lg:gap-8 items-center">
                 <div className="lg:col-span-6">
-
+                  <div className="w-16 h-16 bg-sage-500 rounded-xl flex items-center justify-center mb-6">
+                    <Package className="text-white w-8 h-8" />
+                  </div>
                   <h1 className="text-4xl lg:text-5xl font-bold text-forest-900 leading-tight mb-6" data-testid="text-meal-kit-title">
                     Reduce Churn With <span className="text-sage-500">Smart Curation</span>
                   </h1>

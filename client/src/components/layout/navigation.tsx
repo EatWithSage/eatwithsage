@@ -9,6 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { SageLogo } from "@/components/ui/sage-logo";
 
 export default function Navigation() {
   const [location] = useLocation();
@@ -43,11 +44,7 @@ export default function Navigation() {
         <div className="flex justify-between items-center h-32">
           <div className="flex items-center">
             <Link href="/" className="flex items-center" data-testid="link-home">
-              <img 
-                src="/Sage-healthy-meal-plan-app-logo_1755077718089.png" 
-                alt="Sage logo - stylized plant with leaves and text representing healthy meal planning" 
-                className="w-32 h-32" 
-              />
+              <SageLogo size="lg" />
             </Link>
           </div>
           
@@ -74,26 +71,24 @@ export default function Navigation() {
               </Link>
               
               {/* Industries Dropdown */}
-              <div className="relative">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="text-gray-600 hover:text-sage-500 px-3 py-2 text-sm font-medium font-recoleta transition-colors flex items-center whitespace-nowrap" data-testid="button-industries-dropdown">
-                      Industries <ChevronDown className="ml-1 h-3 w-3 flex-shrink-0" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="start" className="w-48 bg-white border border-sage-200 shadow-lg rounded-lg p-2">
-                    <DropdownMenuItem asChild className="hover:bg-sage-50 rounded-md transition-colors">
-                      <Link href="/industry/grocery" className="text-gray-700 hover:text-sage-600 px-3 py-2 block w-full" data-testid="link-industry-grocery">Food Retailers</Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild className="hover:bg-sage-50 rounded-md transition-colors">
-                      <Link href="/industry/restaurants" className="text-gray-700 hover:text-sage-600 px-3 py-2 block w-full" data-testid="link-industry-restaurants">Restaurants</Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild className="hover:bg-sage-50 rounded-md transition-colors">
-                      <Link href="/industry/meal-kits" className="text-gray-700 hover:text-sage-600 px-3 py-2 block w-full" data-testid="link-industry-meal-kits">Meal Kit Services</Link>
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="text-gray-600 hover:text-sage-500 px-3 py-2 text-sm font-medium font-recoleta transition-colors flex items-center" data-testid="button-industries-dropdown">
+                    Industries <ChevronDown className="ml-1 h-3 w-3" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-48 bg-white border border-sage-200 shadow-lg rounded-lg p-2">
+                  <DropdownMenuItem asChild className="hover:bg-sage-50 rounded-md transition-colors">
+                    <Link href="/industry/grocery" className="text-gray-700 hover:text-sage-600 px-3 py-2 block w-full" data-testid="link-industry-grocery">Food Retailers</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild className="hover:bg-sage-50 rounded-md transition-colors">
+                    <Link href="/industry/restaurants" className="text-gray-700 hover:text-sage-600 px-3 py-2 block w-full" data-testid="link-industry-restaurants">Restaurants</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild className="hover:bg-sage-50 rounded-md transition-colors">
+                    <Link href="/industry/meal-kits" className="text-gray-700 hover:text-sage-600 px-3 py-2 block w-full" data-testid="link-industry-meal-kits">Meal Kit Services</Link>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
               
               <Link 
                 href="/about" 
