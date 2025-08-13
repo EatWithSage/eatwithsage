@@ -133,3 +133,14 @@ iframe {
   margin: 0 !important;
   padding: 0 !important;
 }
+
+/* Iframe masking container */
+.iframe-mask-container {
+  background: transparent;
+  border-radius: 0;
+}
+
+.iframe-mask-container iframe {
+  transform: scale(1.02);
+  transform-origin: center;
+}

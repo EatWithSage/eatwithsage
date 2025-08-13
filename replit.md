@@ -59,7 +59,7 @@ Preferred communication style: Simple, everyday language.
   - ✅ Ready for GitHub push and Vercel deployment
 - **Sage Branding Status**: ✅ Fully active in preview and production build ready
 - **Vercel Deployment**: Updated dist/ folder contains new CSS with compiled Sage brand hex values
-- **Files for Deployment**: dist/assets/index-B4MsnZDW.css and dist/assets/index-DqpqZazS.js  
+- **Files for Deployment**: dist/assets/index-C1Tb1fNP.css and dist/assets/index-BdLWi0kG.js  
 - **GitHub Push**: Ready with fixed files - user can run git commands to deploy
 - **Request Demo Button**: Fixed to smoothly scroll to "See Sage In Action" section
 - **Navigation Dropdown**: Fixed Industries dropdown with Sage brand colors and white background
@@ -67,7 +67,7 @@ Preferred communication style: Simple, everyday language.
 - **Navigation Background**: Changed to cream-50 background matching logo's beige color with subtle shadow
 - **Smart Navigation**: Fixed header that hides when scrolling down and shows when scrolling up or near top
 - **Hero Section**: Added top padding (pt-32) to account for fixed header height
-- **HubSpot Meeting Integration**: Switched to direct iframe approach (proven 2025 solution) with `frameBorder="0"` and inline `border: none` styles applied before HubSpot script execution
+- **HubSpot Meeting Integration**: Implemented overflow masking technique with positioned iframe extending beyond container boundaries to physically clip visible borders
 - **Typography**: Applied Recoleta font to all headlines and navigation text for elegant serif branding
 - **Call-to-Action Buttons**: Enhanced "Request Demo" and "Learn More" buttons with larger size (px-12 py-6), bigger text (text-lg), and wider letter spacing (tracking-wider)
 
