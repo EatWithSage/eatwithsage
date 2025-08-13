@@ -1,7 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Navigation } from "@/components/layout/navigation";
 
 export default function FoodBrandsPage() {
+  useEffect(() => {
+    // Load HubSpot Meetings Embed Script
+    const script = document.createElement('script');
+    script.src = 'https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js';
+    script.async = true;
+    document.body.appendChild(script);
+
+    return () => {
+      // Cleanup
+      document.body.removeChild(script);
+    };
+  }, []);
+
   return (
     <>
       <title>Food Brands - Sage Meal Planning Platform</title>
@@ -40,14 +53,15 @@ export default function FoodBrandsPage() {
               </p>
               
               {/* HubSpot Meeting Embed */}
-              <div 
-                dangerouslySetInnerHTML={{
-                  __html: `<!-- Start of Meetings Embed Script -->
-<div class="meetings-iframe-container" data-src="https://meetings-na2.hubspot.com/dave-milliken?embed=true"></div>
-<script type="text/javascript" src="https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js"></script>
-<!-- End of Meetings Embed Script -->`
-                }}
-              />
+              <div className="w-full max-w-4xl mx-auto">
+                <iframe 
+                  src="https://meetings-na2.hubspot.com/dave-milliken?embed=true"
+                  width="100%"
+                  height="600"
+                  style={{ border: 'none', borderRadius: '8px' }}
+                  title="Schedule a meeting with Dave Milliken"
+                ></iframe>
+              </div>
             </div>
           </section>
         </main>
