@@ -11,6 +11,11 @@ import About from "@/pages/about";
 import GroceryIndustry from "@/pages/industry/grocery";
 import RestaurantsIndustry from "@/pages/industry/restaurants";
 import MealKitsIndustry from "@/pages/industry/meal-kits";
+import { FoodBrandsPage } from "@/pages/industry/food-brands";
+import { ChronicDiseasePage } from "@/pages/industry/chronic-disease";
+import { EmployersPage } from "@/pages/industry/employers";
+import { KitchenAppliancesPage } from "@/pages/industry/kitchen-appliances";
+import { MediaTechPage } from "@/pages/industry/media-tech";
 
 function Router() {
   return (
@@ -21,6 +26,11 @@ function Router() {
       <Route path="/industry/grocery" component={GroceryIndustry} />
       <Route path="/industry/restaurants" component={RestaurantsIndustry} />
       <Route path="/industry/meal-kits" component={MealKitsIndustry} />
+      <Route path="/industry/food-brands" component={FoodBrandsPage} />
+      <Route path="/industry/chronic-disease" component={ChronicDiseasePage} />
+      <Route path="/industry/employers" component={EmployersPage} />
+      <Route path="/industry/kitchen-appliances" component={KitchenAppliancesPage} />
+      <Route path="/industry/media-tech" component={MediaTechPage} />
       <Route component={NotFound} />
     </Switch>
   );
