@@ -47,8 +47,8 @@
     --popover-foreground: var(--forest-900);
     --card: var(--cream-50);
     --card-foreground: var(--forest-900);
-    --border: var(--sage-200);
-    --input: var(--sage-200);
+    --border: hsl(0, 0%, 90%);
+    --input: hsl(0, 0%, 90%);
     --primary: var(--sage-500);
     --primary-foreground: var(--cream-50);
     --secondary: var(--sage-100);
@@ -70,8 +70,8 @@
     --popover-foreground: var(--cream-50);
     --card: var(--forest-900);
     --card-foreground: var(--cream-50);
-    --border: var(--forest-700);
-    --input: var(--forest-700);
+    --border: hsl(0, 0%, 30%);
+    --input: hsl(0, 0%, 30%);
     --primary: var(--sage-400);
     --primary-foreground: var(--forest-900);
     --secondary: var(--forest-800);
@@ -84,6 +84,16 @@
   }
 
   body { @apply bg-background text-foreground; }
+  
+  /* Minimize borders globally for cleaner appearance */
+  * {
+    border-width: 0;
+  }
+  
+  /* Only add borders where explicitly needed */
+  .border {
+    border-width: 1px;
+  }
 }
 
 
