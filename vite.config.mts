@@ -7,9 +7,11 @@ export default defineConfig({
 
   server: {
     host: '0.0.0.0',
-    // No port specified - let Replit auto-assign
+    port: 5173,
     strictPort: false,
-    hmr: false, // Disable HMR to avoid WebSocket issues in Replit
+    hmr: {
+      port: 5174
+    },
     cors: true,
     open: false,
     // Use polling for file watching in container environments
