@@ -16,19 +16,43 @@ export default function DemoForm({ variant = "primary", className = "" }: DemoFo
 
     // Remove borders from HubSpot iframes after they load
     const removeBorders = () => {
-      const iframes = document.querySelectorAll('iframe[src*="hubspot"], iframe[src*="meetings"], .meetings-iframe-container iframe');
-      iframes.forEach((iframe) => {
-        iframe.style.border = 'none';
-        iframe.style.borderRadius = '0';
-        iframe.style.boxShadow = 'none';
-        iframe.style.outline = 'none';
-      });
+      // Target all possible HubSpot elements
+      const selectors = [
+        'iframe[src*="hubspot"]',
+        'iframe[src*="meetings"]',
+        '.meetings-iframe-container iframe',
+        '.meetings-iframe-container > div',
+        '.meetings-iframe-container',
+        '[data-testid="hubspot-meeting-scheduler"] iframe',
+        '[data-testid="hubspot-meeting-scheduler-secondary"] iframe',
+        '.hs-meeting-embed',
+        '.hs-meeting-widget'
+      ];
       
-      const containers = document.querySelectorAll('.meetings-iframe-container');
-      containers.forEach((container) => {
-        container.style.border = 'none';
-        container.style.borderRadius = '0';
-        container.style.boxShadow = 'none';
+      selectors.forEach(selector => {
+        const elements = document.querySelectorAll(selector);
+        elements.forEach((element) => {
+          element.style.border = 'none';
+          element.style.borderRadius = '0';
+          element.style.boxShadow = 'none';
+          element.style.outline = 'none';
+          element.style.margin = '-1px';
+          element.style.padding = '0';
+          
+          // Also try to access iframe content if same origin
+          try {
+            if (element.tagName === 'IFRAME' && element.contentDocument) {
+              const iframeBody = element.contentDocument.body;
+              if (iframeBody) {
+                iframeBody.style.border = 'none';
+                iframeBody.style.margin = '0';
+                iframeBody.style.padding = '0';
+              }
+            }
+          } catch (e) {
+            // Cross-origin iframe, can't access content
+          }
+        });
       });
     };
 
@@ -57,12 +81,20 @@ export default function DemoForm({ variant = "primary", className = "" }: DemoFo
           </div>
           
           <div className="bg-gradient-to-r from-sage-50 to-cream-100 rounded-2xl p-8 lg:p-12">
-            <div 
-              className="meetings-iframe-container border-0" 
-              data-src="https://meetings-na2.hubspot.com/dave-milliken?embed=true&hide_branding=true"
-              data-testid="hubspot-meeting-scheduler"
-              style={{ border: 'none !important', borderRadius: '0 !important', boxShadow: 'none !important' }}
-            ></div>
+            <div className="overflow-hidden" style={{ margin: '-2px', padding: '2px' }}>
+              <div 
+                className="meetings-iframe-container border-0" 
+                data-src="https://meetings-na2.hubspot.com/dave-milliken?embed=true&hide_branding=true"
+                data-testid="hubspot-meeting-scheduler"
+                style={{ 
+                  border: 'none !important', 
+                  borderRadius: '0 !important', 
+                  boxShadow: 'none !important',
+                  margin: '-1px',
+                  transform: 'scale(1.002)'
+                }}
+              ></div>
+            </div>
           </div>
         </div>
       </section>
@@ -72,12 +104,20 @@ export default function DemoForm({ variant = "primary", className = "" }: DemoFo
   // Secondary variant for final CTA
   return (
     <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 lg:p-12">
-      <div 
-        className="meetings-iframe-container border-0" 
-        data-src="https://meetings-na2.hubspot.com/dave-milliken?embed=true&hide_branding=true"
-        data-testid="hubspot-meeting-scheduler-secondary"
-        style={{ border: 'none !important', borderRadius: '0 !important', boxShadow: 'none !important' }}
-      ></div>
+      <div className="overflow-hidden" style={{ margin: '-2px', padding: '2px' }}>
+        <div 
+          className="meetings-iframe-container border-0" 
+          data-src="https://meetings-na2.hubspot.com/dave-milliken?embed=true&hide_branding=true"
+          data-testid="hubspot-meeting-scheduler-secondary"
+          style={{ 
+            border: 'none !important', 
+            borderRadius: '0 !important', 
+            boxShadow: 'none !important',
+            margin: '-1px',
+            transform: 'scale(1.002)'
+          }}
+        ></div>
+      </div>
     </div>
   );
 }
