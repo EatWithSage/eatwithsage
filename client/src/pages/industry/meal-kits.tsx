@@ -25,9 +25,7 @@ export default function MealKitsIndustry() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="lg:grid lg:grid-cols-12 lg:gap-8 items-center">
                 <div className="lg:col-span-6">
-                  <div className="w-16 h-16 bg-sage-500 rounded-xl flex items-center justify-center mb-6">
-                    <Package className="text-white w-8 h-8" />
-                  </div>
+
                   <h1 className="text-4xl lg:text-5xl font-bold text-forest-900 leading-tight mb-6" data-testid="text-meal-kit-title">
                     Reduce Churn With <span className="text-sage-500">Smart Curation</span>
                   </h1>
