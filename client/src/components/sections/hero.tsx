@@ -3,6 +3,13 @@ import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, Shield, Clock } from "lucide-react";
 
+const scrollToDemo = () => {
+  const demoSection = document.getElementById('demo');
+  if (demoSection) {
+    demoSection.scrollIntoView({ behavior: 'smooth' });
+  }
+};
+
 export default function Hero() {
   return (
     <section className="relative bg-gradient-to-br from-sage-50 to-cream-50 overflow-hidden">
@@ -17,11 +24,11 @@ export default function Hero() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 mb-12">
               <Button 
-                asChild 
+                onClick={scrollToDemo}
                 className="bg-sage-500 text-white px-8 py-4 rounded-xl font-semibold hover:bg-sage-600 transition-colors h-auto"
                 data-testid="button-request-demo"
               >
-                <Link href="#demo">Request Demo</Link>
+                Request Demo
               </Button>
               <Button 
                 asChild 

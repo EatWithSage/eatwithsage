@@ -59,8 +59,9 @@ Preferred communication style: Simple, everyday language.
   - ✅ Ready for GitHub push and Vercel deployment
 - **Sage Branding Status**: ✅ Fully active in preview and production build ready
 - **Vercel Deployment**: Updated dist/ folder contains new CSS with compiled Sage brand hex values
-- **Files for Deployment**: dist/assets/index-CYZkQNGO.css and dist/assets/index-D3Xrzi6R.js
+- **Files for Deployment**: dist/assets/index-CYZkQNGO.css and dist/assets/index-DUAoLLjJ.js
 - **GitHub Push**: Ready with fixed files - user can run git commands to deploy
+- **Request Demo Button**: Fixed to smoothly scroll to "See Sage In Action" section
 
 ## August 13, 2025 - TypeScript/JSX Configuration Fix
 - **Issue Resolved**: Fixed 134 LSP diagnostics related to missing React type definitions and JSX configuration
