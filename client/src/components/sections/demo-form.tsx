@@ -14,8 +14,31 @@ export default function DemoForm({ variant = "primary", className = "" }: DemoFo
     script.async = true;
     document.head.appendChild(script);
 
+    // Remove borders from HubSpot iframes after they load
+    const removeBorders = () => {
+      const iframes = document.querySelectorAll('iframe[src*="hubspot"], iframe[src*="meetings"], .meetings-iframe-container iframe');
+      iframes.forEach((iframe) => {
+        iframe.style.border = 'none';
+        iframe.style.borderRadius = '0';
+        iframe.style.boxShadow = 'none';
+        iframe.style.outline = 'none';
+      });
+      
+      const containers = document.querySelectorAll('.meetings-iframe-container');
+      containers.forEach((container) => {
+        container.style.border = 'none';
+        container.style.borderRadius = '0';
+        container.style.boxShadow = 'none';
+      });
+    };
+
+    // Run border removal immediately and on intervals
+    const interval = setInterval(removeBorders, 1000);
+    setTimeout(removeBorders, 2000);
+    setTimeout(removeBorders, 5000);
+
     return () => {
-      // Cleanup script on unmount
+      clearInterval(interval);
       if (script.parentNode) {
         script.parentNode.removeChild(script);
       }
@@ -35,9 +58,10 @@ export default function DemoForm({ variant = "primary", className = "" }: DemoFo
           
           <div className="bg-gradient-to-r from-sage-50 to-cream-100 rounded-2xl p-8 lg:p-12">
             <div 
-              className="meetings-iframe-container" 
+              className="meetings-iframe-container border-0" 
               data-src="https://meetings-na2.hubspot.com/dave-milliken?embed=true&hide_branding=true"
               data-testid="hubspot-meeting-scheduler"
+              style={{ border: 'none !important', borderRadius: '0 !important', boxShadow: 'none !important' }}
             ></div>
           </div>
         </div>
@@ -49,9 +73,10 @@ export default function DemoForm({ variant = "primary", className = "" }: DemoFo
   return (
     <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 lg:p-12">
       <div 
-        className="meetings-iframe-container" 
+        className="meetings-iframe-container border-0" 
         data-src="https://meetings-na2.hubspot.com/dave-milliken?embed=true&hide_branding=true"
         data-testid="hubspot-meeting-scheduler-secondary"
+        style={{ border: 'none !important', borderRadius: '0 !important', boxShadow: 'none !important' }}
       ></div>
     </div>
   );
