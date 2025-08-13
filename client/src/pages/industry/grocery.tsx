@@ -3,8 +3,10 @@ import Navigation from "@/components/layout/navigation";
 import Footer from "@/components/layout/footer";
 import DemoForm from "@/components/sections/demo-form";
 import { ShoppingBasket, TrendingUp, Users, BarChart3, CheckCircle } from "lucide-react";
+import { useScrollToTop } from "@/hooks/use-scroll-to-top";
 
 export default function GroceryIndustry() {
+  useScrollToTop();
   const benefits = [
     "Increase average basket size by 25-40%",
     "Drive repeat visits with personalized meal plans", 

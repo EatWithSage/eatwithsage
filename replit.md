@@ -71,6 +71,7 @@ Preferred communication style: Simple, everyday language.
 - **Border Removal**: Fixed root cause by removing explicit Tailwind border classes from Hero button (border-2 border-sage-500) and UI components (input, textarea, alert) that were creating visible borders
 - **Typography**: Applied Recoleta font to all headlines and navigation text for elegant serif branding
 - **Call-to-Action Buttons**: Enhanced "Request Demo" and "Learn More" buttons with larger size (px-12 py-6), bigger text (text-lg), and wider letter spacing (tracking-wider)
+- **Scroll-to-Top Navigation**: Added automatic scroll-to-top functionality for all industry and page navigation to ensure users land at the top of pages
 
 ## August 13, 2025 - TypeScript/JSX Configuration Fix
 - **Issue Resolved**: Fixed 134 LSP diagnostics related to missing React type definitions and JSX configuration

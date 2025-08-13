@@ -2,8 +2,10 @@ import Navigation from "@/components/layout/navigation";
 import Footer from "@/components/layout/footer";
 import DemoForm from "@/components/sections/demo-form";
 import { Utensils, Star, Heart, Users, CheckCircle } from "lucide-react";
+import { useScrollToTop } from "@/hooks/use-scroll-to-top";
 
 export default function RestaurantsIndustry() {
+  useScrollToTop();
   const benefits = [
     "Increase customer visit frequency by 30%",
     "Personalize menu recommendations for dietary needs",
