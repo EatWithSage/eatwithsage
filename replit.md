@@ -59,7 +59,7 @@ Preferred communication style: Simple, everyday language.
   - ✅ Ready for GitHub push and Vercel deployment
 - **Sage Branding Status**: ✅ Fully active in preview and production build ready
 - **Vercel Deployment**: Updated dist/ folder contains new CSS with compiled Sage brand hex values
-- **Files for Deployment**: dist/assets/index-DuKyRalz.css and dist/assets/index-CoMvQQjd.js  
+- **Files for Deployment**: dist/assets/index-cnuO8kZH.css and dist/assets/index-COGHVFDY.js  
 - **GitHub Push**: Ready with fixed files - user can run git commands to deploy
 - **Request Demo Button**: Fixed to smoothly scroll to "See Sage In Action" section
 - **Navigation Dropdown**: Fixed Industries dropdown with Sage brand colors and white background
@@ -82,7 +82,7 @@ Preferred communication style: Simple, everyday language.
 - **Favicon Implementation**: Added custom Sage favicon using uploaded favicon file (favicon.png) with proper browser and mobile support including Apple touch icon for iOS devices
 - **Industries Navigation Expansion**: Updated Industries dropdown menu to include 6 industry categories: Food Retailers (existing), Food Brands, Chronic Disease Foundations, Self-Insured Employers, Kitchen Appliance Manufacturers, and Food & Health Media and Tech Companies
 - **Coming Soon Pages**: Created reusable ComingSoonPage component and 5 new industry pages with header images, large "Coming Soon" sections, and embedded HubSpot meeting scheduler for demo requests
-- **HubSpot Integration**: Implemented HubSpot meetings iframe (https://meetings.hubspot.com/sage-demo/discovery-call) with fallback button across all new industry pages for lead generation
+- **HubSpot Integration**: Implemented HubSpot meetings embed (https://meetings-na2.hubspot.com/dave-milliken) with proper JavaScript integration across all new industry pages for lead generation
 
 ## August 13, 2025 - TypeScript/JSX Configuration Fix
 - **Issue Resolved**: Fixed 134 LSP diagnostics related to missing React type definitions and JSX configuration

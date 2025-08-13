@@ -56,27 +56,14 @@ export function ComingSoonPage({ title, description, headerImage, imageAlt }: Co
                     </p>
                     
                     {/* HubSpot Meetings Embed */}
-                    <div className="hubspot-meeting-embed">
-                      <iframe 
-                        src="https://meetings.hubspot.com/sage-demo/discovery-call"
-                        width="100%" 
-                        height="600"
-                        frameBorder="0"
-                        className="rounded-lg"
-                        title="Schedule a meeting with Sage"
-                      ></iframe>
-                    </div>
-                    
-                    {/* Fallback Button */}
-                    <div className="mt-8">
-                      <Button 
-                        className="bg-sage-600 hover:bg-sage-700 text-white px-12 py-6 text-lg font-recoleta tracking-wider"
-                        onClick={() => window.open('https://meetings.hubspot.com/sage-demo/discovery-call', '_blank')}
-                        data-testid="button-schedule-demo"
-                      >
-                        Schedule Demo
-                      </Button>
-                    </div>
+                    <div 
+                      className="meetings-iframe-container" 
+                      data-src="https://meetings-na2.hubspot.com/dave-milliken?embed=true"
+                    ></div>
+                    <script 
+                      type="text/javascript" 
+                      src="https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js"
+                    ></script>
                   </div>
                 </div>
               </div>
