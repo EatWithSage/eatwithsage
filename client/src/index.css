@@ -83,8 +83,15 @@
     --ring: var(--sage-500);
   }
 
-  * { @apply border-border; }
   body { @apply bg-background text-foreground; }
 }
 
-
+/* HubSpot Meeting Calendar - Remove All Borders */
+.meetings-iframe-container,
+.meetings-iframe-container *,
+iframe[src*="hubspot"],
+iframe[src*="meetings"] {
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
