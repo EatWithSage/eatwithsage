@@ -19,14 +19,9 @@ export default defineConfig({
     host: '0.0.0.0',
     port: 5173,
     strictPort: false,
-    hmr: false,
+    hmr: true,
     cors: true,
-    open: false,
-    // Use polling for file watching in container environments
-    watch: {
-      usePolling: true,
-      interval: 100
-    }
+    open: false
   },
 
   build: {
