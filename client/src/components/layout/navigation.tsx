@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export default function Navigation() {
+export function Navigation() {
   const [location] = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
@@ -82,13 +82,25 @@ export default function Navigation() {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-48 bg-white border border-sage-200 shadow-lg rounded-lg p-2">
                   <DropdownMenuItem asChild className="hover:bg-sage-50 rounded-md transition-colors">
-                    <Link href="/industry/grocery" className="text-gray-700 hover:text-sage-600 px-3 py-2 block w-full" data-testid="link-industry-grocery">Food Retailers</Link>
+                    <Link href="/industry/food-retailers" className="text-gray-700 hover:text-sage-600 px-3 py-2 block w-full" data-testid="link-industry-food-retailers">Food Retailers</Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild className="hover:bg-sage-50 rounded-md transition-colors">
-                    <Link href="/industry/restaurants" className="text-gray-700 hover:text-sage-600 px-3 py-2 block w-full" data-testid="link-industry-restaurants">Restaurants</Link>
+                    <Link href="/industry/food-brands" className="text-gray-700 hover:text-sage-600 px-3 py-2 block w-full" data-testid="link-industry-food-brands">Food Brands</Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild className="hover:bg-sage-50 rounded-md transition-colors">
-                    <Link href="/industry/meal-kits" className="text-gray-700 hover:text-sage-600 px-3 py-2 block w-full" data-testid="link-industry-meal-kits">Meal Kit Services</Link>
+                    <Link href="/industry/chronic-disease-foundations" className="text-gray-700 hover:text-sage-600 px-3 py-2 block w-full" data-testid="link-industry-chronic-disease-foundations">Chronic Disease Foundations</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild className="hover:bg-sage-50 rounded-md transition-colors">
+                    <Link href="/industry/self-insured-employers" className="text-gray-700 hover:text-sage-600 px-3 py-2 block w-full" data-testid="link-industry-self-insured-employers">Self-Insured Employers</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild className="hover:bg-sage-50 rounded-md transition-colors">
+                    <Link href="/industry/kitchen-appliance-manufacturers" className="text-gray-700 hover:text-sage-600 px-3 py-2 block w-full" data-testid="link-industry-kitchen-appliance-manufacturers">Kitchen Appliance Manufacturers</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild className="hover:bg-sage-50 rounded-md transition-colors">
+                    <Link href="/industry/food-health-media" className="text-gray-700 hover:text-sage-600 px-3 py-2 block w-full" data-testid="link-industry-food-health-media">Food and Health Media</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild className="hover:bg-sage-50 rounded-md transition-colors">
+                    <Link href="/industry/tech-companies" className="text-gray-700 hover:text-sage-600 px-3 py-2 block w-full" data-testid="link-industry-tech-companies">Tech Companies</Link>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -134,28 +146,60 @@ export default function Navigation() {
                   <div className="pl-3">
                     <div className="text-sm font-medium text-sage-600 mb-2">Industries</div>
                     <Link 
-                      href="/industry/grocery" 
+                      href="/industry/food-retailers" 
                       className="block px-3 py-2 text-gray-600 hover:text-sage-500"
                       onClick={() => setMobileOpen(false)}
-                      data-testid="link-mobile-grocery"
+                      data-testid="link-mobile-food-retailers"
                     >
                       Food Retailers
                     </Link>
                     <Link 
-                      href="/industry/restaurants" 
+                      href="/industry/food-brands" 
                       className="block px-3 py-2 text-gray-600 hover:text-sage-500"
                       onClick={() => setMobileOpen(false)}
-                      data-testid="link-mobile-restaurants"
+                      data-testid="link-mobile-food-brands"
                     >
-                      Restaurants
+                      Food Brands
                     </Link>
                     <Link 
-                      href="/industry/meal-kits" 
+                      href="/industry/chronic-disease-foundations" 
                       className="block px-3 py-2 text-gray-600 hover:text-sage-500"
                       onClick={() => setMobileOpen(false)}
-                      data-testid="link-mobile-meal-kits"
+                      data-testid="link-mobile-chronic-disease-foundations"
                     >
-                      Meal Kit Services
+                      Chronic Disease Foundations
+                    </Link>
+                    <Link 
+                      href="/industry/self-insured-employers" 
+                      className="block px-3 py-2 text-gray-600 hover:text-sage-500"
+                      onClick={() => setMobileOpen(false)}
+                      data-testid="link-mobile-self-insured-employers"
+                    >
+                      Self-Insured Employers
+                    </Link>
+                    <Link 
+                      href="/industry/kitchen-appliance-manufacturers" 
+                      className="block px-3 py-2 text-gray-600 hover:text-sage-500"
+                      onClick={() => setMobileOpen(false)}
+                      data-testid="link-mobile-kitchen-appliance-manufacturers"
+                    >
+                      Kitchen Appliance Manufacturers
+                    </Link>
+                    <Link 
+                      href="/industry/food-health-media" 
+                      className="block px-3 py-2 text-gray-600 hover:text-sage-500"
+                      onClick={() => setMobileOpen(false)}
+                      data-testid="link-mobile-food-health-media"
+                    >
+                      Food and Health Media
+                    </Link>
+                    <Link 
+                      href="/industry/tech-companies" 
+                      className="block px-3 py-2 text-gray-600 hover:text-sage-500"
+                      onClick={() => setMobileOpen(false)}
+                      data-testid="link-mobile-tech-companies"
+                    >
+                      Tech Companies
                     </Link>
                   </div>
                   <Link 
@@ -175,3 +219,5 @@ export default function Navigation() {
     </nav>
   );
 }
+
+export default Navigation;

@@ -8,9 +8,13 @@ import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
 import Product from "@/pages/product";
 import About from "@/pages/about";
-import GroceryIndustry from "@/pages/industry/grocery";
-import RestaurantsIndustry from "@/pages/industry/restaurants";
-import MealKitsIndustry from "@/pages/industry/meal-kits";
+import FoodRetailersIndustry from "@/pages/industry/food-retailers";
+import FoodBrandsIndustry from "@/pages/industry/food-brands";
+import ChronicDiseaseFoundationsIndustry from "@/pages/industry/chronic-disease-foundations";
+import SelfInsuredEmployersIndustry from "@/pages/industry/self-insured-employers";
+import KitchenApplianceManufacturersIndustry from "@/pages/industry/kitchen-appliance-manufacturers";
+import FoodHealthMediaIndustry from "@/pages/industry/food-health-media";
+import TechCompaniesIndustry from "@/pages/industry/tech-companies";
 
 function Router() {
   return (
@@ -18,9 +22,13 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/product" component={Product} />
       <Route path="/about" component={About} />
-      <Route path="/industry/grocery" component={GroceryIndustry} />
-      <Route path="/industry/restaurants" component={RestaurantsIndustry} />
-      <Route path="/industry/meal-kits" component={MealKitsIndustry} />
+      <Route path="/industry/food-retailers" component={FoodRetailersIndustry} />
+      <Route path="/industry/food-brands" component={FoodBrandsIndustry} />
+      <Route path="/industry/chronic-disease-foundations" component={ChronicDiseaseFoundationsIndustry} />
+      <Route path="/industry/self-insured-employers" component={SelfInsuredEmployersIndustry} />
+      <Route path="/industry/kitchen-appliance-manufacturers" component={KitchenApplianceManufacturersIndustry} />
+      <Route path="/industry/food-health-media" component={FoodHealthMediaIndustry} />
+      <Route path="/industry/tech-companies" component={TechCompaniesIndustry} />
       <Route component={NotFound} />
     </Switch>
   );
