@@ -25,7 +25,7 @@ export default function Navigation() {
               <img 
                 src="/Sage-healthy-meal-plan-app-logo.png" 
                 alt="Sage logo - stylized plant with leaves representing healthy meal planning" 
-                className="w-12 h-12" 
+                className="w-16 h-16" 
               />
             </Link>
           </div>
