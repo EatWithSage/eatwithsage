@@ -46,13 +46,13 @@ export function ComingSoonPage({ title, description, headerImage, imageAlt }: Co
                     </p>
                   </div>
 
-                  {/* HubSpot Meeting Embed */}
+                  {/* See Sage In Action Section */}
                   <div className="bg-white rounded-xl shadow-lg p-8">
-                    <h3 className="text-2xl font-bold text-forest-900 mb-6 font-recoleta">
-                      Ready to Learn More?
+                    <h3 className="text-3xl font-bold text-forest-900 mb-4 font-recoleta">
+                      See Sage In Action
                     </h3>
                     <p className="text-lg text-gray-600 mb-8">
-                      Schedule a personalized demo to see how Sage can transform your business.
+                      Get a personalized demo tailored to your business needs
                     </p>
                     
                     {/* HubSpot Meetings Embed */}
