@@ -5,8 +5,8 @@ import path from 'path'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  root: '.',
-  publicDir: 'client/public',
+  root: './client',
+  publicDir: 'public',
   
   resolve: {
     alias: {
@@ -17,9 +17,9 @@ export default defineConfig({
 
   server: {
     host: '0.0.0.0',
-    port: 5173,
-    strictPort: false,
-    hmr: true,
+    port: parseInt(process.env.PORT) || 5173,
+    strictPort: true,
+    hmr: false,
     cors: true,
     open: false
   },
