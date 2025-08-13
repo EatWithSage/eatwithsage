@@ -60,15 +60,15 @@ export default function Navigation() {
                     Industries <ChevronDown className="ml-1 h-3 w-3" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-48">
-                  <DropdownMenuItem asChild>
-                    <Link href="/industry/grocery" data-testid="link-industry-grocery">Food Retailers</Link>
+                <DropdownMenuContent className="w-48 bg-white border border-sage-200 shadow-lg rounded-lg p-2">
+                  <DropdownMenuItem asChild className="hover:bg-sage-50 rounded-md transition-colors">
+                    <Link href="/industry/grocery" className="text-gray-700 hover:text-sage-600 px-3 py-2 block w-full" data-testid="link-industry-grocery">Food Retailers</Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href="/industry/restaurants" data-testid="link-industry-restaurants">Restaurants</Link>
+                  <DropdownMenuItem asChild className="hover:bg-sage-50 rounded-md transition-colors">
+                    <Link href="/industry/restaurants" className="text-gray-700 hover:text-sage-600 px-3 py-2 block w-full" data-testid="link-industry-restaurants">Restaurants</Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
-                    <Link href="/industry/meal-kits" data-testid="link-industry-meal-kits">Meal Kit Services</Link>
+                  <DropdownMenuItem asChild className="hover:bg-sage-50 rounded-md transition-colors">
+                    <Link href="/industry/meal-kits" className="text-gray-700 hover:text-sage-600 px-3 py-2 block w-full" data-testid="link-industry-meal-kits">Meal Kit Services</Link>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -93,7 +93,7 @@ export default function Navigation() {
                   <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right">
+              <SheetContent side="right" className="bg-white">
                 <div className="flex flex-col space-y-4 mt-4">
                   <Link 
                     href="/" 
@@ -112,7 +112,7 @@ export default function Navigation() {
                     Product
                   </Link>
                   <div className="pl-3">
-                    <div className="text-sm font-medium text-gray-900 mb-2">Industries</div>
+                    <div className="text-sm font-medium text-sage-600 mb-2">Industries</div>
                     <Link 
                       href="/industry/grocery" 
                       className="block px-3 py-2 text-gray-600 hover:text-sage-500"
