@@ -87,38 +87,4 @@
   body { @apply bg-background text-foreground; }
 }
 
-/* HubSpot Meeting Border Clipping */
-.meetings-iframe-container {
-  border: none !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  overflow: hidden !important;
-  position: relative !important;
-}
 
-.meetings-iframe-container iframe,
-iframe[src*="hubspot"],
-iframe[src*="meetings"] {
-  border: none !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  outline: none !important;
-  position: relative !important;
-  top: -1px !important;
-  left: -1px !important;
-  width: calc(100% + 2px) !important;
-  height: calc(100% + 2px) !important;
-}
-
-/* Border clipping wrapper */
-.meetings-iframe-container::before {
-  content: '';
-  position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  background: transparent;
-  z-index: 1;
-  pointer-events: none;
-}
