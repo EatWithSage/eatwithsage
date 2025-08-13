@@ -17,15 +17,15 @@ export default function Navigation() {
   const isActive = (path: string) => location === path;
 
   return (
-    <nav className="bg-white shadow-sm fixed top-0 left-0 right-0 z-50">
+    <nav className="bg-transparent sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+        <div className="flex justify-between items-center h-32">
           <div className="flex items-center">
             <Link href="/" className="flex items-center" data-testid="link-home">
               <img 
-                src="/logo.svg" 
+                src="/Sage-healthy-meal-plan-app-logo.png" 
                 alt="Sage logo - stylized plant with leaves representing healthy meal planning" 
-                className="w-12 h-12" 
+                className="w-32 h-32" 
               />
             </Link>
           </div>
