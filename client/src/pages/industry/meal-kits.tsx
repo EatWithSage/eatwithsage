@@ -21,7 +21,7 @@ export default function MealKitsIndustry() {
         <Navigation />
         <main>
           {/* Hero Section */}
-          <section className="pt-52 pb-20 bg-gradient-to-br from-sage-50 to-cream-50">
+          <section className="pt-40 pb-20 bg-gradient-to-br from-sage-50 to-cream-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="lg:grid lg:grid-cols-12 lg:gap-8 items-center">
                 <div className="lg:col-span-6">
