@@ -17,10 +17,10 @@ export default defineConfig({
 
   server: {
     host: '0.0.0.0',
-    port: parseInt(process.env.PORT) || 5173,
-    strictPort: true,
+    port: 5175,
+    strictPort: false,
     hmr: {
-      port: 5173,
+      port: 5175,
       host: '0.0.0.0'
     },
     cors: true,
