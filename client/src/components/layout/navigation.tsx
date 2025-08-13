@@ -23,8 +23,8 @@ export default function Navigation() {
           <div className="flex items-center">
             <Link href="/" className="flex items-center" data-testid="link-home">
               <img 
-                src="/Sage-healthy-meal-plan-app-logo.png" 
-                alt="Sage logo - stylized plant with leaves representing healthy meal planning" 
+                src="/Sage-healthy-meal-plan-app-logo_1755077718089.png" 
+                alt="Sage logo - stylized plant with leaves and text representing healthy meal planning" 
                 className="w-32 h-32" 
               />
             </Link>
