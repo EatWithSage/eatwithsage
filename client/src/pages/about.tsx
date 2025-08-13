@@ -8,6 +8,14 @@ export default function About() {
     <>
       <title>About Us - The Sage Story</title>
       <meta name="description" content="Learn about Sage's mission to make healthy eating accessible through AI-powered meal planning. Founded from personal experience to transform how families approach nutrition." />
+      <meta property="og:title" content="About Us - The Sage Story" />
+      <meta property="og:description" content="Learn about Sage's mission to make healthy eating accessible through AI-powered meal planning. Founded from personal experience to transform how families approach nutrition." />
+      <meta property="og:image" content="/Sage-healthy-meal-plan-app-logo_1755077718089.png" />
+      <meta property="og:type" content="website" />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content="About Us - The Sage Story" />
+      <meta name="twitter:description" content="Learn about Sage's mission to make healthy eating accessible through AI-powered meal planning. Founded from personal experience to transform how families approach nutrition." />
+      <meta name="twitter:image" content="/Sage-healthy-meal-plan-app-logo_1755077718089.png" />
       
       <div className="min-h-screen bg-cream-50">
         <Navigation />
