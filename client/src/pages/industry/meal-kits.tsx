@@ -16,14 +16,7 @@ export default function MealKitsIndustry() {
     <>
       <title>Meal Kit Services - Sage Meal Planning Platform</title>
       <meta name="description" content="Reduce churn and increase satisfaction in your meal kit service with Sage's AI-powered meal curation, cooking guidance, and subscription optimization features." />
-      <meta property="og:title" content="Meal Kit Services - Sage Meal Planning Platform" />
-      <meta property="og:description" content="Reduce churn and increase satisfaction in your meal kit service with Sage's AI-powered meal curation, cooking guidance, and subscription optimization features." />
-      <meta property="og:image" content="/og-image.png" />
-      <meta property="og:type" content="website" />
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content="Meal Kit Services - Sage Meal Planning Platform" />
-      <meta name="twitter:description" content="Reduce churn and increase satisfaction in your meal kit service with Sage's AI-powered meal curation, cooking guidance, and subscription optimization features." />
-      <meta name="twitter:image" content="/og-image.png" />
+
       
       <div className="min-h-screen bg-cream-50">
         <Navigation />

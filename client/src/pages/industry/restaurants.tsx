@@ -16,14 +16,7 @@ export default function RestaurantsIndustry() {
     <>
       <title>Restaurant Solutions - Sage Meal Planning Platform</title>
       <meta name="description" content="Enhance your restaurant's customer experience with Sage's AI-powered meal planning. Personalize menus, accommodate dietary needs, and build lasting customer relationships." />
-      <meta property="og:title" content="Restaurant Solutions - Sage Meal Planning Platform" />
-      <meta property="og:description" content="Enhance your restaurant's customer experience with Sage's AI-powered meal planning. Personalize menus, accommodate dietary needs, and build lasting customer relationships." />
-      <meta property="og:image" content="/og-image.png" />
-      <meta property="og:type" content="website" />
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:title" content="Restaurant Solutions - Sage Meal Planning Platform" />
-      <meta name="twitter:description" content="Enhance your restaurant's customer experience with Sage's AI-powered meal planning. Personalize menus, accommodate dietary needs, and build lasting customer relationships." />
-      <meta name="twitter:image" content="/og-image.png" />
+
       
       <div className="min-h-screen bg-cream-50">
         <Navigation />
