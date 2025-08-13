@@ -6,21 +6,7 @@ interface DemoFormProps {
 }
 
 export default function DemoForm({ variant = "primary", className = "" }: DemoFormProps) {
-  useEffect(() => {
-    // Load HubSpot meetings embed script
-    const script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.src = 'https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js';
-    script.async = true;
-    document.head.appendChild(script);
-
-    return () => {
-      // Cleanup script on unmount
-      if (script.parentNode) {
-        script.parentNode.removeChild(script);
-      }
-    };
-  }, []);
+  // No need for HubSpot script with direct iframe approach
 
   if (variant === "primary") {
     return (
@@ -34,12 +20,15 @@ export default function DemoForm({ variant = "primary", className = "" }: DemoFo
           </div>
           
           <div className="bg-gradient-to-r from-sage-50 to-cream-100 rounded-2xl p-8 lg:p-12">
-            <div 
-              className="meetings-iframe-container" 
-              data-src="https://meetings-na2.hubspot.com/dave-milliken?embed=true"
-              data-testid="hubspot-meeting-scheduler"
-              style={{
-                border: '0',
+            <iframe 
+              src="https://meetings-na2.hubspot.com/dave-milliken?embed=true"
+              width="100%" 
+              data-hs-ignore="true" 
+              style={{ 
+                minWidth: '312px', 
+                minHeight: '615px', 
+                height: '715px', 
+                border: 'none',
                 borderWidth: '0',
                 borderStyle: 'none',
                 boxShadow: 'none',
@@ -47,7 +36,9 @@ export default function DemoForm({ variant = "primary", className = "" }: DemoFo
                 margin: '0',
                 padding: '0'
               }}
-            ></div>
+              frameBorder="0"
+              data-testid="hubspot-meeting-scheduler"
+            ></iframe>
           </div>
         </div>
       </section>
@@ -57,12 +48,15 @@ export default function DemoForm({ variant = "primary", className = "" }: DemoFo
   // Secondary variant for final CTA
   return (
     <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 lg:p-12">
-      <div 
-        className="meetings-iframe-container" 
-        data-src="https://meetings-na2.hubspot.com/dave-milliken?embed=true"
-        data-testid="hubspot-meeting-scheduler-secondary"
-        style={{
-          border: '0',
+      <iframe 
+        src="https://meetings-na2.hubspot.com/dave-milliken?embed=true"
+        width="100%" 
+        data-hs-ignore="true" 
+        style={{ 
+          minWidth: '312px', 
+          minHeight: '615px', 
+          height: '715px', 
+          border: 'none',
           borderWidth: '0',
           borderStyle: 'none',
           boxShadow: 'none',
@@ -70,7 +64,9 @@ export default function DemoForm({ variant = "primary", className = "" }: DemoFo
           margin: '0',
           padding: '0'
         }}
-      ></div>
+        frameBorder="0"
+        data-testid="hubspot-meeting-scheduler-secondary"
+      ></iframe>
     </div>
   );
 }
