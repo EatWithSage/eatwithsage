@@ -59,13 +59,14 @@ Preferred communication style: Simple, everyday language.
   - ✅ Ready for GitHub push and Vercel deployment
 - **Sage Branding Status**: ✅ Fully active in preview and production build ready
 - **Vercel Deployment**: Updated dist/ folder contains new CSS with compiled Sage brand hex values
-- **Files for Deployment**: dist/assets/index-DsU4ILiT.css and dist/assets/index-Doddiy6I.js  
+- **Files for Deployment**: dist/assets/index-B_08nvR3.css and dist/assets/index-Dlk6auSd.js  
 - **GitHub Push**: Ready with fixed files - user can run git commands to deploy
 - **Request Demo Button**: Fixed to smoothly scroll to "See Sage In Action" section
 - **Navigation Dropdown**: Fixed Industries dropdown with Sage brand colors and white background
 - **Logo Design**: Updated logo to be very large (w-32 h-32 = 128px x 128px) and removed "Sage" text from navigation
 - **Navigation Background**: Removed white background from header navigation for transparent overlay effect
 - **Typography**: Applied Recoleta font to all headlines and navigation text for elegant serif branding
+- **Call-to-Action Buttons**: Enhanced "Request Demo" and "Learn More" buttons with larger size (px-12 py-6), bigger text (text-lg), and wider letter spacing (tracking-wider)
 
 ## August 13, 2025 - TypeScript/JSX Configuration Fix
 - **Issue Resolved**: Fixed 134 LSP diagnostics related to missing React type definitions and JSX configuration

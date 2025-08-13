@@ -25,7 +25,7 @@ export default function Hero() {
             <div className="flex flex-col sm:flex-row gap-4 mb-12">
               <Button 
                 onClick={scrollToDemo}
-                className="bg-sage-500 text-white px-8 py-4 rounded-xl font-semibold hover:bg-sage-600 transition-colors h-auto"
+                className="bg-sage-500 text-white px-12 py-6 rounded-xl font-semibold hover:bg-sage-600 transition-colors h-auto text-lg tracking-wider"
                 data-testid="button-request-demo"
               >
                 Request Demo
@@ -33,7 +33,7 @@ export default function Hero() {
               <Button 
                 asChild 
                 variant="outline" 
-                className="border-2 border-sage-500 text-sage-500 px-8 py-4 rounded-xl font-semibold hover:bg-sage-50 transition-colors h-auto"
+                className="border-2 border-sage-500 text-sage-500 px-12 py-6 rounded-xl font-semibold hover:bg-sage-50 transition-colors h-auto text-lg tracking-wider"
                 data-testid="button-learn-more"
               >
                 <Link href="/product">Learn More</Link>
