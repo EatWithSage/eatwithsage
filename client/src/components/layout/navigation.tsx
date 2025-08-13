@@ -17,7 +17,7 @@ export default function Navigation() {
   const isActive = (path: string) => location === path;
 
   return (
-    <nav className="bg-transparent sticky top-0 z-50">
+    <nav className="bg-cream-50 fixed top-0 w-full z-50 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-32">
           <div className="flex items-center">
