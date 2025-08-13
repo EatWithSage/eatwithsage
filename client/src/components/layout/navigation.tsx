@@ -9,7 +9,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { SageLogo } from "@/components/ui/sage-logo";
 
 export default function Navigation() {
   const [location] = useLocation();
@@ -44,7 +43,11 @@ export default function Navigation() {
         <div className="flex justify-between items-center h-32">
           <div className="flex items-center">
             <Link href="/" className="flex items-center" data-testid="link-home">
-              <SageLogo size="lg" />
+              <img 
+                src="/Sage-healthy-meal-plan-app-logo_1755077718089.png" 
+                alt="Sage logo - stylized plant with leaves and text representing healthy meal planning" 
+                className="w-32 h-32" 
+              />
             </Link>
           </div>
           

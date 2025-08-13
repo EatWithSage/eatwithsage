@@ -47,8 +47,8 @@
     --popover-foreground: var(--forest-900);
     --card: var(--cream-50);
     --card-foreground: var(--forest-900);
-    --border: hsl(0, 0%, 90%);
-    --input: hsl(0, 0%, 90%);
+    --border: var(--sage-200);
+    --input: var(--sage-200);
     --primary: var(--sage-500);
     --primary-foreground: var(--cream-50);
     --secondary: var(--sage-100);
@@ -70,8 +70,8 @@
     --popover-foreground: var(--cream-50);
     --card: var(--forest-900);
     --card-foreground: var(--cream-50);
-    --border: hsl(0, 0%, 30%);
-    --input: hsl(0, 0%, 30%);
+    --border: var(--forest-700);
+    --input: var(--forest-700);
     --primary: var(--sage-400);
     --primary-foreground: var(--forest-900);
     --secondary: var(--forest-800);
@@ -83,36 +83,6 @@
     --ring: var(--sage-500);
   }
 
+  * { @apply border-border; }
   body { @apply bg-background text-foreground; }
-  
-  /* Comprehensive border reset - Production ready solution */
-  *, *::before, *::after {
-    border: none !important;
-    border-width: 0 !important;
-    box-sizing: border-box;
-  }
-  
-  /* Target specific elements that commonly resist border removal */
-  input, textarea, button, select, img, iframe {
-    border: none !important;
-    outline: none !important;
-  }
-  
-  /* Table-specific reset */
-  table {
-    border-collapse: separate !important;
-    border-spacing: 0 !important;
-  }
-  
-  table, td, th {
-    border: none !important;
-  }
-  
-  /* Only add borders where explicitly needed with higher specificity */
-  .border {
-    border-width: 1px !important;
-    border-style: solid !important;
-  }
 }
-
-

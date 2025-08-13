@@ -36,7 +36,7 @@ export default function DemoForm({ variant = "primary", className = "" }: DemoFo
           <div className="bg-gradient-to-r from-sage-50 to-cream-100 rounded-2xl p-8 lg:p-12">
             <div 
               className="meetings-iframe-container" 
-              data-src="https://meetings-na2.hubspot.com/dave-milliken?embed=true"
+              data-src="https://meetings-na2.hubspot.com/dave-milliken?embed=true&hide_branding=true"
               data-testid="hubspot-meeting-scheduler"
             ></div>
           </div>
@@ -50,7 +50,7 @@ export default function DemoForm({ variant = "primary", className = "" }: DemoFo
     <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 lg:p-12">
       <div 
         className="meetings-iframe-container" 
-        data-src="https://meetings-na2.hubspot.com/dave-milliken?embed=true"
+        data-src="https://meetings-na2.hubspot.com/dave-milliken?embed=true&hide_branding=true"
         data-testid="hubspot-meeting-scheduler-secondary"
       ></div>
     </div>
