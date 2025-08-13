@@ -1,3 +1,4 @@
+import React from "react";
 import Navigation from "@/components/layout/navigation";
 import Footer from "@/components/layout/footer";
 import DemoForm from "@/components/sections/demo-form";
