@@ -86,3 +86,26 @@
   * { @apply border-border; }
   body { @apply bg-background text-foreground; }
 }
+
+/* HubSpot Meeting Embed Styles */
+.meetings-iframe-container iframe,
+.meetings-iframe-container,
+[data-hubspot-meeting] iframe,
+[data-hubspot-meeting],
+iframe[src*="hubspot.com"],
+iframe[src*="meetings"] {
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Remove any potential borders from HubSpot containers */
+.hs-form,
+.hs-form iframe,
+.hs-meeting-embed,
+.hs-meeting-embed iframe {
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
