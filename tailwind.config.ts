@@ -63,7 +63,10 @@ export default {
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
-      fontFamily: { sans: ['var(--font-sans)', ...defaultTheme.fontFamily.sans] },
+      fontFamily: { 
+        sans: ['var(--font-sans)', ...defaultTheme.fontFamily.sans],
+        recoleta: ['Recoleta', 'serif']
+      },
       keyframes: {
         'accordion-down': { from: { height: '0' }, to: { height: 'var(--radix-accordion-content-height)' } },
         'accordion-up': { from: { height: 'var(--radix-accordion-content-height)' }, to: { height: '0' } },

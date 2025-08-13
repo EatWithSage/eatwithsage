@@ -37,7 +37,7 @@ export default function ProductOverview() {
     <section id="product" className="py-20 bg-cream-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-forest-900 mb-6" data-testid="text-product-title">
+          <h2 className="text-4xl font-bold font-recoleta text-forest-900 mb-6" data-testid="text-product-title">
             Transform Macro Health Trends Into Brand Loyalty
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
@@ -57,7 +57,7 @@ export default function ProductOverview() {
         
         {/* What Sage Does Accordion */}
         <div className="max-w-4xl mx-auto mb-20">
-          <h3 className="text-2xl font-bold text-forest-900 mb-8 text-center" data-testid="text-accordion-title">
+          <h3 className="text-2xl font-bold font-recoleta text-forest-900 mb-8 text-center" data-testid="text-accordion-title">
             Sage Magic Meal Plans
           </h3>
           
@@ -69,7 +69,7 @@ export default function ProductOverview() {
                     <UserCircle className="text-sage-500 w-6 h-6" />
                   </div>
                   <div className="text-left">
-                    <h4 className="text-lg font-semibold text-forest-900">Gets to Know Your Customers</h4>
+                    <h4 className="text-lg font-semibold font-recoleta text-forest-900">Gets to Know Your Customers</h4>
                     <p className="text-gray-600">Understand customer preferences and dietary needs</p>
                   </div>
                 </div>
@@ -88,7 +88,7 @@ export default function ProductOverview() {
                     <Calendar className="text-sage-500 w-6 h-6" />
                   </div>
                   <div className="text-left">
-                    <h4 className="text-lg font-semibold text-forest-900">0-Touch Meal Plans</h4>
+                    <h4 className="text-lg font-semibold font-recoleta text-forest-900">0-Touch Meal Plans</h4>
                     <p className="text-gray-600">The fastest possible meal plans plus easy online ordering</p>
                   </div>
                 </div>
@@ -107,7 +107,7 @@ export default function ProductOverview() {
                     <ShoppingCart className="text-sage-500 w-6 h-6" />
                   </div>
                   <div className="text-left">
-                    <h4 className="text-lg font-semibold text-forest-900">Easy Execution</h4>
+                    <h4 className="text-lg font-semibold font-recoleta text-forest-900">Easy Execution</h4>
                     <p className="text-gray-600">Seamless shopping and cooking guidance</p>
                   </div>
                 </div>
@@ -126,7 +126,7 @@ export default function ProductOverview() {
                     <Lightbulb className="text-sage-500 w-6 h-6" />
                   </div>
                   <div className="text-left">
-                    <h4 className="text-lg font-semibold text-forest-900">Your Personal Health Coach</h4>
+                    <h4 className="text-lg font-semibold font-recoleta text-forest-900">Your Personal Health Coach</h4>
                     <p className="text-gray-600">Ongoing health and nutrition guidance</p>
                   </div>
                 </div>
@@ -142,7 +142,7 @@ export default function ProductOverview() {
         
         {/* How Sage Makes Meal Magic */}
         <div className="mb-20">
-          <h3 className="text-2xl font-bold text-forest-900 mb-12 text-center" data-testid="text-workflow-title">
+          <h3 className="text-2xl font-bold font-recoleta text-forest-900 mb-12 text-center" data-testid="text-workflow-title">
             How Sage Makes Meal Magic
           </h3>
           <div className="flex justify-center">

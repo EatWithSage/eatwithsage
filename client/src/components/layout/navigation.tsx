@@ -35,7 +35,7 @@ export default function Navigation() {
             <div className="ml-10 flex items-baseline space-x-8">
               <Link 
                 href="/" 
-                className={`px-3 py-2 text-sm font-medium transition-colors ${
+                className={`px-3 py-2 text-sm font-medium font-recoleta transition-colors ${
                   isActive('/') ? 'text-forest-900' : 'text-gray-600 hover:text-sage-500'
                 }`}
                 data-testid="link-nav-home"
@@ -44,7 +44,7 @@ export default function Navigation() {
               </Link>
               <Link 
                 href="/product" 
-                className={`px-3 py-2 text-sm font-medium transition-colors ${
+                className={`px-3 py-2 text-sm font-medium font-recoleta transition-colors ${
                   isActive('/product') ? 'text-forest-900' : 'text-gray-600 hover:text-sage-500'
                 }`}
                 data-testid="link-nav-product"
@@ -55,7 +55,7 @@ export default function Navigation() {
               {/* Industries Dropdown */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="text-gray-600 hover:text-sage-500 px-3 py-2 text-sm font-medium transition-colors flex items-center" data-testid="button-industries-dropdown">
+                  <Button variant="ghost" className="text-gray-600 hover:text-sage-500 px-3 py-2 text-sm font-medium font-recoleta transition-colors flex items-center" data-testid="button-industries-dropdown">
                     Industries <ChevronDown className="ml-1 h-3 w-3" />
                   </Button>
                 </DropdownMenuTrigger>
@@ -74,7 +74,7 @@ export default function Navigation() {
               
               <Link 
                 href="/about" 
-                className={`px-3 py-2 text-sm font-medium transition-colors ${
+                className={`px-3 py-2 text-sm font-medium font-recoleta transition-colors ${
                   isActive('/about') ? 'text-forest-900' : 'text-gray-600 hover:text-sage-500'
                 }`}
                 data-testid="link-nav-about"

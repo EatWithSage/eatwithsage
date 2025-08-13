@@ -16,7 +16,7 @@ export default function Hero() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
         <div className="lg:grid lg:grid-cols-12 lg:gap-8 items-center">
           <div className="lg:col-span-6">
-            <h1 className="text-4xl lg:text-6xl font-bold text-forest-900 leading-tight mb-6">
+            <h1 className="text-4xl lg:text-6xl font-bold font-recoleta text-forest-900 leading-tight mb-6">
               Your Recipe for <span className="text-sage-500">Brand Loyalty</span>
             </h1>
             <p className="text-xl text-gray-600 mb-8 leading-relaxed">
