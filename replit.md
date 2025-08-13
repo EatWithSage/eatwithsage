@@ -1,0 +1,75 @@
+# Overview
+
+Sage is a B2B marketing website for an AI-powered meal planning platform that helps retailers integrate personalized meal recommendations into their customer experience. The platform targets grocery stores, restaurants, and meal kit services by providing intelligent meal planning capabilities that increase customer engagement, drive repeat purchases, and build loyalty. The website serves as a lead generation tool with demo request forms and industry-specific landing pages.
+
+# User Preferences
+
+Preferred communication style: Simple, everyday language.
+
+# System Architecture
+
+## Frontend Architecture
+- **React SPA with Vite**: Single-page application built with React 18, TypeScript, and Vite for fast development and build tooling
+- **Wouter Router**: Lightweight client-side routing for page navigation without heavy framework overhead
+- **Shadcn/ui Components**: Modern, accessible component library with Radix UI primitives and Tailwind CSS styling
+- **Responsive Design**: Mobile-first approach with Tailwind CSS utility classes and custom brand color system
+
+## Backend Architecture
+- **Express.js Server**: Node.js backend with Express handling API routes and static file serving
+- **Minimal API Surface**: Single endpoint `/api/email-demo` for demo form submissions
+- **Development/Production Split**: Vite dev server integration in development, static file serving in production
+- **Email Service Integration**: Placeholder architecture for email services (SendGrid, Mailgun, AWS SES)
+
+## Styling & Design System
+- **Tailwind CSS**: Utility-first CSS framework with custom brand color palette
+- **Brand Colors**: Primary sage green (#8A9A5B), forest accent (#052D24), cream background (#F7F5EF)
+- **Component Variants**: Consistent design tokens through class-variance-authority for component styling
+- **CSS Variables**: Dynamic theming support with CSS custom properties
+
+## Form Handling & Validation
+- **React Hook Form**: Form state management with TypeScript integration
+- **Zod Validation**: Schema validation for form inputs with shared schemas between client and server
+- **Toast Notifications**: User feedback system using Radix UI toast components
+
+## State Management
+- **TanStack Query**: Server state management for API calls with caching and error handling
+- **React Context**: Local state management for UI components like mobile navigation
+- **Form State**: Isolated form state management without global state pollution
+
+## Build & Development Tools
+- **TypeScript**: Full type safety across client and server code
+- **ESBuild**: Fast bundling for production server builds
+- **Path Aliases**: Clean import paths with @ aliases for better code organization
+- **Hot Module Replacement**: Fast development iteration with Vite HMR
+
+# External Dependencies
+
+## Database & ORM
+- **Drizzle ORM**: Type-safe database toolkit configured for PostgreSQL
+- **Neon Database**: PostgreSQL-compatible serverless database (inferred from @neondatabase/serverless)
+- **Database Migrations**: Drizzle Kit for schema migrations and database management
+
+## UI & Component Libraries
+- **Radix UI**: Headless, accessible component primitives for complex UI patterns
+- **Tailwind CSS**: Utility-first CSS framework for rapid styling
+- **Lucide React**: Consistent icon library with tree-shaking support
+- **Class Variance Authority**: Type-safe variant API for component styling
+
+## Development & Build Tools
+- **Vite**: Fast build tool with plugins for React and development features
+- **Replit Integration**: Cartographer and runtime error modal plugins for Replit environment
+- **PostCSS**: CSS processing with Tailwind CSS and Autoprefixer plugins
+
+## Email Services (Planned)
+- **Email Service Providers**: Architecture ready for SendGrid, Mailgun, or AWS SES integration
+- **SMTP Configuration**: Environment variable configuration for email credentials and settings
+
+## Form & Validation
+- **React Hook Form**: Performant form library with minimal re-renders
+- **Hookform/Resolvers**: Integration bridge for Zod schema validation
+- **Zod**: Runtime type validation and schema definition
+
+## Deployment & Hosting
+- **Node.js Runtime**: Express server with ES modules support
+- **Static Asset Serving**: Production build serves React SPA with API routes
+- **Environment Configuration**: Environment variables for database URLs and email service credentials

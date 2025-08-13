@@ -1,0 +1,66 @@
+────────────────────────────────────────
+🎨 Branding
+────────────────────────────────────────
+• Primary: **#8A9A5B**   • Accent 1: **#052D24**   • Accent 2: **#F7F5EF**  
+• Modern, premium look; rounded-xl cards; generous white space.  
+• Include /public/logo.svg (placeholder).  
+
+────────────────────────────────────────
+🌐 Pages & key sections
+────────────────────────────────────────
+1. **Home**  
+ • `<Hero>` component with headline “Bring Personalized Meal-Planning to Your Shoppers” and sub-headline tailored to B2B buyers.  
+ • `<DemoForm>` directly under the hero.  
+ • `<ProductOverview>` teaser with screenshots (use `/public/img/placeholder-screens.png`).  
+ • `<SocialProof>` — carousel of three quote cards pulled from `data/socialProof.ts` (seed with placeholder quotes for now).  
+
+2. **Product Overview**  
+ • “What Sage Does” accordion: Gets to Know You → Meal Planning → Execution → Advice.  
+ • Animated infographic of the weekly planning workflow.  
+ • Secondary `<DemoForm>`.
+
+3. **Industry pages** (one route per industry):  
+ • Above-the-fold benefit statement + industry-specific value bullets.  
+ • CTA card (embedded `<DemoForm>`).  
+
+4. **About Us**  
+ • “The Sage Story” timeline (founder’s heart-attack moment → mission).  
+ • “Reasons to Believe” list (research credibility, tech expertise, enterprise experience).  
+ • “Credentials” grid of past employers (logo images).  
+
+5. **Blog**  
+ • Generate `[slug]/page.tsx` + MDX support but **do not link it from global nav until `ENV.NEXT_PUBLIC_SHOW_BLOG === "true"`**.  
+
+6. **Global Nav / Footer**  
+ • Links: Home, Product, Industries (drop-down), About.  
+ • No social icons.  
+
+────────────────────────────────────────
+📩 Forms & email
+────────────────────────────────────────
+• `<DemoForm>` fields: firstName, lastName, email.  
+• On submit, call `POST /api/email-demo` → server action `sendDemoEmail.ts` that:  
+- Sends a formatted HTML email to **dave@eatwithsage.com**  
+- BCCs **davidmillikenco@gmail.com**  
+• Show a toast “Thanks! We’ll be in touch shortly.”  
+
+────────────────────────────────────────
+🖼 Images
+────────────────────────────────────────
+• Use the three brand colors as subtle overlays.  
+• Royalty-free suggestions (Unsplash): grocery-aisles-premium, family-cooking-healthy, smart-fridge-UI.  
+• Add semantic `alt` text for every img.  
+
+────────────────────────────────────────
+📈 Performance & SEO
+────────────────────────────────────────
+• <Head> tags: title, meta description, og:image.  
+• lazy-load images; use Next Image.  
+• lighthouse score ≥ 90 on desktop & mobile.
+
+────────────────────────────────────────
+✅ Done criteria
+────────────────────────────────────────
+• `npm run dev` renders all pages with placeholder content, no build errors.  
+• Submitting the form logs the email payload in dev console and (in prod) sends email via API route.  
+• Colors, fonts, and spacing match premium aesthetic.
