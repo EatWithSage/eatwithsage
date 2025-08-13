@@ -2,10 +2,8 @@ import Navigation from "@/components/layout/navigation";
 import Footer from "@/components/layout/footer";
 import ProductOverview from "@/components/sections/product-overview";
 import DemoForm from "@/components/sections/demo-form";
-import { useScrollToTop } from "@/hooks/use-scroll-to-top";
 
 export default function Product() {
-  useScrollToTop();
   return (
     <>
       <title>Product Overview - Sage Meal Planning Platform</title>

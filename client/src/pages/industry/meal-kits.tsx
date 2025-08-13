@@ -2,10 +2,8 @@ import Navigation from "@/components/layout/navigation";
 import Footer from "@/components/layout/footer";
 import DemoForm from "@/components/sections/demo-form";
 import { Package, TrendingDown, BookOpen, RefreshCw, CheckCircle } from "lucide-react";
-import { useScrollToTop } from "@/hooks/use-scroll-to-top";
 
 export default function MealKitsIndustry() {
-  useScrollToTop();
   const benefits = [
     "Reduce customer churn by up to 35%",
     "Increase meal kit satisfaction scores",

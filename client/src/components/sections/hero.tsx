@@ -33,7 +33,7 @@ export default function Hero() {
               <Button 
                 asChild 
                 variant="outline" 
-                className="bg-transparent text-sage-500 px-12 py-6 rounded-xl font-semibold hover:bg-sage-50 transition-colors h-auto text-lg tracking-wider"
+                className="border-2 border-sage-500 text-sage-500 px-12 py-6 rounded-xl font-semibold hover:bg-sage-50 transition-colors h-auto text-lg tracking-wider"
                 data-testid="button-learn-more"
               >
                 <Link href="/product">Learn More</Link>
