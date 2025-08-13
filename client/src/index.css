@@ -85,14 +85,33 @@
 
   body { @apply bg-background text-foreground; }
   
-  /* Minimize borders globally for cleaner appearance */
-  * {
-    border-width: 0;
+  /* Comprehensive border reset - Production ready solution */
+  *, *::before, *::after {
+    border: none !important;
+    border-width: 0 !important;
+    box-sizing: border-box;
   }
   
-  /* Only add borders where explicitly needed */
+  /* Target specific elements that commonly resist border removal */
+  input, textarea, button, select, img, iframe {
+    border: none !important;
+    outline: none !important;
+  }
+  
+  /* Table-specific reset */
+  table {
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+  }
+  
+  table, td, th {
+    border: none !important;
+  }
+  
+  /* Only add borders where explicitly needed with higher specificity */
   .border {
-    border-width: 1px;
+    border-width: 1px !important;
+    border-style: solid !important;
   }
 }
 
