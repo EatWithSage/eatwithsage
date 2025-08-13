@@ -115,27 +115,4 @@
   }
 }
 
-/* Custom utility classes */
-.font-recoleta {
-  font-family: 'Recoleta', serif;
-}
-
-/* Remove all underlines and decorations from links */
-a, a:hover, a:focus, a:active, a:visited {
-  text-decoration: none !important;
-  border-bottom: none !important;
-}
-
-/* Specifically target navigation links */
-nav a, nav a:hover, nav a:focus, nav a:active {
-  text-decoration: none !important;
-  border-bottom: none !important;
-  box-shadow: none !important;
-}
-
-.no-underline {
-  text-decoration: none !important;
-  border-bottom: none !important;
-}
-
 
