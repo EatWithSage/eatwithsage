@@ -2,150 +2,52 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: hsl(60, 33%, 97%);
-  --foreground: hsl(161, 67%, 8%);
-  --muted: hsl(60, 33%, 95%);
-  --muted-foreground: hsl(25, 5.3%, 44.7%);
-  --popover: hsl(0, 0%, 100%);
-  --popover-foreground: hsl(161, 67%, 8%);
-  --card: hsl(0, 0%, 100%);
-  --card-foreground: hsl(161, 67%, 8%);
-  --border: hsl(20, 5.9%, 90%);
-  --input: hsl(20, 5.9%, 90%);
-  --primary: hsl(76, 24%, 47%);
-  --primary-foreground: hsl(0, 0%, 100%);
-  --secondary: hsl(60, 33%, 95%);
-  --secondary-foreground: hsl(161, 67%, 8%);
-  --accent: hsl(60, 33%, 95%);
-  --accent-foreground: hsl(161, 67%, 8%);
-  --destructive: hsl(0, 84.2%, 60.2%);
-  --destructive-foreground: hsl(60, 9.1%, 97.8%);
-  --ring: hsl(161, 67%, 8%);
-  --radius: 0.75rem;
-  
-  /* Custom Sage brand colors */
-  --sage-50: hsl(76, 32%, 96%);
-  --sage-100: hsl(76, 28%, 89%);
-  --sage-500: hsl(76, 24%, 47%);
-  --sage-600: hsl(76, 24%, 42%);
-  --sage-700: hsl(76, 24%, 37%);
-  
-  --forest-700: hsl(161, 85%, 19%);
-  --forest-800: hsl(161, 76%, 15%);
-  --forest-900: hsl(161, 67%, 8%);
-  
-  --cream-50: hsl(60, 33%, 97%);
-  --cream-100: hsl(60, 20%, 91%);
-}
-
-.dark {
-  --background: hsl(240, 10%, 3.9%);
-  --foreground: hsl(0, 0%, 98%);
-  --muted: hsl(240, 3.7%, 15.9%);
-  --muted-foreground: hsl(240, 5%, 64.9%);
-  --popover: hsl(240, 10%, 3.9%);
-  --popover-foreground: hsl(0, 0%, 98%);
-  --card: hsl(240, 10%, 3.9%);
-  --card-foreground: hsl(0, 0%, 98%);
-  --border: hsl(240, 3.7%, 15.9%);
-  --input: hsl(240, 3.7%, 15.9%);
-  --primary: hsl(76, 24%, 47%);
-  --primary-foreground: hsl(0, 0%, 100%);
-  --secondary: hsl(240, 3.7%, 15.9%);
-  --secondary-foreground: hsl(0, 0%, 98%);
-  --accent: hsl(240, 3.7%, 15.9%);
-  --accent-foreground: hsl(0, 0%, 98%);
-  --destructive: hsl(0, 62.8%, 30.6%);
-  --destructive-foreground: hsl(0, 0%, 98%);
-  --ring: hsl(240, 4.9%, 83.9%);
-}
-
 @layer base {
-  * {
-    @apply border-border;
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --ring: 215 20.2% 65.1%;
+    --radius: 0.5rem;
   }
 
-  body {
-    @apply font-sans antialiased bg-background text-foreground;
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --ring: 215 20.2% 65.1%;
   }
-}
 
-/* Hide HubSpot branding */
-.meetings-iframe-container iframe {
-  border: none !important;
-}
-
-/* Hide HubSpot promotional text */
-.meetings-iframe-container [data-testid*="powered-by"],
-.meetings-iframe-container [href*="hubspot.com/products/meetings"],
-.meetings-iframe-container .hs-cta-embed,
-.meetings-iframe-container .hs-cta-wrapper {
-  display: none !important;
-}
-
-@layer utilities {
-  .bg-sage-50 {
-    background-color: var(--sage-50);
-  }
-  .bg-sage-100 {
-    background-color: var(--sage-100);
-  }
-  .bg-sage-500 {
-    background-color: var(--sage-500);
-  }
-  .bg-sage-600 {
-    background-color: var(--sage-600);
-  }
-  .bg-sage-700 {
-    background-color: var(--sage-700);
-  }
-  
-  .text-sage-500 {
-    color: var(--sage-500);
-  }
-  .text-sage-600 {
-    color: var(--sage-600);
-  }
-  
-  .bg-forest-700 {
-    background-color: var(--forest-700);
-  }
-  .bg-forest-800 {
-    background-color: var(--forest-800);
-  }
-  .bg-forest-900 {
-    background-color: var(--forest-900);
-  }
-  
-  .text-forest-900 {
-    color: var(--forest-900);
-  }
-  
-  .bg-cream-50 {
-    background-color: var(--cream-50);
-  }
-  .bg-cream-100 {
-    background-color: var(--cream-100);
-  }
-  
-  .hover\:bg-sage-600:hover {
-    background-color: var(--sage-600);
-  }
-  
-  .hover\:text-sage-500:hover {
-    color: var(--sage-500);
-  }
-  
-  .border-sage-500 {
-    border-color: var(--sage-500);
-  }
-  
-  .focus\:ring-sage-500:focus {
-    --tw-ring-color: var(--sage-500);
-  }
-  
-  .focus\:border-sage-500:focus {
-    border-color: var(--sage-500);
-  }
+  * { @apply border-border; }
+  body { @apply bg-background text-foreground; }
 }
