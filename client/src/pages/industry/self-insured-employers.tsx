@@ -22,6 +22,9 @@ export default function SelfInsuredEmployersPage() {
                 <h1 className="text-5xl md:text-6xl font-bold text-forest-900 mb-6 font-recoleta">
                   Coming Soon
                 </h1>
+                <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                  Reduce healthcare costs and improve employee wellness with Sage's comprehensive meal planning platform. Provide your workforce with personalized nutrition guidance, preventive health meal plans, and wellness programs that lower medical claims while boosting productivity and retention.
+                </p>
               </div>
             </div>
           </section>
@@ -38,13 +41,13 @@ export default function SelfInsuredEmployersPage() {
               
               {/* HubSpot Meeting Embed */}
               <div 
-                className="meetings-iframe-container" 
-                data-src="https://meetings-na2.hubspot.com/dave-milliken?embed=true"
-              ></div>
-              <script 
-                type="text/javascript" 
-                src="https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js"
-              ></script>
+                dangerouslySetInnerHTML={{
+                  __html: `<!-- Start of Meetings Embed Script -->
+                  <div class="meetings-iframe-container" data-src="https://meetings-na2.hubspot.com/dave-milliken?embed=true"></div>
+                  <script type="text/javascript" src="https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js"></script>
+                  <!-- End of Meetings Embed Script -->`
+                }}
+              />
             </div>
           </section>
         </main>

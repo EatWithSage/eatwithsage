@@ -81,6 +81,7 @@ Preferred communication style: Simple, everyday language.
 - **Sage Logo as Page Preview**: Implemented comprehensive Open Graph and Twitter Card meta tags in HTML template (client/index.html) using Sage logo (/og-image.png) for reliable social media preview images. Includes proper dimensions (512x512px), image type declaration, and removed duplicate meta tags from individual React components for clean implementation
 - **Favicon Implementation**: Added custom Sage favicon using uploaded favicon file (favicon.png) with proper browser and mobile support including Apple touch icon for iOS devices
 - **Industry Navigation Restructure**: Updated Industries dropdown to include 7 new categories: Food Retailers, Food Brands, Chronic Disease Foundations, Self-Insured Employers, Kitchen Appliance Manufacturers, Food and Health Media, and Tech Companies. Renamed grocery page to food-retailers and created "Coming Soon" pages for all new industries with HubSpot demo booking integration
+- **Industry Page Content Enhancement**: Added detailed industry-specific value propositions under "Coming Soon" headlines explaining how Sage transforms each sector. Fixed HubSpot meeting embed code using dangerouslySetInnerHTML to properly render the interactive booking calendar on all new industry pages
 
 ## August 13, 2025 - TypeScript/JSX Configuration Fix
 - **Issue Resolved**: Fixed 134 LSP diagnostics related to missing React type definitions and JSX configuration

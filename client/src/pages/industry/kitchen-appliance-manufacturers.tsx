@@ -22,6 +22,9 @@ export default function KitchenApplianceManufacturersPage() {
                 <h1 className="text-5xl md:text-6xl font-bold text-forest-900 mb-6 font-recoleta">
                   Coming Soon
                 </h1>
+                <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                  Enhance your kitchen appliance value proposition with Sage's smart meal planning integration. Provide customers with appliance-optimized recipes, cooking guidance, and meal plans that showcase your products' capabilities while building lasting customer relationships and driving repeat purchases.
+                </p>
               </div>
             </div>
           </section>
@@ -38,13 +41,13 @@ export default function KitchenApplianceManufacturersPage() {
               
               {/* HubSpot Meeting Embed */}
               <div 
-                className="meetings-iframe-container" 
-                data-src="https://meetings-na2.hubspot.com/dave-milliken?embed=true"
-              ></div>
-              <script 
-                type="text/javascript" 
-                src="https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js"
-              ></script>
+                dangerouslySetInnerHTML={{
+                  __html: `<!-- Start of Meetings Embed Script -->
+                  <div class="meetings-iframe-container" data-src="https://meetings-na2.hubspot.com/dave-milliken?embed=true"></div>
+                  <script type="text/javascript" src="https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js"></script>
+                  <!-- End of Meetings Embed Script -->`
+                }}
+              />
             </div>
           </section>
         </main>

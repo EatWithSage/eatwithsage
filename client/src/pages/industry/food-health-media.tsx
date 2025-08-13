@@ -22,6 +22,9 @@ export default function FoodHealthMediaPage() {
                 <h1 className="text-5xl md:text-6xl font-bold text-forest-900 mb-6 font-recoleta">
                   Coming Soon
                 </h1>
+                <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                  Enhance your media platform with Sage's AI-powered meal planning tools. Engage audiences with personalized nutrition content, interactive meal recommendations, and evidence-based dietary guidance that transforms your content into actionable wellness solutions your readers can implement daily.
+                </p>
               </div>
             </div>
           </section>
@@ -38,13 +41,13 @@ export default function FoodHealthMediaPage() {
               
               {/* HubSpot Meeting Embed */}
               <div 
-                className="meetings-iframe-container" 
-                data-src="https://meetings-na2.hubspot.com/dave-milliken?embed=true"
-              ></div>
-              <script 
-                type="text/javascript" 
-                src="https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js"
-              ></script>
+                dangerouslySetInnerHTML={{
+                  __html: `<!-- Start of Meetings Embed Script -->
+                  <div class="meetings-iframe-container" data-src="https://meetings-na2.hubspot.com/dave-milliken?embed=true"></div>
+                  <script type="text/javascript" src="https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js"></script>
+                  <!-- End of Meetings Embed Script -->`
+                }}
+              />
             </div>
           </section>
         </main>
