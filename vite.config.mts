@@ -19,7 +19,10 @@ export default defineConfig({
     host: '0.0.0.0',
     port: parseInt(process.env.PORT) || 5173,
     strictPort: true,
-    hmr: false,
+    hmr: {
+      port: 5173,
+      host: '0.0.0.0'
+    },
     cors: true,
     open: false
   },
