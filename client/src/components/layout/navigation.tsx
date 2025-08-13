@@ -80,24 +80,15 @@ export default function Navigation() {
                     Industries <ChevronDown className="ml-1 h-3 w-3" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-64 bg-white border border-sage-200 shadow-lg rounded-lg p-2">
+                <DropdownMenuContent className="w-48 bg-white border border-sage-200 shadow-lg rounded-lg p-2">
                   <DropdownMenuItem asChild className="hover:bg-sage-50 rounded-md transition-colors">
-                    <Link href="/industry/grocery" className="text-gray-700 hover:text-sage-600 px-3 py-2 block w-full font-recoleta" data-testid="link-industry-grocery">Food Retailers</Link>
+                    <Link href="/industry/grocery" className="text-gray-700 hover:text-sage-600 px-3 py-2 block w-full" data-testid="link-industry-grocery">Food Retailers</Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild className="hover:bg-sage-50 rounded-md transition-colors">
-                    <Link href="/industry/food-brands" className="text-gray-700 hover:text-sage-600 px-3 py-2 block w-full font-recoleta" data-testid="link-industry-food-brands">Food Brands</Link>
+                    <Link href="/industry/restaurants" className="text-gray-700 hover:text-sage-600 px-3 py-2 block w-full" data-testid="link-industry-restaurants">Restaurants</Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild className="hover:bg-sage-50 rounded-md transition-colors">
-                    <Link href="/industry/chronic-disease" className="text-gray-700 hover:text-sage-600 px-3 py-2 block w-full font-recoleta" data-testid="link-industry-chronic-disease">Chronic Disease Foundations</Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild className="hover:bg-sage-50 rounded-md transition-colors">
-                    <Link href="/industry/employers" className="text-gray-700 hover:text-sage-600 px-3 py-2 block w-full font-recoleta" data-testid="link-industry-employers">Self-Insured Employers</Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild className="hover:bg-sage-50 rounded-md transition-colors">
-                    <Link href="/industry/kitchen-appliances" className="text-gray-700 hover:text-sage-600 px-3 py-2 block w-full font-recoleta" data-testid="link-industry-kitchen-appliances">Kitchen Appliance Manufacturers</Link>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem asChild className="hover:bg-sage-50 rounded-md transition-colors">
-                    <Link href="/industry/media-tech" className="text-gray-700 hover:text-sage-600 px-3 py-2 block w-full font-recoleta" data-testid="link-industry-media-tech">Food & Health Media and Tech</Link>
+                    <Link href="/industry/meal-kits" className="text-gray-700 hover:text-sage-600 px-3 py-2 block w-full" data-testid="link-industry-meal-kits">Meal Kit Services</Link>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -151,44 +142,20 @@ export default function Navigation() {
                       Food Retailers
                     </Link>
                     <Link 
-                      href="/industry/food-brands" 
+                      href="/industry/restaurants" 
                       className="block px-3 py-2 text-gray-600 hover:text-sage-500"
                       onClick={() => setMobileOpen(false)}
-                      data-testid="link-mobile-food-brands"
+                      data-testid="link-mobile-restaurants"
                     >
-                      Food Brands
+                      Restaurants
                     </Link>
                     <Link 
-                      href="/industry/chronic-disease" 
+                      href="/industry/meal-kits" 
                       className="block px-3 py-2 text-gray-600 hover:text-sage-500"
                       onClick={() => setMobileOpen(false)}
-                      data-testid="link-mobile-chronic-disease"
+                      data-testid="link-mobile-meal-kits"
                     >
-                      Chronic Disease Foundations
-                    </Link>
-                    <Link 
-                      href="/industry/employers" 
-                      className="block px-3 py-2 text-gray-600 hover:text-sage-500"
-                      onClick={() => setMobileOpen(false)}
-                      data-testid="link-mobile-employers"
-                    >
-                      Self-Insured Employers
-                    </Link>
-                    <Link 
-                      href="/industry/kitchen-appliances" 
-                      className="block px-3 py-2 text-gray-600 hover:text-sage-500"
-                      onClick={() => setMobileOpen(false)}
-                      data-testid="link-mobile-kitchen-appliances"
-                    >
-                      Kitchen Appliance Manufacturers
-                    </Link>
-                    <Link 
-                      href="/industry/media-tech" 
-                      className="block px-3 py-2 text-gray-600 hover:text-sage-500"
-                      onClick={() => setMobileOpen(false)}
-                      data-testid="link-mobile-media-tech"
-                    >
-                      Food & Health Media and Tech
+                      Meal Kit Services
                     </Link>
                   </div>
                   <Link 
