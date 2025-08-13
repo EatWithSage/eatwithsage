@@ -52,7 +52,7 @@ export default function AboutTimeline() {
     <section id="about" className="py-20 bg-cream-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-forest-900 mb-6" data-testid="text-about-title">
+          <h2 className="text-4xl font-bold font-recoleta text-forest-900 mb-6" data-testid="text-about-title">
             The Sage Story
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
@@ -72,7 +72,7 @@ export default function AboutTimeline() {
         
         {/* Timeline */}
         <div className="max-w-4xl mx-auto mb-20">
-          <h3 className="text-2xl font-bold text-forest-900 mb-12 text-center" data-testid="text-timeline-title">
+          <h3 className="text-2xl font-bold font-recoleta text-forest-900 mb-12 text-center" data-testid="text-timeline-title">
             Our Journey
           </h3>
           
@@ -90,7 +90,7 @@ export default function AboutTimeline() {
                     </div>
                     <div className="ml-8">
                       <div className="bg-white rounded-xl p-6 shadow-sm">
-                        <h4 className="text-lg font-semibold text-forest-900 mb-2">
+                        <h4 className="text-lg font-semibold font-recoleta text-forest-900 mb-2">
                           {item.year} - {item.title}
                         </h4>
                         <p className="text-gray-600">{item.description}</p>
@@ -105,7 +105,7 @@ export default function AboutTimeline() {
         
         {/* Reasons to Believe */}
         <div className="mb-20">
-          <h3 className="text-2xl font-bold text-forest-900 mb-12 text-center" data-testid="text-credentials-title">
+          <h3 className="text-2xl font-bold font-recoleta text-forest-900 mb-12 text-center" data-testid="text-credentials-title">
             Reasons to Believe
           </h3>
           
@@ -117,7 +117,7 @@ export default function AboutTimeline() {
                   <div className="w-20 h-20 bg-sage-100 rounded-full flex items-center justify-center mx-auto mb-6">
                     <IconComponent className="text-sage-500 w-8 h-8" />
                   </div>
-                  <h4 className="text-xl font-semibold text-forest-900 mb-4">{credential.title}</h4>
+                  <h4 className="text-xl font-semibold font-recoleta text-forest-900 mb-4">{credential.title}</h4>
                   <p className="text-gray-600">{credential.description}</p>
                 </div>
               );

@@ -27,7 +27,7 @@ export default function DemoForm({ variant = "primary", className = "" }: DemoFo
       <section id="demo" className={`py-16 bg-white ${className}`}>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-forest-900 mb-4" data-testid="text-demo-title">
+            <h2 className="text-3xl font-bold font-recoleta text-forest-900 mb-4" data-testid="text-demo-title">
               See Sage In Action
             </h2>
             <p className="text-xl text-gray-600">Get a personalized demo tailored to your business needs</p>

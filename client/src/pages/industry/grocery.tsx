@@ -29,7 +29,7 @@ export default function GroceryIndustry() {
                   <div className="w-16 h-16 bg-sage-500 rounded-xl flex items-center justify-center mb-6">
                     <ShoppingBasket className="text-white w-8 h-8" />
                   </div>
-                  <h1 className="text-4xl lg:text-5xl font-bold text-forest-900 leading-tight mb-6" data-testid="text-grocery-title">
+                  <h1 className="text-4xl lg:text-5xl font-bold font-recoleta text-forest-900 leading-tight mb-6" data-testid="text-grocery-title">
                     Turn Meal Planning Into <span className="text-sage-500">Brand Loyalty</span>
                   </h1>
                   <p className="text-xl text-gray-600 mb-6 leading-relaxed">
@@ -66,7 +66,7 @@ export default function GroceryIndustry() {
                   <div className="mt-8 text-center">
                     <a 
                       href="#demo" 
-                      className="inline-block bg-sage-500 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:bg-sage-600 transition-colors"
+                      className="inline-block bg-sage-500 text-white px-8 py-4 rounded-xl font-semibold font-recoleta text-lg hover:bg-sage-600 transition-colors"
                       data-testid="button-cta-demo"
                     >
                       See Sage In Action
@@ -91,7 +91,7 @@ export default function GroceryIndustry() {
           <section className="py-20 bg-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-16">
-                <h2 className="text-3xl font-bold text-forest-900 mb-4" data-testid="text-features-title">
+                <h2 className="text-3xl font-bold font-recoleta text-forest-900 mb-4" data-testid="text-features-title">
                   Built For Grocery Retailers
                 </h2>
                 <p className="text-xl text-gray-600 max-w-3xl mx-auto">

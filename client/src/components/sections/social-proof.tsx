@@ -29,7 +29,7 @@ export default function SocialProof() {
     <section className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold text-forest-900 mb-4" data-testid="text-social-proof-title">
+          <h2 className="text-3xl font-bold font-recoleta text-forest-900 mb-4" data-testid="text-social-proof-title">
             Beloved by Users: See What Consumers Say About Their Sage Experience
           </h2>
           <p className="text-xl text-gray-600">Real families sharing how Sage transformed their meal planning</p>

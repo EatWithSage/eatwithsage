@@ -59,7 +59,7 @@ export default function IndustryShowcase() {
     <section className="py-20 bg-gradient-to-br from-forest-50 to-cream-100 text-forest-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-6" data-testid="text-industry-title">
+          <h2 className="text-4xl font-bold font-recoleta mb-6" data-testid="text-industry-title">
             Tailored Solutions for Your Business
           </h2>
           <p className="text-xl text-gray-700 max-w-3xl mx-auto">
@@ -77,7 +77,7 @@ export default function IndustryShowcase() {
                   <div className="w-16 h-16 bg-sage-500 rounded-xl flex items-center justify-center mb-6">
                     <IconComponent className="text-white w-8 h-8" />
                   </div>
-                  <h3 className="text-2xl font-bold mb-4 text-forest-900">{industry.title}</h3>
+                  <h3 className="text-2xl font-bold font-recoleta mb-4 text-forest-900">{industry.title}</h3>
                   <p className="text-gray-600 mb-6 leading-relaxed">{industry.description}</p>
                   <ul className="space-y-2 mb-8 text-gray-600 flex-grow">
                     {industry.features.map((feature, featureIndex) => (
@@ -87,7 +87,7 @@ export default function IndustryShowcase() {
                       </li>
                     ))}
                   </ul>
-                  <Button asChild className="bg-forest-900 text-white font-semibold hover:bg-forest-800 transition-colors mt-auto" data-testid={`button-industry-learn-more-${index}`}>
+                  <Button asChild className="bg-forest-900 text-white font-semibold font-recoleta hover:bg-forest-800 transition-colors mt-auto" data-testid={`button-industry-learn-more-${index}`}>
                     <Link href={industry.href}>Learn More</Link>
                   </Button>
                 </div>

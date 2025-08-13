@@ -28,7 +28,7 @@ export default function RestaurantsIndustry() {
                   <div className="w-16 h-16 bg-sage-500 rounded-xl flex items-center justify-center mb-6">
                     <Utensils className="text-white w-8 h-8" />
                   </div>
-                  <h1 className="text-4xl lg:text-5xl font-bold text-forest-900 leading-tight mb-6" data-testid="text-restaurant-title">
+                  <h1 className="text-4xl lg:text-5xl font-bold font-recoleta text-forest-900 leading-tight mb-6" data-testid="text-restaurant-title">
                     Create <span className="text-sage-500">Personalized</span> Dining Experiences
                   </h1>
                   <p className="text-xl text-gray-600 mb-8 leading-relaxed">
@@ -61,7 +61,7 @@ export default function RestaurantsIndustry() {
           <section className="py-20 bg-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center mb-16">
-                <h2 className="text-3xl font-bold text-forest-900 mb-4" data-testid="text-features-title">
+                <h2 className="text-3xl font-bold font-recoleta text-forest-900 mb-4" data-testid="text-features-title">
                   Designed For Restaurant Success
                 </h2>
                 <p className="text-xl text-gray-600 max-w-3xl mx-auto">
