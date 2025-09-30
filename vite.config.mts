@@ -7,14 +7,13 @@ export default defineConfig({
   plugins: [react()],
   root: './client',
   publicDir: 'public',
-  
+
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './client/src'),
       '@assets': path.resolve(__dirname, './attached_assets'),
     },
   },
-
   server: {
     host: '0.0.0.0',
     port: 5175,
@@ -31,22 +30,19 @@ export default defineConfig({
     cors: true,
     open: false
   },
-
   build: {
-    outDir: 'dist',
-    sourcemap: true
+    outDir: '../dist',
+    sourcemap: true,
+    emptyOutDir: true
   },
-
   // Handle TypeScript properly
   esbuild: {
     target: 'es2020'
   },
-
   // Optimize dependencies
   optimizeDeps: {
     include: ['react', 'react-dom']
   },
-
   // Preview configuration for production builds
   preview: {
     host: '0.0.0.0',
