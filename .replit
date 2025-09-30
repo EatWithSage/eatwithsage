@@ -39,7 +39,7 @@ runButton = "Dev server"
 
 [[workflows.workflow]]
 name = "Dev server"
-mode = "auto"
+mode = "parallel"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
