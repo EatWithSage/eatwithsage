@@ -4,8 +4,19 @@ import SocialProof from "@/components/sections/social-proof";
 
 export default function ShopRitePage() {
   useEffect(() => {
-    const script = document.createElement('script');
-    script.src = 'https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js';
+    // Set page title and meta description
+    document.title = "ShopRite's Recipe for Brand Loyalty - Sage";
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute(
+        "content",
+        "See how ShopRite uses Sage's AI-powered meal planning platform to drive brand loyalty and customer engagement.",
+      );
+    }
+
+    const script = document.createElement("script");
+    script.src =
+      "https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js";
     script.async = true;
     document.body.appendChild(script);
 
@@ -19,7 +30,10 @@ export default function ShopRitePage() {
   return (
     <>
       <title>ShopRite's Recipe for Brand Loyalty - Sage</title>
-      <meta name="description" content="See how ShopRite uses Sage's AI-powered meal planning platform to drive brand loyalty and customer engagement." />
+      <meta
+        name="description"
+        content="See how ShopRite uses Sage's AI-powered meal planning platform to drive brand loyalty and customer engagement."
+      />
 
       <div className="min-h-screen bg-cream-50">
         <Navigation />
@@ -31,17 +45,17 @@ export default function ShopRitePage() {
                 <h1 className="text-5xl md:text-6xl font-bold text-forest-900 mb-12 font-recoleta">
                   ShopRite's Recipe for Brand Loyalty
                 </h1>
-                
+
                 {/* YouTube Video Embed */}
                 <div className="w-full max-w-6xl mx-auto mb-16">
-                  <div className="relative" style={{ paddingBottom: '56.25%' }}>
-                    <iframe 
+                  <div className="relative" style={{ paddingBottom: "56.25%" }}>
+                    <iframe
                       className="absolute top-0 left-0 w-full h-full rounded-2xl shadow-2xl"
-                      src="https://www.youtube.com/embed/5k2Ijsakxzk" 
-                      title="Sage - ShopRite's Recipe for Brand Loyalty" 
-                      frameBorder="0" 
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                      referrerPolicy="strict-origin-when-cross-origin" 
+                      src="https://www.youtube.com/embed/5k2Ijsakxzk"
+                      title="Sage - ShopRite's Recipe for Brand Loyalty"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      referrerPolicy="strict-origin-when-cross-origin"
                       allowFullScreen
                       data-testid="video-shoprite-demo"
                     ></iframe>
@@ -60,8 +74,8 @@ export default function ShopRitePage() {
 
                 {/* HubSpot Meeting Embed - Above Fold */}
                 <div className="w-full max-w-4xl mx-auto">
-                  <div 
-                    className="meetings-iframe-container" 
+                  <div
+                    className="meetings-iframe-container"
                     data-src="https://meetings-na2.hubspot.com/dave-milliken?embed=true"
                     data-testid="hubspot-embed-above"
                   ></div>
@@ -80,9 +94,9 @@ export default function ShopRitePage() {
                 Sage Magic Meal Plans
               </h2>
               <div className="max-w-5xl mx-auto">
-                <img 
-                  src="/sage-meal-planning-magic-workflow.png" 
-                  alt="Sage meal planning workflow showing the circular process: Consumer Health Profiles leading to AI Meal Plans, then Smart Shopping, Sage Assistant, Continuous Improvement, and back to profiles" 
+                <img
+                  src="/sage-meal-planning-magic-workflow.png"
+                  alt="Sage meal planning workflow showing the circular process: Consumer Health Profiles leading to AI Meal Plans, then Smart Shopping, Sage Assistant, Continuous Improvement, and back to profiles"
                   className="w-full rounded-2xl shadow-lg"
                   data-testid="img-workflow"
                 />
@@ -99,11 +113,11 @@ export default function ShopRitePage() {
               <p className="text-xl text-gray-600 mb-12">
                 Get a personalized demo tailored to your business needs
               </p>
-              
+
               {/* HubSpot Meeting Embed - Below Fold */}
               <div className="w-full max-w-4xl mx-auto">
-                <div 
-                  className="meetings-iframe-container" 
+                <div
+                  className="meetings-iframe-container"
                   data-src="https://meetings-na2.hubspot.com/dave-milliken?embed=true"
                   data-testid="hubspot-embed-below"
                 ></div>
