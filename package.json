@@ -36,6 +36,7 @@
     "@radix-ui/react-toggle-group": "^1.1.10",
     "@radix-ui/react-tooltip": "^1.2.7",
     "@tanstack/react-query": "^5.85.0",
+    "@vitejs/plugin-react": "^5.0.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "drizzle-kit": "^0.31.4",
@@ -59,5 +60,6 @@
   },
   "engines": {
     "node": "20.x"
-  }
+  },
+  "type": "module"
 }
