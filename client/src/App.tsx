@@ -16,6 +16,7 @@ import KitchenApplianceManufacturersIndustry from "@/pages/industry/kitchen-appl
 import FoodHealthMediaIndustry from "@/pages/industry/food-health-media";
 import TechCompaniesIndustry from "@/pages/industry/tech-companies";
 import ShopRite from "@/pages/ShopRite";
+import IndexPage from "@/pages/index";
 
 function Router() {
   return (
@@ -23,6 +24,7 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/product" component={Product} />
       <Route path="/about" component={About} />
+      <Route path="/index" component={IndexPage} />
       <Route path="/industry/food-retailers" component={FoodRetailersIndustry} />
       <Route path="/industry/food-brands" component={FoodBrandsIndustry} />
       <Route path="/industry/chronic-disease-foundations" component={ChronicDiseaseFoundationsIndustry} />
