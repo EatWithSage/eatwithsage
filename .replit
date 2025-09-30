@@ -5,7 +5,7 @@ run = "npm run dev"
 channel = "stable-25_05"
 
 [env]
-PORT = "5175"
+PORT = "5173"
 
 [[ports]]
 localPort = 443
@@ -27,10 +27,6 @@ localPort = 5175
 externalPort = 80
 
 [[ports]]
-localPort = 5176
-externalPort = 3003
-
-[[ports]]
 localPort = 8080
 externalPort = 8080
 
@@ -39,9 +35,9 @@ runButton = "Dev server"
 
 [[workflows.workflow]]
 name = "Dev server"
-mode = "parallel"
+mode = "auto"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "npm run dev"
-waitForPort = 5175
+waitForPort = 5173
