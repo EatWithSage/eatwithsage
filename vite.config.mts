@@ -31,7 +31,7 @@ export default defineConfig({
     open: false
   },
   build: {
-    outDir: '../dist',
+    outDir: '../.vercel/output/static',
     sourcemap: true,
     emptyOutDir: true
   },
