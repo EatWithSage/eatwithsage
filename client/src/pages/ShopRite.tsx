@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Navigation } from "@/components/layout/navigation";
+import SocialProof from "@/components/sections/social-proof";
 
 export default function ShopRitePage() {
   useEffect(() => {
@@ -47,6 +48,16 @@ export default function ShopRitePage() {
                   </div>
                 </div>
 
+                {/* Above Calendar Heading */}
+                <div className="mb-12">
+                  <h2 className="text-4xl font-bold text-forest-900 mb-4 font-recoleta">
+                    See Sage In Action
+                  </h2>
+                  <p className="text-xl text-gray-600">
+                    Get a personalized demo tailored to your business needs
+                  </p>
+                </div>
+
                 {/* HubSpot Meeting Embed - Above Fold */}
                 <div className="w-full max-w-4xl mx-auto">
                   <div 
@@ -60,18 +71,7 @@ export default function ShopRitePage() {
           </section>
 
           {/* Beloved by Users Section */}
-          <section className="py-20 bg-white">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <h2 className="text-4xl md:text-5xl font-bold text-forest-900 mb-12 text-center font-recoleta">
-                Beloved by Users: See What Consumers Say About Their Sage Experience
-              </h2>
-              <div className="max-w-4xl mx-auto text-center">
-                <p className="text-xl text-gray-600 leading-relaxed" data-testid="text-user-feedback">
-                  Content coming soon - User testimonials and feedback will be displayed here.
-                </p>
-              </div>
-            </div>
-          </section>
+          <SocialProof />
 
           {/* Sage Magic Meal Plans Section */}
           <section className="py-20 bg-sage-50">
@@ -79,10 +79,13 @@ export default function ShopRitePage() {
               <h2 className="text-4xl md:text-5xl font-bold text-forest-900 mb-12 text-center font-recoleta">
                 Sage Magic Meal Plans
               </h2>
-              <div className="max-w-4xl mx-auto text-center">
-                <p className="text-xl text-gray-600 leading-relaxed" data-testid="text-meal-plans">
-                  Content coming soon - Sage Magic Meal Plans information will be displayed here.
-                </p>
+              <div className="max-w-5xl mx-auto">
+                <img 
+                  src="/sage-meal-planning-magic-workflow.png" 
+                  alt="Sage meal planning workflow showing the circular process: Consumer Health Profiles leading to AI Meal Plans, then Smart Shopping, Sage Assistant, Continuous Improvement, and back to profiles" 
+                  className="w-full rounded-2xl shadow-lg"
+                  data-testid="img-workflow"
+                />
               </div>
             </div>
           </section>
