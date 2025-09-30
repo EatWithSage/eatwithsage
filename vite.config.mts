@@ -29,24 +29,23 @@ export default defineConfig({
     },
     cors: true,
     open: false
-  },
   build: {
-    outDir: '../.vercel/output/static',
-    sourcemap: true,
-    emptyOutDir: true
-  },
-  // Handle TypeScript properly
-  esbuild: {
-    target: 'es2020'
-  },
-  // Optimize dependencies
-  optimizeDeps: {
-    include: ['react', 'react-dom']
-  },
-  // Preview configuration for production builds
-  preview: {
-    host: '0.0.0.0',
-    cors: true,
-    strictPort: false
-  }
-})
+      outDir: '../dist',
+      sourcemap: true,
+      emptyOutDir: true
+    },
+    // Handle TypeScript properly
+    esbuild: {
+      target: 'es2020'
+    },
+    // Optimize dependencies
+    optimizeDeps: {
+      include: ['react', 'react-dom']
+    },
+    // Preview configuration for production builds
+    preview: {
+      host: '0.0.0.0',
+      cors: true,
+      strictPort: false
+    }
+  })
