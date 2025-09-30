@@ -15,6 +15,7 @@ import SelfInsuredEmployersIndustry from "@/pages/industry/self-insured-employer
 import KitchenApplianceManufacturersIndustry from "@/pages/industry/kitchen-appliance-manufacturers";
 import FoodHealthMediaIndustry from "@/pages/industry/food-health-media";
 import TechCompaniesIndustry from "@/pages/industry/tech-companies";
+import ShopRite from "@/pages/ShopRite";
 
 function Router() {
   return (
@@ -29,6 +30,7 @@ function Router() {
       <Route path="/industry/kitchen-appliance-manufacturers" component={KitchenApplianceManufacturersIndustry} />
       <Route path="/industry/food-health-media" component={FoodHealthMediaIndustry} />
       <Route path="/industry/tech-companies" component={TechCompaniesIndustry} />
+      <Route path="/ShopRite" component={ShopRite} />
       <Route component={NotFound} />
     </Switch>
   );
