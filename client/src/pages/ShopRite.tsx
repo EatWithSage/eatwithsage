@@ -27,13 +27,16 @@ export default function ShopRitePage() {
           {/* Above the Fold Section */}
           <section className="pt-40 pb-20">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="text-center mb-16">
-                <h1 className="text-5xl md:text-6xl font-bold text-forest-900 mb-12 font-recoleta">
+              <div className="text-center mb-12">
+                <h1 className="text-5xl md:text-6xl font-bold text-forest-900 font-recoleta">
                   ShopRite's Recipe for Brand Loyalty
                 </h1>
-                
-                {/* YouTube Video Embed */}
-                <div className="w-full max-w-6xl mx-auto mb-16">
+              </div>
+              
+              {/* Two Column Layout */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                {/* Left Column - YouTube Video */}
+                <div className="w-full">
                   <div className="relative" style={{ paddingBottom: '56.25%' }}>
                     <iframe 
                       className="absolute top-0 left-0 w-full h-full rounded-2xl shadow-2xl"
@@ -48,18 +51,16 @@ export default function ShopRitePage() {
                   </div>
                 </div>
 
-                {/* Above Calendar Heading */}
-                <div className="mb-12">
-                  <h2 className="text-4xl font-bold text-forest-900 mb-4 font-recoleta">
-                    See Sage In Action
-                  </h2>
-                  <p className="text-xl text-gray-600">
-                    Get a personalized demo tailored to your business needs
-                  </p>
-                </div>
-
-                {/* HubSpot Meeting Embed - Above Fold */}
-                <div className="w-full max-w-4xl mx-auto">
+                {/* Right Column - Calendar Embed */}
+                <div className="w-full">
+                  <div className="text-center mb-8">
+                    <h2 className="text-3xl md:text-4xl font-bold text-forest-900 mb-4 font-recoleta">
+                      See Sage In Action
+                    </h2>
+                    <p className="text-lg md:text-xl text-gray-600">
+                      Get a personalized demo tailored to your business needs
+                    </p>
+                  </div>
                   <div 
                     className="meetings-iframe-container" 
                     data-src="https://meetings-na2.hubspot.com/dave-milliken?embed=true"
