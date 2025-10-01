@@ -40,7 +40,7 @@ export default function ShopRitePage() {
               </h1>
 
               {/* YouTube Video Embed */}
-              <div className="w-full max-w-6xl mx-auto mb-16">
+              <div className="w-full max-w-4xl mx-auto mb-16">
                 <div className="relative" style={{ paddingBottom: "56.25%" }}>
                   <iframe
                     className="absolute top-0 left-0 w-full h-full rounded-2xl shadow-2xl"
