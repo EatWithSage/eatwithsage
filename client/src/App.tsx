@@ -16,6 +16,13 @@ import KitchenApplianceManufacturersIndustry from "@/pages/industry/kitchen-appl
 import FoodHealthMediaIndustry from "@/pages/industry/food-health-media";
 import TechCompaniesIndustry from "@/pages/industry/tech-companies";
 import ShopRite from "@/pages/ShopRite";
+import Gelsons from "@/pages/Gelsons";
+import SmartAndFinal from "@/pages/SmartAndFinal";
+import StaterBros from "@/pages/StaterBros";
+import WeisMarkets from "@/pages/WeisMarkets";
+import Publix from "@/pages/Publix";
+import GiantEagle from "@/pages/GiantEagle";
+import HyVee from "@/pages/Hy-Vee";
 import IndexPage from "@/pages/index";
 
 function Router() {
@@ -33,6 +40,13 @@ function Router() {
       <Route path="/industry/food-health-media" component={FoodHealthMediaIndustry} />
       <Route path="/industry/tech-companies" component={TechCompaniesIndustry} />
       <Route path="/ShopRite" component={ShopRite} />
+      <Route path="/Gelsons" component={Gelsons} />
+      <Route path="/SmartAndFinal" component={SmartAndFinal} />
+      <Route path="/StaterBros" component={StaterBros} />
+      <Route path="/WeisMarkets" component={WeisMarkets} />
+      <Route path="/Publix" component={Publix} />
+      <Route path="/GiantEagle" component={GiantEagle} />
+      <Route path="/Hy-Vee" component={HyVee} />
       <Route component={NotFound} />
     </Switch>
   );
