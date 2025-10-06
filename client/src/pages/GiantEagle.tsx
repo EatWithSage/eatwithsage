@@ -44,7 +44,7 @@ export default function GiantEaglePage() {
                 <div className="relative" style={{ paddingBottom: "56.25%" }}>
                   <iframe
                     className="absolute top-0 left-0 w-full h-full rounded-2xl shadow-2xl"
-                    src="https://www.youtube.com/embed/5k2Ijsakxzk"
+                    src="https://www.youtube.com/embed/FE2UwhQLXO0"
                     title="Sage - Giant Eagle's Recipe for Brand Loyalty"
                     frameBorder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
