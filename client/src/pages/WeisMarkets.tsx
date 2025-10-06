@@ -36,7 +36,7 @@ export default function WeisMarketsPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h1 className="text-5xl md:text-6xl font-bold text-forest-900 mb-12 font-recoleta">
-                Weis Markets' Recipe for Brand Loyalty
+                Weis Markets'<br />Recipe for Brand Loyalty
               </h1>
 
               {/* YouTube Video Embed */}
