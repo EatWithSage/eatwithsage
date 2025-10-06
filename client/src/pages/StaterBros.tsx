@@ -5,7 +5,7 @@ import SocialProof from "@/components/sections/social-proof";
 export default function StaterBrosPage() {
   useEffect(() => {
     // Set page title and meta description
-    document.title = "Stater Bros' Recipe for Brand Loyalty - Sage";
+    document.title = "Stater Bros.' Recipe for Brand Loyalty - Sage";
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
       metaDescription.setAttribute(
@@ -36,7 +36,7 @@ export default function StaterBrosPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h1 className="text-5xl md:text-6xl font-bold text-forest-900 mb-12 font-recoleta">
-                Stater Bros' Recipe for Brand Loyalty
+                Stater Bros.' Recipe for Brand Loyalty
               </h1>
 
               {/* YouTube Video Embed */}
@@ -45,7 +45,7 @@ export default function StaterBrosPage() {
                   <iframe
                     className="absolute top-0 left-0 w-full h-full rounded-2xl shadow-2xl"
                     src="https://www.youtube.com/embed/Noeebo1Zd6w"
-                    title="Sage - Stater Bros' Recipe for Brand Loyalty"
+                    title="Sage - Stater Bros.' Recipe for Brand Loyalty"
                     frameBorder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerPolicy="strict-origin-when-cross-origin"
