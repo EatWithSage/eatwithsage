@@ -24,6 +24,7 @@ import WeisMarkets from "@/pages/WeisMarkets";
 import Publix from "@/pages/Publix";
 import GiantEagle from "@/pages/GiantEagle";
 import HyVee from "@/pages/Hy-Vee";
+import Cronin from "@/pages/Cronin";
 import IndexPage from "@/pages/index";
 
 function Router() {
@@ -51,6 +52,7 @@ function Router() {
       <Route path="/Publix" component={Publix} />
       <Route path="/GiantEagle" component={GiantEagle} />
       <Route path="/Hy-Vee" component={HyVee} />
+      <Route path="/cronin" component={Cronin} />
       <Route component={NotFound} />
     </Switch>
   );
