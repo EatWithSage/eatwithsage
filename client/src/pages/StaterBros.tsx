@@ -44,7 +44,7 @@ export default function StaterBrosPage() {
                 <div className="relative" style={{ paddingBottom: "56.25%" }}>
                   <iframe
                     className="absolute top-0 left-0 w-full h-full rounded-2xl shadow-2xl"
-                    src="https://www.youtube.com/embed/Noeebo1Zd6w"
+                    src="https://www.youtube.com/embed/Noeebo1Zd6w?enablejsapi=1&origin=https%3A%2F%2Featwithsage.com"
                     title="Sage - Stater Bros.' Recipe for Brand Loyalty"
                     frameBorder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

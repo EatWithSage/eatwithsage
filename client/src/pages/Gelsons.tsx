@@ -44,7 +44,7 @@ export default function GelsonsPage() {
                 <div className="relative" style={{ paddingBottom: "56.25%" }}>
                   <iframe
                     className="absolute top-0 left-0 w-full h-full rounded-2xl shadow-2xl"
-                    src="https://www.youtube.com/embed/ndZt5FUSybk"
+                    src="https://www.youtube.com/embed/ndZt5FUSybk?enablejsapi=1&origin=https%3A%2F%2Featwithsage.com"
                     title="Sage - Gelson's Recipe for Brand Loyalty"
                     frameBorder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
