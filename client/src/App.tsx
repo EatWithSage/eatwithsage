@@ -27,6 +27,7 @@ import HyVee from "@/pages/Hy-Vee";
 import Cronin from "@/pages/Cronin";
 import FreshThymeMarket from "@/pages/FreshThymeMarket";
 import Sprouts from "@/pages/Sprouts";
+import BristolFarms from "@/pages/BristolFarms";
 import IndexPage from "@/pages/index";
 
 function Router() {
@@ -57,6 +58,7 @@ function Router() {
       <Route path="/cronin" component={Cronin} />
       <Route path="/freshthymemarket" component={FreshThymeMarket} />
       <Route path="/sprouts" component={Sprouts} />
+      <Route path="/bristolfarms" component={BristolFarms} />
       <Route component={NotFound} />
     </Switch>
   );
