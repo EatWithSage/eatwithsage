@@ -36,7 +36,7 @@ export default function FreshThymeMarketPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h1 className="text-5xl md:text-6xl font-bold text-forest-900 mb-12 font-recoleta">
-                Fresh Thyme Market's Recipe for Brand Loyalty
+                Fresh Thyme Market's Recipe for<br />Brand Loyalty
               </h1>
 
               {/* YouTube Video Embed */}
