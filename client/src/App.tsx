@@ -26,6 +26,7 @@ import GiantEagle from "@/pages/GiantEagle";
 import HyVee from "@/pages/Hy-Vee";
 import Cronin from "@/pages/Cronin";
 import FreshThymeMarket from "@/pages/FreshThymeMarket";
+import Sprouts from "@/pages/Sprouts";
 import IndexPage from "@/pages/index";
 
 function Router() {
@@ -55,6 +56,7 @@ function Router() {
       <Route path="/Hy-Vee" component={HyVee} />
       <Route path="/cronin" component={Cronin} />
       <Route path="/freshthymemarket" component={FreshThymeMarket} />
+      <Route path="/sprouts" component={Sprouts} />
       <Route component={NotFound} />
     </Switch>
   );
