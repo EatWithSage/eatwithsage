@@ -16,7 +16,7 @@ export default defineConfig({
   },
   server: {
     host: '0.0.0.0',
-    port: 5175,
+    port: 5173,
     strictPort: false,
     allowedHosts: [
       '10670300-ab17-4f56-82c5-bdbb405d0c53-00-1kaumwexhawyv.janeway.replit.dev',
@@ -24,7 +24,7 @@ export default defineConfig({
       'localhost'
     ],
     hmr: {
-      port: 5175,
+      port: 5173,
       host: '0.0.0.0'
     },
     cors: true,
