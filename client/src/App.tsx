@@ -29,6 +29,11 @@ import FreshThymeMarket from "@/pages/FreshThymeMarket";
 import Sprouts from "@/pages/Sprouts";
 import BristolFarms from "@/pages/BristolFarms";
 import Rouses from "@/pages/Rouses";
+import Schnucks from "@/pages/Schnucks";
+import UncleG from "@/pages/UncleG";
+import Foodtown from "@/pages/Foodtown";
+import FTMSC from "@/pages/FTMSC";
+import HarrisTeeter from "@/pages/HarrisTeeter";
 import IndexPage from "@/pages/index";
 
 function Router() {
@@ -61,6 +66,11 @@ function Router() {
       <Route path="/sprouts" component={Sprouts} />
       <Route path="/bristolfarms" component={BristolFarms} />
       <Route path="/rouses" component={Rouses} />
+      <Route path="/schnucks" component={Schnucks} />
+      <Route path="/uncleg" component={UncleG} />
+      <Route path="/foodtown" component={Foodtown} />
+      <Route path="/ftmsc" component={FTMSC} />
+      <Route path="/harristeeter" component={HarrisTeeter} />
       <Route component={NotFound} />
     </Switch>
   );
