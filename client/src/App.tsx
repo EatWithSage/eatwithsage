@@ -34,6 +34,7 @@ import UncleG from "@/pages/UncleG";
 import Foodtown from "@/pages/Foodtown";
 import FTMSC from "@/pages/FTMSC";
 import HarrisTeeter from "@/pages/HarrisTeeter";
+import SBRC from "@/pages/SBRC";
 import IndexPage from "@/pages/index";
 
 function Router() {
@@ -71,6 +72,7 @@ function Router() {
       <Route path="/foodtown" component={Foodtown} />
       <Route path="/ftmsc" component={FTMSC} />
       <Route path="/harristeeter" component={HarrisTeeter} />
+      <Route path="/sbrc" component={SBRC} />
       <Route component={NotFound} />
     </Switch>
   );
