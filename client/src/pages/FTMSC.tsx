@@ -4,12 +4,12 @@ import SocialProof from "@/components/sections/social-proof";
 
 export default function FTMSCPage() {
   useEffect(() => {
-    document.title = "FTMSC's Recipe for Brand Loyalty - Sage";
+    document.title = "Fresh Thyme Market's Recipe for Brand Loyalty - Sage";
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
       metaDescription.setAttribute(
         "content",
-        "See how FTMSC uses Sage's AI-powered meal planning platform to drive brand loyalty and customer engagement.",
+        "See how Fresh Thyme Market uses Sage's AI-powered meal planning platform to drive brand loyalty and customer engagement.",
       );
     }
 
@@ -34,7 +34,7 @@ export default function FTMSCPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h1 className="text-5xl md:text-6xl font-bold text-forest-900 mb-12 font-recoleta">
-                FTMSC's Recipe for<br />Brand Loyalty
+                Fresh Thyme Market's Recipe for<br />Brand Loyalty
               </h1>
 
               <div className="w-full max-w-4xl mx-auto mb-16">
@@ -42,7 +42,7 @@ export default function FTMSCPage() {
                   <iframe
                     className="absolute top-0 left-0 w-full h-full rounded-2xl shadow-2xl"
                     src="https://www.youtube.com/embed/Pa-SuFu8o1I?enablejsapi=1&origin=https%3A%2F%2Featwithsage.com"
-                    title="Sage - FTMSC's Recipe for Brand Loyalty"
+                    title="Sage - Fresh Thyme Market's Recipe for Brand Loyalty"
                     frameBorder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     referrerPolicy="strict-origin-when-cross-origin"
