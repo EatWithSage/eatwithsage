@@ -37,6 +37,7 @@ import HarrisTeeter from "@/pages/HarrisTeeter";
 import SBRC from "@/pages/SBRC";
 import NaturalGrocers from "@/pages/NaturalGrocers";
 import Giant from "@/pages/Giant";
+import Kroger from "@/pages/Kroger";
 import IndexPage from "@/pages/index";
 
 function Router() {
@@ -77,6 +78,7 @@ function Router() {
       <Route path="/sbrc" component={SBRC} />
       <Route path="/naturalgrocers" component={NaturalGrocers} />
       <Route path="/giant" component={Giant} />
+      <Route path="/kroger" component={Kroger} />
       <Route component={NotFound} />
     </Switch>
   );
