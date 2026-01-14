@@ -36,6 +36,7 @@ import FTMSC from "@/pages/FTMSC";
 import HarrisTeeter from "@/pages/HarrisTeeter";
 import SBRC from "@/pages/SBRC";
 import NaturalGrocers from "@/pages/NaturalGrocers";
+import Giant from "@/pages/Giant";
 import IndexPage from "@/pages/index";
 
 function Router() {
@@ -75,6 +76,7 @@ function Router() {
       <Route path="/harristeeter" component={HarrisTeeter} />
       <Route path="/sbrc" component={SBRC} />
       <Route path="/naturalgrocers" component={NaturalGrocers} />
+      <Route path="/giant" component={Giant} />
       <Route component={NotFound} />
     </Switch>
   );
