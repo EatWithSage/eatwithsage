@@ -30,6 +30,11 @@ export const insertBlogPostSchema = createInsertSchema(blogPosts).omit({
   id: true,
   createdAt: true,
   updatedAt: true,
+}).extend({
+  publishedDate: z.string().datetime({ offset: true }).nullable().optional()
+    .or(z.date().nullable().optional())
+    .transform((val) => (val ? new Date(val) : null)),
+  postDate: z.string().nullable().optional(),
 });
 
 export type InsertBlogPost = z.infer<typeof insertBlogPostSchema>;

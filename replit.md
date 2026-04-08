@@ -15,10 +15,20 @@ Preferred communication style: Simple, everyday language.
 - **Responsive Design**: Mobile-first approach with Tailwind CSS utility classes and custom brand color system
 
 ## Backend Architecture
-- **Express.js Server**: Node.js backend with Express handling API routes and static file serving
-- **Minimal API Surface**: Single endpoint `/api/email-demo` for demo form submissions
+- **Dual Express Servers**: 
+  - `server/api-server.ts` runs on port 3001 (API server) proxied via Vite at `/api`
+  - `server/index.ts` (legacy, not used in dev workflows)
+- **API Surface**: 
+  - `POST /api/email-demo` — demo form submissions
+  - `GET /api/posts` — public blog posts (published only)
+  - `GET /api/posts/:slug` — single published post
+  - `GET /api/admin/posts` — all posts (admin auth required)
+  - `POST /api/admin/posts` — create post (admin auth required)
+  - `PATCH /api/admin/posts/:id` — update post (admin auth required)
+  - `DELETE /api/admin/posts/:id` — delete post (admin auth required)
+- **Admin Auth**: Bearer token using `ADMIN_PASSWORD` env var (`sage-admin-2024`)
+- **Storage**: In-memory storage (`MemStorage`) in `server/storage.ts`
 - **Development/Production Split**: Vite dev server integration in development, static file serving in production
-- **Email Service Integration**: Placeholder architecture for email services (SendGrid, Mailgun, AWS SES)
 
 ## Styling & Design System
 - **Tailwind CSS**: Utility-first CSS framework with custom brand color palette
@@ -43,6 +53,25 @@ Preferred communication style: Simple, everyday language.
 - **Hot Module Replacement**: Fast development iteration with Vite HMR
 
 # Recent Changes
+
+## April 8, 2026 - Blog with Admin CMS
+- **Blog Feature Added**: Full blog platform with public-facing pages and password-protected admin CMS
+- **Frontend Pages Added**:
+  - `/blog` — Blog listing page with post cards, tags, author, date
+  - `/blog/:slug` — Individual post page with Markdown rendered as rich HTML
+  - `/admin` — Admin login page (password: `sage-admin-2024`, stored in `ADMIN_PASSWORD` env var)
+  - `/admin/blog` — Admin dashboard showing all posts with publish/draft status, edit/delete actions
+  - `/admin/blog/new` — Rich blog post editor with live preview
+  - `/admin/blog/:id/edit` — Edit existing blog posts
+- **Navigation**: Added "Blog" link to desktop and mobile navigation menus
+- **API Backend**: All blog endpoints on API server (port 3001, proxied at `/api`):
+  - Public: `GET /api/posts`, `GET /api/posts/:slug`
+  - Admin (auth required): `GET/POST /api/admin/posts`, `PATCH/DELETE /api/admin/posts/:id`
+- **Storage**: In-memory `MemStorage` handles all blog CRUD operations
+- **Schema**: `blogPosts` table in `shared/schema.ts` with `insertBlogPostSchema` (publishedDate accepts ISO strings)
+- **Vite Config**: Updated `vite.config.mts` with `root: './client'`, proxy `/api → localhost:3001`, `hmr.clientPort: 443` for Replit HTTPS
+- **Error Boundary**: Added React ErrorBoundary in `main.tsx` to catch render errors visibly
+- **Bug Fix**: Canvas iframes updated to use domain without explicit port (`:5000`)
 
 ## August 13, 2025 - Sage Brand CSS Restoration & Server Configuration
 - **Issue Addressed**: User requested restoration of CSS from "6 PM Mountain Time" showing generic colors instead of Sage branding
