@@ -81,4 +81,3 @@ outputType = "console"
 [userenv]
 
 [userenv.shared]
-ADMIN_PASSWORD = "sage-admin-2024"

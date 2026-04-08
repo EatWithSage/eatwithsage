@@ -1,6 +1,6 @@
 import { db } from "./db";
 import { blogPosts, type BlogPost, type InsertBlogPost } from "@shared/schema";
-import { eq, desc, and, lte, isNull, or } from "drizzle-orm";
+import { eq, desc, and, lte } from "drizzle-orm";
 
 export interface IStorage {
   getBlogPosts(): Promise<BlogPost[]>;
@@ -24,10 +24,7 @@ export class DbStorage implements IStorage {
       .where(
         and(
           eq(blogPosts.status, "published"),
-          or(
-            isNull(blogPosts.publishedDate),
-            lte(blogPosts.publishedDate, new Date())
-          )
+          lte(blogPosts.publishedDate, new Date())
         )
       )
       .orderBy(desc(blogPosts.publishedDate));

@@ -307,7 +307,14 @@ export default function BlogEditor() {
                 <span className="text-sm text-gray-500">Draft</span>
                 <Switch
                   checked={statusValue === "published"}
-                  onCheckedChange={(checked) => setValue("status", checked ? "published" : "draft")}
+                  onCheckedChange={(checked) => {
+                    setValue("status", checked ? "published" : "draft");
+                    if (checked && !form.getValues("publishedDate")) {
+                      const now = new Date();
+                      now.setSeconds(0, 0);
+                      setValue("publishedDate", now.toISOString().slice(0, 16));
+                    }
+                  }}
                 />
                 <span className="text-sm text-gray-700 font-medium">Published</span>
               </div>
@@ -324,13 +331,16 @@ export default function BlogEditor() {
                 />
               </div>
               <div>
-                <Label htmlFor="publishedDate" className="text-gray-700 font-medium">Published Date & Time</Label>
+                <Label htmlFor="publishedDate" className="text-gray-700 font-medium">
+                  Published Date & Time <span className="text-red-500">*</span>
+                </Label>
                 <Input
                   id="publishedDate"
                   type="datetime-local"
                   {...form.register("publishedDate")}
                   className="mt-1"
                 />
+                <p className="text-xs text-gray-400 mt-1">Required for post to appear publicly</p>
               </div>
             </div>
 
