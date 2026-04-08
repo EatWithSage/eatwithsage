@@ -36,6 +36,20 @@
     <!-- Start of HubSpot Embed Code -->
     <script type="text/javascript" id="hs-script-loader" async defer src="//js-na2.hs-scripts.com/243538734.js"></script>
     <!-- End of HubSpot Embed Code -->
+    <script>
+      window.addEventListener('unhandledrejection', function(e) {
+        var root = document.getElementById('root');
+        if (root) {
+          root.innerHTML = '<div style="padding:2rem;font-family:sans-serif;color:#c00;background:#fff;min-height:100vh"><h2>Module Load Error</h2><pre style="white-space:pre-wrap;font-size:14px">' + (e.reason && (e.reason.stack || e.reason.message || String(e.reason))) + '</pre></div>';
+        }
+      });
+      window.addEventListener('error', function(e) {
+        var root = document.getElementById('root');
+        if (root && root.children.length === 1 && root.children[0].textContent === 'Loading Sage...') {
+          root.innerHTML = '<div style="padding:2rem;font-family:sans-serif;color:#c00;background:#fff;min-height:100vh"><h2>Script Error</h2><pre style="white-space:pre-wrap;font-size:14px">' + e.message + '\n' + e.filename + ':' + e.lineno + '</pre></div>';
+        }
+      });
+    </script>
   </head>
   <body>
     <!-- Google Tag Manager (noscript) -->
@@ -43,7 +57,7 @@
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
     
-    <div id="root"></div>
+    <div id="root"><div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:sans-serif;color:#2d5a27;font-size:18px">Loading Sage...</div></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

@@ -24,8 +24,7 @@ export default defineConfig({
       'localhost'
     ],
     hmr: {
-      port: 5000,
-      host: '0.0.0.0'
+      clientPort: 443,
     },
     cors: true,
     open: false,
