@@ -3,6 +3,7 @@ run = "npm run dev"
 
 [nix]
 channel = "stable-25_05"
+packages = ["lsof"]
 
 [env]
 PORT = "5173"
@@ -81,3 +82,7 @@ outputType = "console"
 [userenv]
 
 [userenv.shared]
+
+[deployment]
+deploymentTarget = "cloudrun"
+run = ["sh", "-c", "npm run preview -- --host 0.0.0.0 --port 4173"]
