@@ -28,7 +28,13 @@ export default defineConfig({
       host: '0.0.0.0'
     },
     cors: true,
-    open: false
+    open: false,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3001',
+        changeOrigin: true,
+      }
+    }
   },
   build: {
     outDir: '../dist',

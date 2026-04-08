@@ -114,6 +114,15 @@ export function Navigation() {
               >
                 About
               </Link>
+              <Link 
+                href="/blog" 
+                className={`px-3 py-2 text-sm font-medium font-recoleta transition-colors ${
+                  isActive('/blog') ? 'text-forest-900' : 'text-gray-600 hover:text-sage-500'
+                }`}
+                data-testid="link-nav-blog"
+              >
+                Blog
+              </Link>
             </div>
           </div>
           
@@ -209,6 +218,14 @@ export function Navigation() {
                     data-testid="link-mobile-about"
                   >
                     About
+                  </Link>
+                  <Link 
+                    href="/blog" 
+                    className="block px-3 py-2 text-gray-600 hover:text-sage-500"
+                    onClick={() => setMobileOpen(false)}
+                    data-testid="link-mobile-blog"
+                  >
+                    Blog
                   </Link>
                 </div>
               </SheetContent>

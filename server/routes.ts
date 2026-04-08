@@ -1,57 +1,136 @@
-import type { Express } from "express";
+import type { Express, Request, Response, NextFunction } from "express";
 import { createServer, type Server } from "http";
 import { z } from "zod";
-import { demoFormSchema } from "@shared/schema";
+import { demoFormSchema, insertBlogPostSchema } from "@shared/schema";
 import { sendEmail, createDemoEmailHTML } from "./services/email";
+import { storage } from "./storage";
+
+function requireAdmin(req: Request, res: Response, next: NextFunction) {
+  const authHeader = req.headers.authorization;
+  const adminPassword = process.env.ADMIN_PASSWORD;
+  if (!adminPassword) {
+    return res.status(500).json({ success: false, message: "ADMIN_PASSWORD not configured" });
+  }
+  if (!authHeader || authHeader !== `Bearer ${adminPassword}`) {
+    return res.status(401).json({ success: false, message: "Unauthorized" });
+  }
+  next();
+}
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Demo form submission endpoint
   app.post("/api/email-demo", async (req, res) => {
     try {
-      // Validate request body
       const validatedData = demoFormSchema.parse(req.body);
-      
       console.log("Demo form submission received:", validatedData);
-      
-      // Create email content
       const emailHTML = createDemoEmailHTML(
         validatedData.firstName,
         validatedData.lastName,
         validatedData.email
       );
-      
-      // Send email to dave@eatwithsage.com with BCC to davidmillikenco@gmail.com
       const emailSent = await sendEmail({
         to: "dave@eatwithsage.com",
         bcc: "davidmillikenco@gmail.com",
         subject: `New Demo Request from ${validatedData.firstName} ${validatedData.lastName}`,
         html: emailHTML
       });
-      
       if (!emailSent) {
         throw new Error("Failed to send email");
       }
-      
-      res.json({ 
-        success: true, 
-        message: "Demo request submitted successfully" 
-      });
-      
+      res.json({ success: true, message: "Demo request submitted successfully" });
     } catch (error) {
       console.error("Demo form submission error:", error);
-      
       if (error instanceof z.ZodError) {
-        res.status(400).json({
-          success: false,
-          message: "Invalid form data",
-          errors: error.errors
-        });
+        res.status(400).json({ success: false, message: "Invalid form data", errors: error.errors });
       } else {
-        res.status(500).json({
-          success: false,
-          message: "Internal server error"
-        });
+        res.status(500).json({ success: false, message: "Internal server error" });
       }
+    }
+  });
+
+  app.get("/api/posts", async (req, res) => {
+    try {
+      const posts = await storage.getPublishedBlogPosts();
+      res.json(posts);
+    } catch (error) {
+      console.error("Error fetching published posts:", error);
+      res.status(500).json({ success: false, message: "Internal server error" });
+    }
+  });
+
+  app.get("/api/posts/:slug", async (req, res) => {
+    try {
+      const post = await storage.getBlogPostBySlug(req.params.slug);
+      if (!post || post.status !== "published") {
+        return res.status(404).json({ success: false, message: "Post not found" });
+      }
+      res.json(post);
+    } catch (error) {
+      console.error("Error fetching post:", error);
+      res.status(500).json({ success: false, message: "Internal server error" });
+    }
+  });
+
+  app.get("/api/admin/posts", requireAdmin, async (req, res) => {
+    try {
+      const posts = await storage.getBlogPosts();
+      res.json(posts);
+    } catch (error) {
+      console.error("Error fetching admin posts:", error);
+      res.status(500).json({ success: false, message: "Internal server error" });
+    }
+  });
+
+  app.post("/api/admin/posts", requireAdmin, async (req, res) => {
+    try {
+      const validatedData = insertBlogPostSchema.parse(req.body);
+      const post = await storage.createBlogPost(validatedData);
+      res.status(201).json(post);
+    } catch (error) {
+      console.error("Error creating post:", error);
+      if (error instanceof z.ZodError) {
+        res.status(400).json({ success: false, message: "Invalid post data", errors: error.errors });
+      } else {
+        res.status(500).json({ success: false, message: "Internal server error" });
+      }
+    }
+  });
+
+  app.patch("/api/admin/posts/:id", requireAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id, 10);
+      if (isNaN(id)) {
+        return res.status(400).json({ success: false, message: "Invalid post ID" });
+      }
+      const partial = insertBlogPostSchema.partial().parse(req.body);
+      const post = await storage.updateBlogPost(id, partial);
+      if (!post) {
+        return res.status(404).json({ success: false, message: "Post not found" });
+      }
+      res.json(post);
+    } catch (error) {
+      console.error("Error updating post:", error);
+      if (error instanceof z.ZodError) {
+        res.status(400).json({ success: false, message: "Invalid post data", errors: error.errors });
+      } else {
+        res.status(500).json({ success: false, message: "Internal server error" });
+      }
+    }
+  });
+
+  app.delete("/api/admin/posts/:id", requireAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id, 10);
+      if (isNaN(id)) {
+        return res.status(400).json({ success: false, message: "Invalid post ID" });
+      }
+      const deleted = await storage.deleteBlogPost(id);
+      if (!deleted) {
+        return res.status(404).json({ success: false, message: "Post not found" });
+      }
+      res.json({ success: true, message: "Post deleted" });
+    } catch (error) {
+      console.error("Error deleting post:", error);
+      res.status(500).json({ success: false, message: "Internal server error" });
     }
   });
 

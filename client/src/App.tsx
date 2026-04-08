@@ -38,6 +38,11 @@ import SBRC from "@/pages/SBRC";
 import NaturalGrocers from "@/pages/NaturalGrocers";
 import Giant from "@/pages/Giant";
 import Kroger from "@/pages/Kroger";
+import Blog from "@/pages/Blog";
+import BlogPost from "@/pages/BlogPost";
+import AdminLogin from "@/pages/admin/AdminLogin";
+import AdminBlog from "@/pages/admin/AdminBlog";
+import BlogEditor from "@/pages/admin/BlogEditor";
 import IndexPage from "@/pages/index";
 
 function Router() {
@@ -79,6 +84,12 @@ function Router() {
       <Route path="/naturalgrocers" component={NaturalGrocers} />
       <Route path="/giant" component={Giant} />
       <Route path="/kroger" component={Kroger} />
+      <Route path="/blog" component={Blog} />
+      <Route path="/blog/:slug" component={BlogPost} />
+      <Route path="/admin" component={AdminLogin} />
+      <Route path="/admin/blog" component={AdminBlog} />
+      <Route path="/admin/blog/new" component={BlogEditor} />
+      <Route path="/admin/blog/:id/edit" component={BlogEditor} />
       <Route component={NotFound} />
     </Switch>
   );
