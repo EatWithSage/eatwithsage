@@ -32,10 +32,10 @@ export default function BlogPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h1 className="text-5xl md:text-6xl font-bold text-forest-900 mb-4 font-recoleta">
-              The Sage Blog
+              The Savvy Sage
             </h1>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Insights and ideas on AI-powered meal planning, grocery retail innovation, and building lasting customer loyalty.
+              Insights on how healthy eating shapes our bodies, our economy, and our society so your brand can create more meaningful customer experiences
             </p>
           </div>
 
