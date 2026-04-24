@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { Link, useLocation, useParams } from "wouter";
 import { useForm } from "react-hook-form";
@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
-import { ArrowLeft, Save, Eye } from "lucide-react";
+import { ArrowLeft, Save, Eye, Upload, X, ImageIcon } from "lucide-react";
 import type { BlogPost } from "../../../../shared/schema";
 
 function getToken(): string {
@@ -117,6 +117,31 @@ export default function BlogEditor() {
   }, [existingPost, isEditing, reset]);
 
   const [slugManuallyEdited, setSlugManuallyEdited] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadError, setUploadError] = useState("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  async function handleImageUpload(file: File) {
+    setIsUploading(true);
+    setUploadError("");
+    try {
+      const formData = new FormData();
+      formData.append("image", file);
+      const res = await fetch("/api/admin/upload", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${getToken()}` },
+        body: formData,
+      });
+      const data = await res.json();
+      if (!res.ok || !data.success) throw new Error(data.message || "Upload failed");
+      setValue("coverImage", data.url);
+    } catch (err: unknown) {
+      setUploadError(err instanceof Error ? err.message : "Upload failed");
+    } finally {
+      setIsUploading(false);
+    }
+  }
+
   useEffect(() => {
     if (!isEditing && !slugManuallyEdited && titleValue) {
       setValue("slug", slugify(titleValue));
@@ -366,25 +391,91 @@ export default function BlogEditor() {
             </div>
 
             <div>
-              <Label htmlFor="coverImage" className="text-gray-700 font-medium">Cover Image URL</Label>
-              <Input
-                id="coverImage"
-                {...form.register("coverImage")}
-                placeholder="https://example.com/image.jpg"
-                className="mt-1"
+              <Label className="text-gray-700 font-medium">Cover Image</Label>
+
+              {/* Hidden file input */}
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) handleImageUpload(file);
+                  e.target.value = "";
+                }}
               />
-              {form.formState.errors.coverImage && (
-                <p className="text-red-500 text-sm mt-1">{form.formState.errors.coverImage.message}</p>
-              )}
-              {watch("coverImage") && !form.formState.errors.coverImage && (
-                <div className="mt-2 rounded-lg overflow-hidden h-32 w-full">
+
+              {/* Upload area */}
+              {!watch("coverImage") ? (
+                <div
+                  className="mt-1 border-2 border-dashed border-gray-200 rounded-xl p-8 text-center cursor-pointer hover:border-sage-400 hover:bg-sage-50 transition-colors"
+                  onClick={() => fileInputRef.current?.click()}
+                  onDragOver={(e) => e.preventDefault()}
+                  onDrop={(e) => {
+                    e.preventDefault();
+                    const file = e.dataTransfer.files?.[0];
+                    if (file) handleImageUpload(file);
+                  }}
+                >
+                  {isUploading ? (
+                    <div className="flex flex-col items-center gap-2 text-sage-600">
+                      <div className="h-8 w-8 animate-spin rounded-full border-2 border-sage-400 border-t-transparent" />
+                      <p className="text-sm">Uploading...</p>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-center gap-2 text-gray-400">
+                      <ImageIcon className="h-10 w-10" />
+                      <p className="text-sm font-medium text-gray-600">Click to upload or drag & drop</p>
+                      <p className="text-xs">JPG, PNG, WebP up to 5 MB</p>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div className="mt-1 relative rounded-xl overflow-hidden border border-gray-200">
                   <img
                     src={watch("coverImage")}
                     alt="Cover preview"
-                    className="w-full h-full object-cover"
+                    className="w-full h-48 object-cover"
                     onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
                   />
+                  <div className="absolute top-2 right-2 flex gap-2">
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="secondary"
+                      className="bg-white/90 hover:bg-white shadow gap-1.5 text-xs"
+                      onClick={() => fileInputRef.current?.click()}
+                      disabled={isUploading}
+                    >
+                      <Upload className="h-3 w-3" />
+                      {isUploading ? "Uploading..." : "Replace"}
+                    </Button>
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="secondary"
+                      className="bg-white/90 hover:bg-white shadow"
+                      onClick={() => setValue("coverImage", "")}
+                    >
+                      <X className="h-3 w-3" />
+                    </Button>
+                  </div>
                 </div>
+              )}
+
+              {/* URL input as fallback */}
+              <div className="mt-2">
+                <Input
+                  {...form.register("coverImage")}
+                  placeholder="Or paste an image URL..."
+                  className="text-sm text-gray-500"
+                />
+              </div>
+
+              {uploadError && <p className="text-red-500 text-sm mt-1">{uploadError}</p>}
+              {form.formState.errors.coverImage && (
+                <p className="text-red-500 text-sm mt-1">{form.formState.errors.coverImage.message}</p>
               )}
             </div>
           </div>

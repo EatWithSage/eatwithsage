@@ -1,14 +1,36 @@
 import express from "express";
 import cors from "cors";
 import { z } from "zod";
+import multer from "multer";
+import path from "path";
+import fs from "fs";
 import { demoFormSchema, insertBlogPostSchema } from "../shared/schema";
 import { storage } from "./storage";
+
+const uploadsDir = path.join(process.cwd(), "uploads");
+if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
+
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: uploadsDir,
+    filename: (_req, file, cb) => {
+      const ext = path.extname(file.originalname);
+      cb(null, `${Date.now()}-${Math.random().toString(36).slice(2)}${ext}`);
+    },
+  }),
+  limits: { fileSize: 5 * 1024 * 1024 },
+  fileFilter: (_req, file, cb) => {
+    if (file.mimetype.startsWith("image/")) cb(null, true);
+    else cb(new Error("Only image files are allowed"));
+  },
+});
 
 const app = express();
 
 app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use("/uploads", express.static(uploadsDir));
 
 app.use((req, res, next) => {
   const start = Date.now();
@@ -138,6 +160,14 @@ app.delete("/api/admin/posts/:id", requireAdmin, async (req, res) => {
     console.error("Error deleting post:", error);
     res.status(500).json({ success: false, message: "Internal server error" });
   }
+});
+
+app.post("/api/admin/upload", requireAdmin, upload.single("image"), (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ success: false, message: "No image file provided" });
+  }
+  const url = `/uploads/${req.file.filename}`;
+  res.json({ success: true, url });
 });
 
 const port = parseInt(process.env.API_PORT || "3001", 10);
