@@ -72,7 +72,9 @@ export default function BlogEditor() {
     queryKey: ["/api/admin/posts", postId],
     queryFn: async () => {
       const res = await adminFetch(`/api/admin/posts`);
-      const posts: BlogPost[] = await res.json();
+      const text = await res.text();
+      if (!res.ok || !text) throw new Error(`Failed to load posts (${res.status})`);
+      const posts: BlogPost[] = JSON.parse(text);
       const found = posts.find((p) => p.id === postId);
       if (!found) throw new Error("Post not found");
       return found;
@@ -135,7 +137,9 @@ export default function BlogEditor() {
         headers: { Authorization: `Bearer ${getToken()}` },
         body: formData,
       });
-      const data = await res.json();
+      const rawText = await res.text();
+      if (!rawText) throw new Error("Upload failed: empty response");
+      const data = JSON.parse(rawText);
       if (!res.ok || !data.success) throw new Error(data.message || "Upload failed");
       setValue("coverImage", data.url);
     } catch (err: unknown) {

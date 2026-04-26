@@ -47,16 +47,19 @@ export default function AdminBlog() {
         navigate("/admin");
         throw new Error("Unauthorized");
       }
-      if (!res.ok) throw new Error("Failed to fetch posts");
-      return res.json();
+      const text = await res.text();
+      if (!res.ok) throw new Error(`Failed to fetch posts (${res.status}): ${text}`);
+      if (!text) return [] as BlogPost[];
+      return JSON.parse(text) as BlogPost[];
     },
   });
 
   const deleteMutation = useMutation({
     mutationFn: async (id: number) => {
       const res = await adminFetch(`/api/admin/posts/${id}`, { method: "DELETE" });
-      if (!res.ok) throw new Error("Failed to delete post");
-      return res.json();
+      const text = await res.text();
+      if (!res.ok) throw new Error(`Failed to delete post (${res.status}): ${text}`);
+      return text ? JSON.parse(text) : { success: true };
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/posts"] });
