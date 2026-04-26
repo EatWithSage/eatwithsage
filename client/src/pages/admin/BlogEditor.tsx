@@ -40,7 +40,10 @@ const editorSchema = z.object({
   slug: z.string().min(1, "Slug is required").regex(/^[a-z0-9-]+$/, "Slug can only contain lowercase letters, numbers, and hyphens"),
   excerpt: z.string().optional(),
   content: z.string().optional(),
-  coverImage: z.string().url("Must be a valid URL").or(z.literal("")).optional(),
+  coverImage: z.string().optional().refine(
+    (val) => !val || val.startsWith("/") || /^https?:\/\//.test(val),
+    "Must be a valid URL or uploaded image"
+  ),
   author: z.string().min(1, "Author is required"),
   tags: z.string().optional(),
   status: z.enum(["draft", "published"]),
@@ -167,26 +170,27 @@ export default function BlogEditor() {
         publishedDate: data.publishedDate ? new Date(data.publishedDate).toISOString() : null,
       };
 
+      async function parseResponse(res: Response) {
+        const text = await res.text();
+        if (!text) throw new Error(`Server returned empty response (${res.status})`);
+        let json: Record<string, unknown>;
+        try { json = JSON.parse(text); } catch { throw new Error(`Unexpected server response (${res.status}): ${text.slice(0, 200)}`); }
+        if (!res.ok) throw new Error((json.message as string) || `Request failed (${res.status})`);
+        return json;
+      }
+
       if (isEditing) {
         const res = await adminFetch(`/api/admin/posts/${postId}`, {
           method: "PATCH",
           body: JSON.stringify(payload),
         });
-        if (!res.ok) {
-          const err = await res.json();
-          throw new Error(err.message || "Failed to update post");
-        }
-        return res.json();
+        return parseResponse(res);
       } else {
         const res = await adminFetch("/api/admin/posts", {
           method: "POST",
           body: JSON.stringify(payload),
         });
-        if (!res.ok) {
-          const err = await res.json();
-          throw new Error(err.message || "Failed to create post");
-        }
-        return res.json();
+        return parseResponse(res);
       }
     },
     onSuccess: (savedPost: BlogPost) => {
