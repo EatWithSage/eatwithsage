@@ -20,8 +20,9 @@ export default function BlogPostPage() {
     queryKey: ["/api/posts", slug],
     queryFn: async () => {
       const res = await fetch(`/api/posts/${slug}`);
-      if (!res.ok) throw new Error("Post not found");
-      return res.json();
+      const text = await res.text();
+      if (!res.ok || !text) throw new Error("Post not found");
+      return JSON.parse(text) as BlogPost;
     },
     enabled: !!slug,
   });
