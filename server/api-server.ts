@@ -9,21 +9,26 @@ import { storage } from "./storage";
 import { pool } from "./db";
 import { runMigrations } from "./migrate";
 
-const RETENTION_DAYS = parseInt(process.env.TRASH_RETENTION_DAYS || "30", 10);
 const CLEANUP_INTERVAL_MS = 24 * 60 * 60 * 1000;
 
+function parseRetentionDays(raw: string | undefined): number {
+  const parsed = parseInt(raw ?? "30", 10);
+  if (isNaN(parsed) || parsed < 1 || parsed > 3650) return 30;
+  return parsed;
+}
+
 const cleanupState = {
-  retentionDays: RETENTION_DAYS,
+  retentionDays: parseRetentionDays(process.env.TRASH_RETENTION_DAYS),
   lastRunAt: null as Date | null,
   nextRunAt: null as Date | null,
   lastPurgedCount: 0,
 };
 
 async function runCleanup() {
+  cleanupState.nextRunAt = new Date(Date.now() + CLEANUP_INTERVAL_MS);
   try {
     const count = await storage.purgeOldDeletedPosts(cleanupState.retentionDays);
     cleanupState.lastRunAt = new Date();
-    cleanupState.nextRunAt = new Date(Date.now() + CLEANUP_INTERVAL_MS);
     cleanupState.lastPurgedCount = count;
     if (count > 0) {
       console.log(`Trash cleanup: permanently removed ${count} post(s) older than ${cleanupState.retentionDays} days`);
@@ -278,10 +283,10 @@ app.get("/api/admin/trash/cleanup-status", requireAdmin, async (req, res) => {
 });
 
 app.post("/api/admin/trash/cleanup", requireAdmin, async (req, res) => {
+  cleanupState.nextRunAt = new Date(Date.now() + CLEANUP_INTERVAL_MS);
   try {
     const count = await storage.purgeOldDeletedPosts(cleanupState.retentionDays);
     cleanupState.lastRunAt = new Date();
-    cleanupState.nextRunAt = new Date(Date.now() + CLEANUP_INTERVAL_MS);
     cleanupState.lastPurgedCount = count;
     res.json({ success: true, purgedCount: count, retentionDays: cleanupState.retentionDays });
   } catch (error) {
@@ -330,7 +335,7 @@ async function start() {
     console.log(`API server running on port ${port} (${isProduction ? "production" : "development"})`);
     runCleanup();
     setInterval(runCleanup, CLEANUP_INTERVAL_MS);
-    console.log(`Trash cleanup scheduled every 24h (retention: ${RETENTION_DAYS} days)`);
+    console.log(`Trash cleanup scheduled every 24h (retention: ${cleanupState.retentionDays} days)`);
   });
 }
 
