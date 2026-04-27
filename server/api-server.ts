@@ -201,6 +201,8 @@ if (process.env.NODE_ENV === "production") {
   }
 }
 
+export { app };
+
 const isProduction = process.env.NODE_ENV === "production";
 const port = isProduction
   ? parseInt(process.env.PORT || "5000", 10)
@@ -219,4 +221,6 @@ async function start() {
   });
 }
 
-start();
+if (process.env.NODE_ENV !== "test") {
+  start();
+}
