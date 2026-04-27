@@ -18,6 +18,7 @@ import {
 import { PlusCircle, Edit, Trash2, LogOut, Eye, Download, Database, RotateCcw, Flame } from "lucide-react";
 import type { BlogPost } from "../../../../shared/schema";
 import { useToast } from "@/hooks/use-toast";
+import { ToastAction } from "@/components/ui/toast";
 
 function getToken(): string {
   return localStorage.getItem("sage_admin_token") || "";
@@ -182,12 +183,19 @@ export default function AdminBlog() {
       if (!res.ok) throw new Error(`Failed to delete post (${res.status}): ${text}`);
       return text ? JSON.parse(text) : { success: true };
     },
-    onSuccess: () => {
+    onSuccess: (_data, id) => {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/posts"] });
       queryClient.invalidateQueries({ queryKey: ["/api/admin/posts/deleted"] });
       queryClient.invalidateQueries({ queryKey: ["/api/posts"] });
       setTrashTarget(null);
-      toast({ title: "Post moved to trash" });
+      toast({
+        title: "Post moved to trash",
+        action: (
+          <ToastAction altText="Undo" onClick={() => restoreMutation.mutate(id)}>
+            Undo
+          </ToastAction>
+        ),
+      });
     },
     onError: (error: Error) => {
       toast({ title: "Failed to move post to trash", description: error.message, variant: "destructive" });
