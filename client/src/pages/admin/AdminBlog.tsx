@@ -132,6 +132,7 @@ function DatabaseHealthBadge() {
 export default function AdminBlog() {
   const [, navigate] = useLocation();
   const [permanentDeleteTarget, setPermanentDeleteTarget] = useState<BlogPost | null>(null);
+  const [trashTarget, setTrashTarget] = useState<BlogPost | null>(null);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -185,6 +186,11 @@ export default function AdminBlog() {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/posts"] });
       queryClient.invalidateQueries({ queryKey: ["/api/admin/posts/deleted"] });
       queryClient.invalidateQueries({ queryKey: ["/api/posts"] });
+      setTrashTarget(null);
+      toast({ title: "Post moved to trash" });
+    },
+    onError: (error: Error) => {
+      toast({ title: "Failed to move post to trash", description: error.message, variant: "destructive" });
     },
   });
 
@@ -247,9 +253,7 @@ export default function AdminBlog() {
   }
 
   function handleDelete(post: BlogPost) {
-    if (window.confirm(`Move "${post.title}" to trash?`)) {
-      deleteMutation.mutate(post.id);
-    }
+    setTrashTarget(post);
   }
 
   return (
@@ -501,6 +505,27 @@ export default function AdminBlog() {
           </TabsContent>
         </Tabs>
       </main>
+
+      <AlertDialog open={!!trashTarget} onOpenChange={(open) => { if (!open) setTrashTarget(null); }}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Move post to trash?</AlertDialogTitle>
+            <AlertDialogDescription>
+              <strong>"{trashTarget?.title}"</strong> will be moved to the trash and hidden from the public blog. You can restore it later.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={deleteMutation.isPending}>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-red-600 hover:bg-red-700 text-white"
+              disabled={deleteMutation.isPending}
+              onClick={() => trashTarget && deleteMutation.mutate(trashTarget.id)}
+            >
+              {deleteMutation.isPending ? "Moving…" : "Move to Trash"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
       <AlertDialog open={!!permanentDeleteTarget} onOpenChange={(open) => { if (!open) setPermanentDeleteTarget(null); }}>
         <AlertDialogContent>
