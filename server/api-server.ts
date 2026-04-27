@@ -170,7 +170,20 @@ app.post("/api/admin/upload", requireAdmin, upload.single("image"), (req, res) =
   res.json({ success: true, url });
 });
 
-const port = parseInt(process.env.API_PORT || "3001", 10);
+if (process.env.NODE_ENV === "production") {
+  const distDir = path.resolve(process.cwd(), "dist");
+  if (fs.existsSync(distDir)) {
+    app.use(express.static(distDir));
+    app.get("*", (_req, res) => {
+      res.sendFile(path.join(distDir, "index.html"));
+    });
+  }
+}
+
+const isProduction = process.env.NODE_ENV === "production";
+const port = isProduction
+  ? parseInt(process.env.PORT || "5000", 10)
+  : parseInt(process.env.API_PORT || "3001", 10);
 app.listen(port, "0.0.0.0", () => {
-  console.log(`API server running on port ${port}`);
+  console.log(`API server running on port ${port} (${isProduction ? "production" : "development"})`);
 });
