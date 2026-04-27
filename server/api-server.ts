@@ -32,6 +32,10 @@ app.use(express.json({ limit: "5mb" }));
 app.use(express.urlencoded({ extended: false, limit: "5mb" }));
 app.use("/uploads", express.static(uploadsDir));
 
+app.get("/api/health", (_req, res) => {
+  res.json({ status: "ok", version: "2.0", timestamp: Date.now() });
+});
+
 app.use((req, res, next) => {
   const start = Date.now();
   res.on("finish", () => {
@@ -173,8 +177,11 @@ app.post("/api/admin/upload", requireAdmin, upload.single("image"), (req, res) =
 if (process.env.NODE_ENV === "production") {
   const distDir = path.resolve(process.cwd(), "dist");
   if (fs.existsSync(distDir)) {
-    app.use(express.static(distDir));
+    app.use(express.static(distDir, { index: false }));
     app.get("*", (_req, res) => {
+      res.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+      res.setHeader("Pragma", "no-cache");
+      res.setHeader("Expires", "0");
       res.sendFile(path.join(distDir, "index.html"));
     });
   }
