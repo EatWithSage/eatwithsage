@@ -4,7 +4,7 @@ import { Link, useLocation } from "wouter";
 import { queryClient } from "@/lib/queryClient";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { PlusCircle, Edit, Trash2, LogOut, Eye } from "lucide-react";
+import { PlusCircle, Edit, Trash2, LogOut, Eye, Download } from "lucide-react";
 import type { BlogPost } from "../../../../shared/schema";
 
 function getToken(): string {
@@ -72,6 +72,23 @@ export default function AdminBlog() {
     navigate("/admin");
   }
 
+  async function handleExport() {
+    const res = await adminFetch("/api/admin/posts/export");
+    if (!res.ok) {
+      alert("Export failed. Please try again.");
+      return;
+    }
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    const disposition = res.headers.get("Content-Disposition") || "";
+    const match = disposition.match(/filename="([^"]+)"/);
+    a.download = match ? match[1] : "blog-posts-export.json";
+    a.href = url;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
   function handleDelete(post: BlogPost) {
     if (window.confirm(`Delete "${post.title}"? This cannot be undone.`)) {
       deleteMutation.mutate(post.id);
@@ -96,6 +113,10 @@ export default function AdminBlog() {
                 View Blog
               </Button>
             </Link>
+            <Button variant="ghost" size="sm" onClick={handleExport} className="gap-2 text-gray-600">
+              <Download className="h-4 w-4" />
+              Export JSON
+            </Button>
             <Button variant="ghost" size="sm" onClick={handleLogout} className="gap-2 text-gray-600">
               <LogOut className="h-4 w-4" />
               Logout
