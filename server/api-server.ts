@@ -6,6 +6,7 @@ import path from "path";
 import fs from "fs";
 import { demoFormSchema, insertBlogPostSchema } from "../shared/schema";
 import { storage } from "./storage";
+import { runMigrations } from "./migrate";
 
 const uploadsDir = path.join(process.cwd(), "uploads");
 if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
@@ -191,6 +192,18 @@ const isProduction = process.env.NODE_ENV === "production";
 const port = isProduction
   ? parseInt(process.env.PORT || "5000", 10)
   : parseInt(process.env.API_PORT || "3001", 10);
-app.listen(port, "0.0.0.0", () => {
-  console.log(`API server running on port ${port} (${isProduction ? "production" : "development"})`);
-});
+
+async function start() {
+  try {
+    await runMigrations();
+  } catch (err) {
+    console.error("Failed to run migrations. Server will not start.", err);
+    process.exit(1);
+  }
+
+  app.listen(port, "0.0.0.0", () => {
+    console.log(`API server running on port ${port} (${isProduction ? "production" : "development"})`);
+  });
+}
+
+start();
