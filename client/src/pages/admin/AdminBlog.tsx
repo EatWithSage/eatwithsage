@@ -185,21 +185,22 @@ export default function AdminBlog() {
     navigate("/admin");
   }
 
-  async function handleExport() {
-    const res = await adminFetch("/api/admin/posts/export");
+  async function handleExport(format: "json" | "csv" = "json") {
+    const url = format === "csv" ? "/api/admin/posts/export?format=csv" : "/api/admin/posts/export";
+    const res = await adminFetch(url);
     if (!res.ok) {
       alert("Export failed. Please try again.");
       return;
     }
     const blob = await res.blob();
-    const url = URL.createObjectURL(blob);
+    const objectUrl = URL.createObjectURL(blob);
     const a = document.createElement("a");
     const disposition = res.headers.get("Content-Disposition") || "";
     const match = disposition.match(/filename="([^"]+)"/);
-    a.download = match ? match[1] : "blog-posts-export.json";
-    a.href = url;
+    a.download = match ? match[1] : `blog-posts-export.${format}`;
+    a.href = objectUrl;
     a.click();
-    URL.revokeObjectURL(url);
+    URL.revokeObjectURL(objectUrl);
   }
 
   function handleDelete(post: BlogPost) {
@@ -227,9 +228,13 @@ export default function AdminBlog() {
                 View Blog
               </Button>
             </Link>
-            <Button variant="ghost" size="sm" onClick={handleExport} className="gap-2 text-gray-600">
+            <Button variant="ghost" size="sm" onClick={() => handleExport("json")} className="gap-2 text-gray-600">
               <Download className="h-4 w-4" />
               Export JSON
+            </Button>
+            <Button variant="ghost" size="sm" onClick={() => handleExport("csv")} className="gap-2 text-gray-600">
+              <Download className="h-4 w-4" />
+              Export CSV
             </Button>
             <Button variant="ghost" size="sm" onClick={handleLogout} className="gap-2 text-gray-600">
               <LogOut className="h-4 w-4" />

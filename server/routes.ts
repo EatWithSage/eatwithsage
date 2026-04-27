@@ -142,10 +142,40 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/admin/posts/export", requireAdmin, async (req, res) => {
     try {
       const posts = await storage.getBlogPosts();
-      const filename = `blog-posts-export-${new Date().toISOString().slice(0, 10)}.json`;
-      res.setHeader("Content-Disposition", `attachment; filename="${filename}"`);
-      res.setHeader("Content-Type", "application/json");
-      res.send(JSON.stringify(posts, null, 2));
+      const dateStr = new Date().toISOString().slice(0, 10);
+      const format = req.query.format;
+
+      if (format === "csv") {
+        const headers = ["id", "title", "slug", "status", "author", "tags", "publishedDate", "createdAt"];
+        const escape = (val: unknown): string => {
+          if (val === null || val === undefined) return "";
+          const str = Array.isArray(val) ? val.join(";") : String(val);
+          if (str.includes(",") || str.includes('"') || str.includes("\n")) {
+            return `"${str.replace(/"/g, '""')}"`;
+          }
+          return str;
+        };
+        const rows = posts.map((p) => [
+          escape(p.id),
+          escape(p.title),
+          escape(p.slug),
+          escape(p.status),
+          escape(p.author),
+          escape(p.tags),
+          escape(p.publishedDate),
+          escape(p.createdAt),
+        ].join(","));
+        const csv = [headers.join(","), ...rows].join("\n");
+        const filename = `blog-posts-export-${dateStr}.csv`;
+        res.setHeader("Content-Disposition", `attachment; filename="${filename}"`);
+        res.setHeader("Content-Type", "text/csv");
+        res.send(csv);
+      } else {
+        const filename = `blog-posts-export-${dateStr}.json`;
+        res.setHeader("Content-Disposition", `attachment; filename="${filename}"`);
+        res.setHeader("Content-Type", "application/json");
+        res.send(JSON.stringify(posts, null, 2));
+      }
     } catch (error) {
       console.error("Error exporting posts:", error);
       res.status(500).json({ success: false, message: "Internal server error" });
