@@ -6,6 +6,7 @@ import path from "path";
 import fs from "fs";
 import { demoFormSchema, insertBlogPostSchema } from "../shared/schema";
 import { storage } from "./storage";
+import { pool } from "./db";
 import { runMigrations } from "./migrate";
 
 const uploadsDir = path.join(process.cwd(), "uploads");
@@ -33,8 +34,20 @@ app.use(express.json({ limit: "5mb" }));
 app.use(express.urlencoded({ extended: false, limit: "5mb" }));
 app.use("/uploads", express.static(uploadsDir));
 
-app.get("/api/health", (_req, res) => {
-  res.json({ status: "ok", version: "2.0", timestamp: Date.now() });
+app.get("/api/health", async (_req, res) => {
+  const timestamp = Date.now();
+  try {
+    await pool.query("SELECT 1");
+    res.json({ status: "ok", version: "2.0", timestamp, database: "connected" });
+  } catch (err) {
+    console.error("Health check: database unreachable", err);
+    res.status(503).json({
+      status: "degraded",
+      version: "2.0",
+      timestamp,
+      database: "unreachable",
+    });
+  }
 });
 
 app.use((req, res, next) => {
