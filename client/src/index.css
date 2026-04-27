@@ -86,3 +86,46 @@
   * { @apply border-border; }
   body { @apply bg-background text-foreground; }
 }
+
+/* WYSIWYG Editor styles */
+.wysiwyg-content {
+  min-height: 320px;
+  outline: none;
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: #1a1a1a;
+}
+.wysiwyg-content > * + * { margin-top: 0.75em; }
+.wysiwyg-content h1 { font-size: 1.75rem; font-weight: 700; line-height: 1.2; margin-top: 1.5em; }
+.wysiwyg-content h2 { font-size: 1.375rem; font-weight: 700; line-height: 1.3; margin-top: 1.25em; }
+.wysiwyg-content h3 { font-size: 1.125rem; font-weight: 600; line-height: 1.4; margin-top: 1.1em; }
+.wysiwyg-content p { margin: 0; }
+.wysiwyg-content strong { font-weight: 700; }
+.wysiwyg-content em { font-style: italic; }
+.wysiwyg-content u { text-decoration: underline; }
+.wysiwyg-content a { color: #047857; text-decoration: underline; cursor: pointer; }
+.wysiwyg-content a:hover { color: #065f46; }
+.wysiwyg-content ul { list-style-type: disc; padding-left: 1.5rem; }
+.wysiwyg-content ol { list-style-type: decimal; padding-left: 1.5rem; }
+.wysiwyg-content li { margin: 0.25em 0; }
+.wysiwyg-content blockquote {
+  border-left: 3px solid #d1d5db;
+  padding-left: 1rem;
+  color: #6b7280;
+  font-style: italic;
+  margin: 1em 0;
+}
+.wysiwyg-content code {
+  background: #f3f4f6;
+  border-radius: 3px;
+  padding: 0.1em 0.3em;
+  font-size: 0.875em;
+  font-family: monospace;
+}
+.wysiwyg-content p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: #9ca3af;
+  pointer-events: none;
+  height: 0;
+}

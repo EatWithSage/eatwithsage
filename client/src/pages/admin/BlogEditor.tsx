@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { Link, useLocation, useParams } from "wouter";
-import { useForm } from "react-hook-form";
+import { useForm, useController } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { queryClient } from "@/lib/queryClient";
@@ -10,7 +10,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
-import { ArrowLeft, Save, Eye, Upload, X, ImageIcon } from "lucide-react";
+import { ArrowLeft, Save, Eye, Upload, X, ImageIcon, Bold, Italic, Underline as UnderlineIcon, List, ListOrdered, Quote, Link as LinkIcon, Unlink, AlignLeft, AlignCenter, AlignRight, Heading1, Heading2, Heading3, Eraser } from "lucide-react";
+import { useEditor, EditorContent } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import TipTapLink from "@tiptap/extension-link";
+import TipTapUnderline from "@tiptap/extension-underline";
+import Placeholder from "@tiptap/extension-placeholder";
+import TextAlign from "@tiptap/extension-text-align";
 import type { BlogPost } from "../../../../shared/schema";
 
 function getToken(): string {
@@ -35,6 +41,179 @@ function slugify(text: string): string {
     .replace(/^-+|-+$/g, "");
 }
 
+function ToolBtn({
+  onClick, active, title, children,
+}: { onClick: () => void; active?: boolean; title: string; children: React.ReactNode }) {
+  return (
+    <button
+      type="button"
+      onMouseDown={(e) => { e.preventDefault(); onClick(); }}
+      title={title}
+      className={`p-1.5 rounded transition-colors ${active ? "bg-forest-900 text-white" : "text-gray-600 hover:bg-gray-100"}`}
+    >
+      {children}
+    </button>
+  );
+}
+
+function WysiwygEditor({
+  value,
+  onChange,
+}: { value: string; onChange: (v: string) => void }) {
+  const [linkUrl, setLinkUrl] = useState("");
+  const [showLinkInput, setShowLinkInput] = useState(false);
+  const linkInputRef = useRef<HTMLInputElement>(null);
+  const prevValueRef = useRef(value);
+
+  const editor = useEditor({
+    extensions: [
+      StarterKit,
+      TipTapUnderline,
+      TipTapLink.configure({ openOnClick: false, HTMLAttributes: { target: "_blank", rel: "noopener noreferrer" } }),
+      TextAlign.configure({ types: ["heading", "paragraph"] }),
+      Placeholder.configure({ placeholder: "Write your post content here..." }),
+    ],
+    content: value || "",
+    editorProps: { attributes: { class: "wysiwyg-content p-4 focus:outline-none" } },
+    onUpdate: ({ editor }) => {
+      const html = editor.getHTML();
+      onChange(html === "<p></p>" ? "" : html);
+    },
+  });
+
+  useEffect(() => {
+    if (editor && value !== prevValueRef.current) {
+      const currentHtml = editor.getHTML();
+      if (currentHtml !== value) {
+        editor.commands.setContent(value || "", false);
+      }
+    }
+    prevValueRef.current = value;
+  }, [value, editor]);
+
+  useEffect(() => {
+    if (showLinkInput) setTimeout(() => linkInputRef.current?.focus(), 0);
+  }, [showLinkInput]);
+
+  const applyLink = useCallback(() => {
+    if (!editor) return;
+    const url = linkUrl.trim();
+    if (url) {
+      const href = /^https?:\/\//i.test(url) ? url : `https://${url}`;
+      editor.chain().focus().extendMarkToNextWord().setLink({ href }).run();
+    } else {
+      editor.chain().focus().unsetLink().run();
+    }
+    setShowLinkInput(false);
+    setLinkUrl("");
+  }, [editor, linkUrl]);
+
+  if (!editor) return null;
+
+  const iconSize = "h-4 w-4";
+
+  return (
+    <div className="border border-gray-200 rounded-xl overflow-hidden">
+      {/* Toolbar */}
+      <div className="flex flex-wrap items-center gap-0.5 px-2 py-1.5 border-b border-gray-200 bg-gray-50">
+        <ToolBtn title="Bold" active={editor.isActive("bold")} onClick={() => editor.chain().focus().toggleBold().run()}>
+          <Bold className={iconSize} />
+        </ToolBtn>
+        <ToolBtn title="Italic" active={editor.isActive("italic")} onClick={() => editor.chain().focus().toggleItalic().run()}>
+          <Italic className={iconSize} />
+        </ToolBtn>
+        <ToolBtn title="Underline" active={editor.isActive("underline")} onClick={() => editor.chain().focus().toggleUnderline().run()}>
+          <UnderlineIcon className={iconSize} />
+        </ToolBtn>
+
+        <span className="w-px h-5 bg-gray-300 mx-1" />
+
+        <ToolBtn title="Heading 1" active={editor.isActive("heading", { level: 1 })} onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}>
+          <Heading1 className={iconSize} />
+        </ToolBtn>
+        <ToolBtn title="Heading 2" active={editor.isActive("heading", { level: 2 })} onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}>
+          <Heading2 className={iconSize} />
+        </ToolBtn>
+        <ToolBtn title="Heading 3" active={editor.isActive("heading", { level: 3 })} onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}>
+          <Heading3 className={iconSize} />
+        </ToolBtn>
+
+        <span className="w-px h-5 bg-gray-300 mx-1" />
+
+        <ToolBtn title="Bullet list" active={editor.isActive("bulletList")} onClick={() => editor.chain().focus().toggleBulletList().run()}>
+          <List className={iconSize} />
+        </ToolBtn>
+        <ToolBtn title="Numbered list" active={editor.isActive("orderedList")} onClick={() => editor.chain().focus().toggleOrderedList().run()}>
+          <ListOrdered className={iconSize} />
+        </ToolBtn>
+        <ToolBtn title="Blockquote" active={editor.isActive("blockquote")} onClick={() => editor.chain().focus().toggleBlockquote().run()}>
+          <Quote className={iconSize} />
+        </ToolBtn>
+
+        <span className="w-px h-5 bg-gray-300 mx-1" />
+
+        <ToolBtn title="Align left" active={editor.isActive({ textAlign: "left" })} onClick={() => editor.chain().focus().setTextAlign("left").run()}>
+          <AlignLeft className={iconSize} />
+        </ToolBtn>
+        <ToolBtn title="Align center" active={editor.isActive({ textAlign: "center" })} onClick={() => editor.chain().focus().setTextAlign("center").run()}>
+          <AlignCenter className={iconSize} />
+        </ToolBtn>
+        <ToolBtn title="Align right" active={editor.isActive({ textAlign: "right" })} onClick={() => editor.chain().focus().setTextAlign("right").run()}>
+          <AlignRight className={iconSize} />
+        </ToolBtn>
+
+        <span className="w-px h-5 bg-gray-300 mx-1" />
+
+        <ToolBtn title="Insert / edit link" active={editor.isActive("link")} onClick={() => {
+          const existing = editor.getAttributes("link").href || "";
+          setLinkUrl(existing);
+          setShowLinkInput((v) => !v);
+        }}>
+          <LinkIcon className={iconSize} />
+        </ToolBtn>
+        {editor.isActive("link") && (
+          <ToolBtn title="Remove link" onClick={() => editor.chain().focus().unsetLink().run()}>
+            <Unlink className={iconSize} />
+          </ToolBtn>
+        )}
+
+        <span className="w-px h-5 bg-gray-300 mx-1" />
+
+        <ToolBtn title="Clear formatting" onClick={() => editor.chain().focus().clearNodes().unsetAllMarks().run()}>
+          <Eraser className={iconSize} />
+        </ToolBtn>
+      </div>
+
+      {/* Link input popover */}
+      {showLinkInput && (
+        <div className="flex items-center gap-2 px-3 py-2 bg-amber-50 border-b border-amber-200">
+          <LinkIcon className="h-3.5 w-3.5 text-amber-600 shrink-0" />
+          <input
+            ref={linkInputRef}
+            type="url"
+            value={linkUrl}
+            onChange={(e) => setLinkUrl(e.target.value)}
+            onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); applyLink(); } if (e.key === "Escape") { setShowLinkInput(false); setLinkUrl(""); } }}
+            placeholder="https://example.com"
+            className="flex-1 text-sm bg-transparent outline-none placeholder-amber-400"
+          />
+          <button type="button" onClick={applyLink} className="text-xs font-medium text-amber-700 hover:text-amber-900 px-2 py-0.5 rounded hover:bg-amber-100">
+            Apply
+          </button>
+          <button type="button" onClick={() => { setShowLinkInput(false); setLinkUrl(""); }} className="text-gray-400 hover:text-gray-600">
+            <X className="h-3.5 w-3.5" />
+          </button>
+        </div>
+      )}
+
+      {/* Editor content */}
+      <div className="bg-white min-h-[320px]" onClick={() => editor.commands.focus()}>
+        <EditorContent editor={editor} />
+      </div>
+    </div>
+  );
+}
+
 const editorSchema = z.object({
   title: z.string().min(1, "Title is required"),
   slug: z.string().min(1, "Slug is required").regex(/^[a-z0-9-]+$/, "Slug can only contain lowercase letters, numbers, and hyphens"),
@@ -52,6 +231,11 @@ const editorSchema = z.object({
 });
 
 type EditorForm = z.infer<typeof editorSchema>;
+
+function ContentEditor({ form }: { form: ReturnType<typeof useForm<EditorForm>> }) {
+  const { field } = useController({ name: "content", control: form.control });
+  return <WysiwygEditor value={field.value || ""} onChange={field.onChange} />;
+}
 
 export default function BlogEditor() {
   const [, navigate] = useLocation();
@@ -314,16 +498,8 @@ export default function BlogEditor() {
           </div>
 
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-            <Label htmlFor="content" className="text-gray-700 font-medium block mb-2">
-              Content <span className="text-gray-400 font-normal text-sm">(HTML supported)</span>
-            </Label>
-            <Textarea
-              id="content"
-              {...form.register("content")}
-              placeholder="<p>Write your post content here. HTML tags are supported.</p>&#10;<h2>Section heading</h2>&#10;<p>More content...</p>"
-              rows={20}
-              className="mt-1 font-mono text-sm"
-            />
+            <Label className="text-gray-700 font-medium block mb-2">Content</Label>
+            <ContentEditor form={form} />
           </div>
 
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 space-y-5">
