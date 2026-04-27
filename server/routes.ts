@@ -60,7 +60,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/posts/:slug", async (req, res) => {
     try {
       const post = await storage.getBlogPostBySlug(req.params.slug);
-      if (!post || post.status !== "published") {
+      const now = new Date();
+      if (
+        !post ||
+        post.status !== "published" ||
+        (post.publishedDate && post.publishedDate > now)
+      ) {
         return res.status(404).json({ success: false, message: "Post not found" });
       }
       res.json(post);
