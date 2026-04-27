@@ -45,7 +45,22 @@ interface HealthData {
   database: "connected" | "unreachable";
 }
 
+function timeAgo(ts: number): string {
+  const diffMs = Math.max(0, Date.now() - ts);
+  const diffSec = Math.floor(diffMs / 1000);
+  if (diffSec < 5) return "just now";
+  if (diffSec < 60) return `${diffSec}s ago`;
+  const diffMin = Math.floor(diffSec / 60);
+  if (diffMin < 60) return `${diffMin}m ago`;
+  const diffHr = Math.floor(diffMin / 60);
+  if (diffHr < 24) return `${diffHr}h ago`;
+  return `${Math.floor(diffHr / 24)}d ago`;
+}
+
 function DatabaseHealthBadge() {
+  const [lastConnected, setLastConnected] = useState<number | null>(null);
+  const [, setTick] = useState(0);
+
   const { data, isLoading, isError } = useQuery<HealthData>({
     queryKey: ["/api/health"],
     queryFn: async () => {
@@ -57,6 +72,17 @@ function DatabaseHealthBadge() {
     retry: 1,
   });
 
+  useEffect(() => {
+    if (!isError && data?.database === "connected") {
+      setLastConnected(data.timestamp ?? Date.now());
+    }
+  }, [data, isError]);
+
+  useEffect(() => {
+    const id = setInterval(() => setTick((t) => t + 1), 30000);
+    return () => clearInterval(id);
+  }, []);
+
   if (isLoading) {
     return (
       <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gray-100 text-gray-500 text-xs font-medium">
@@ -67,6 +93,10 @@ function DatabaseHealthBadge() {
   }
 
   const isHealthy = !isError && data?.database === "connected";
+  const lastConnectedLabel = lastConnected ? `Last connected ${timeAgo(lastConnected)}` : null;
+  const tooltipText = isHealthy
+    ? lastConnectedLabel ? `Database connected · ${lastConnectedLabel}` : "Database connected"
+    : lastConnectedLabel ? `Database unreachable · ${lastConnectedLabel}` : "Database unreachable";
 
   return (
     <div
@@ -75,7 +105,7 @@ function DatabaseHealthBadge() {
           ? "bg-green-100 text-green-800"
           : "bg-red-100 text-red-800"
       }`}
-      title={isHealthy ? "Database connected" : "Database unreachable"}
+      title={tooltipText}
     >
       <Database className="h-3 w-3" />
       <span className="relative flex h-2 w-2">
@@ -91,6 +121,9 @@ function DatabaseHealthBadge() {
         />
       </span>
       <span>{isHealthy ? "DB Connected" : "DB Unreachable"}</span>
+      {lastConnectedLabel && (
+        <span className="opacity-70 hidden sm:inline">· {lastConnectedLabel}</span>
+      )}
     </div>
   );
 }
