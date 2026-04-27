@@ -1,5 +1,6 @@
 import express, { type Request, Response, NextFunction } from "express";
 import path from "path";
+import { fileURLToPath } from "url";
 import { registerRoutes } from "./routes";
 
 const app = express();
@@ -67,7 +68,7 @@ if (process.env.NODE_ENV === "production") {
 }
 
 // For local development
-if (require.main === module) {
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const port = parseInt(process.env.PORT || '5000', 10);
   app.listen(port, () => {
     console.log(`Server running on port ${port}`);
@@ -75,4 +76,4 @@ if (require.main === module) {
 }
 
 // Export the Express app for Vercel
-module.exports = app;
+export default app;

@@ -1,6 +1,7 @@
 import { drizzle } from "drizzle-orm/node-postgres";
 import { migrate } from "drizzle-orm/node-postgres/migrator";
 import { Pool } from "pg";
+import { fileURLToPath } from "url";
 
 export async function runMigrations() {
   if (!process.env.DATABASE_URL) {
@@ -22,7 +23,7 @@ export async function runMigrations() {
   }
 }
 
-if (require.main === module) {
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
   runMigrations().catch((err) => {
     console.error("Migration failed:", err);
     process.exit(1);
