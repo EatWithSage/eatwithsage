@@ -132,9 +132,53 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!deleted) {
         return res.status(404).json({ success: false, message: "Post not found" });
       }
-      res.json({ success: true, message: "Post deleted" });
+      res.json({ success: true, message: "Post soft-deleted" });
     } catch (error) {
       console.error("Error deleting post:", error);
+      res.status(500).json({ success: false, message: "Internal server error" });
+    }
+  });
+
+  app.get("/api/admin/posts/deleted", requireAdmin, async (req, res) => {
+    try {
+      const posts = await storage.getSoftDeletedBlogPosts();
+      res.json(posts);
+    } catch (error) {
+      console.error("Error fetching deleted posts:", error);
+      res.status(500).json({ success: false, message: "Internal server error" });
+    }
+  });
+
+  app.post("/api/admin/posts/:id/restore", requireAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id, 10);
+      if (isNaN(id)) {
+        return res.status(400).json({ success: false, message: "Invalid post ID" });
+      }
+      const post = await storage.restoreBlogPost(id);
+      if (!post) {
+        return res.status(404).json({ success: false, message: "Deleted post not found" });
+      }
+      res.json(post);
+    } catch (error) {
+      console.error("Error restoring post:", error);
+      res.status(500).json({ success: false, message: "Internal server error" });
+    }
+  });
+
+  app.delete("/api/admin/posts/:id/permanent", requireAdmin, async (req, res) => {
+    try {
+      const id = parseInt(req.params.id, 10);
+      if (isNaN(id)) {
+        return res.status(400).json({ success: false, message: "Invalid post ID" });
+      }
+      const deleted = await storage.permanentlyDeleteBlogPost(id);
+      if (!deleted) {
+        return res.status(404).json({ success: false, message: "Deleted post not found" });
+      }
+      res.json({ success: true, message: "Post permanently deleted" });
+    } catch (error) {
+      console.error("Error permanently deleting post:", error);
       res.status(500).json({ success: false, message: "Internal server error" });
     }
   });

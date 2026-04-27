@@ -1,20 +1,27 @@
 import { db } from "./db";
 import { blogPosts, type BlogPost, type InsertBlogPost } from "@shared/schema";
-import { eq, desc, and, lte } from "drizzle-orm";
+import { eq, desc, and, lte, isNull, isNotNull } from "drizzle-orm";
 
 export interface IStorage {
   getBlogPosts(): Promise<BlogPost[]>;
   getPublishedBlogPosts(): Promise<BlogPost[]>;
+  getSoftDeletedBlogPosts(): Promise<BlogPost[]>;
   getBlogPostById(id: number): Promise<BlogPost | undefined>;
   getBlogPostBySlug(slug: string): Promise<BlogPost | undefined>;
   createBlogPost(post: InsertBlogPost): Promise<BlogPost>;
   updateBlogPost(id: number, post: Partial<InsertBlogPost>): Promise<BlogPost | undefined>;
   deleteBlogPost(id: number): Promise<boolean>;
+  restoreBlogPost(id: number): Promise<BlogPost | undefined>;
+  permanentlyDeleteBlogPost(id: number): Promise<boolean>;
 }
 
 export class DbStorage implements IStorage {
   async getBlogPosts(): Promise<BlogPost[]> {
-    return db.select().from(blogPosts).orderBy(desc(blogPosts.createdAt));
+    return db
+      .select()
+      .from(blogPosts)
+      .where(isNull(blogPosts.deletedAt))
+      .orderBy(desc(blogPosts.createdAt));
   }
 
   async getPublishedBlogPosts(): Promise<BlogPost[]> {
@@ -24,19 +31,34 @@ export class DbStorage implements IStorage {
       .where(
         and(
           eq(blogPosts.status, "published"),
-          lte(blogPosts.publishedDate, new Date())
+          lte(blogPosts.publishedDate, new Date()),
+          isNull(blogPosts.deletedAt)
         )
       )
       .orderBy(desc(blogPosts.publishedDate));
   }
 
+  async getSoftDeletedBlogPosts(): Promise<BlogPost[]> {
+    return db
+      .select()
+      .from(blogPosts)
+      .where(isNotNull(blogPosts.deletedAt))
+      .orderBy(desc(blogPosts.deletedAt));
+  }
+
   async getBlogPostById(id: number): Promise<BlogPost | undefined> {
-    const results = await db.select().from(blogPosts).where(eq(blogPosts.id, id));
+    const results = await db
+      .select()
+      .from(blogPosts)
+      .where(and(eq(blogPosts.id, id), isNull(blogPosts.deletedAt)));
     return results[0];
   }
 
   async getBlogPostBySlug(slug: string): Promise<BlogPost | undefined> {
-    const results = await db.select().from(blogPosts).where(eq(blogPosts.slug, slug));
+    const results = await db
+      .select()
+      .from(blogPosts)
+      .where(and(eq(blogPosts.slug, slug), isNull(blogPosts.deletedAt)));
     return results[0];
   }
 
@@ -49,13 +71,34 @@ export class DbStorage implements IStorage {
     const results = await db
       .update(blogPosts)
       .set({ ...post, updatedAt: new Date() })
-      .where(eq(blogPosts.id, id))
+      .where(and(eq(blogPosts.id, id), isNull(blogPosts.deletedAt)))
       .returning();
     return results[0];
   }
 
   async deleteBlogPost(id: number): Promise<boolean> {
-    const results = await db.delete(blogPosts).where(eq(blogPosts.id, id)).returning();
+    const results = await db
+      .update(blogPosts)
+      .set({ deletedAt: new Date(), updatedAt: new Date() })
+      .where(and(eq(blogPosts.id, id), isNull(blogPosts.deletedAt)))
+      .returning();
+    return results.length > 0;
+  }
+
+  async restoreBlogPost(id: number): Promise<BlogPost | undefined> {
+    const results = await db
+      .update(blogPosts)
+      .set({ deletedAt: null, updatedAt: new Date() })
+      .where(and(eq(blogPosts.id, id), isNotNull(blogPosts.deletedAt)))
+      .returning();
+    return results[0];
+  }
+
+  async permanentlyDeleteBlogPost(id: number): Promise<boolean> {
+    const results = await db
+      .delete(blogPosts)
+      .where(and(eq(blogPosts.id, id), isNotNull(blogPosts.deletedAt)))
+      .returning();
     return results.length > 0;
   }
 }

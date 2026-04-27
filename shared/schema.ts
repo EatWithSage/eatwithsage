@@ -24,12 +24,14 @@ export const blogPosts = pgTable("blog_posts", {
   publishedDate: timestamp("published_date", { withTimezone: true }),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow(),
   updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow(),
+  deletedAt: timestamp("deleted_at", { withTimezone: true }),
 });
 
 export const insertBlogPostSchema = createInsertSchema(blogPosts).omit({
   id: true,
   createdAt: true,
   updatedAt: true,
+  deletedAt: true,
 }).extend({
   publishedDate: z.string().datetime({ offset: true }).nullable().optional()
     .or(z.date().nullable().optional())
