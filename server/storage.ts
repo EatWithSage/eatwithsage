@@ -1,5 +1,5 @@
-import { db } from "./db";
-import { blogPosts, type BlogPost, type InsertBlogPost } from "@shared/schema";
+import { db } from "./db.js";
+import { blogPosts, type BlogPost, type InsertBlogPost } from "../shared/schema.js";
 import { eq, desc, and, lte, lt, isNull, isNotNull, sql } from "drizzle-orm";
 
 export interface IStorage {

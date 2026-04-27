@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { app } from '../server/api-server';
-import { runMigrations } from '../server/migrate';
+import { app } from '../server/api-server.js';
+import { runMigrations } from '../server/migrate.js';
 
 let initialized = false;
 

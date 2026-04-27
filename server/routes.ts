@@ -1,9 +1,9 @@
 import type { Express, Request, Response, NextFunction } from "express";
 import { createServer, type Server } from "http";
 import { z } from "zod";
-import { demoFormSchema, insertBlogPostSchema } from "@shared/schema";
-import { sendEmail, createDemoEmailHTML } from "./services/email";
-import { storage } from "./storage";
+import { demoFormSchema, insertBlogPostSchema } from "../shared/schema.js";
+import { sendEmail, createDemoEmailHTML } from "./services/email.js";
+import { storage } from "./storage.js";
 
 function requireAdmin(req: Request, res: Response, next: NextFunction) {
   const authHeader = req.headers.authorization;

@@ -4,10 +4,10 @@ import { z } from "zod";
 import multer from "multer";
 import path from "path";
 import fs from "fs";
-import { demoFormSchema, insertBlogPostSchema } from "../shared/schema";
-import { storage } from "./storage";
-import { pool } from "./db";
-import { runMigrations } from "./migrate";
+import { demoFormSchema, insertBlogPostSchema } from "../shared/schema.js";
+import { storage } from "./storage.js";
+import { pool } from "./db.js";
+import { runMigrations } from "./migrate.js";
 
 const CLEANUP_INTERVAL_MS = 24 * 60 * 60 * 1000;
 
