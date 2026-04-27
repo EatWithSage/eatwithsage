@@ -202,7 +202,7 @@ app.delete("/api/admin/posts/:id", requireAdmin, async (req, res) => {
     if (!deleted) {
       return res.status(404).json({ success: false, message: "Post not found" });
     }
-    res.json({ success: true, message: "Post deleted" });
+    res.json({ success: true, message: "Post soft-deleted" });
   } catch (error) {
     console.error("Error deleting post:", error);
     res.status(500).json({ success: false, message: "Internal server error" });
@@ -294,6 +294,7 @@ app.post("/api/admin/trash/cleanup", requireAdmin, async (req, res) => {
     res.status(500).json({ success: false, message: "Internal server error" });
   }
 });
+
 
 app.post("/api/admin/upload", requireAdmin, upload.single("image"), (req, res) => {
   if (!req.file) {

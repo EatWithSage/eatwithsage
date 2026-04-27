@@ -1,10 +1,21 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { Link, useLocation } from "wouter";
 import { queryClient } from "@/lib/queryClient";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { PlusCircle, Edit, Trash2, LogOut, Eye, Download, Database } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import { PlusCircle, Edit, Trash2, LogOut, Eye, Download, Database, RotateCcw, Flame } from "lucide-react";
 import type { BlogPost } from "../../../../shared/schema";
 
 function getToken(): string {
@@ -86,6 +97,7 @@ function DatabaseHealthBadge() {
 
 export default function AdminBlog() {
   const [, navigate] = useLocation();
+  const [permanentDeleteTarget, setPermanentDeleteTarget] = useState<BlogPost | null>(null);
 
   useEffect(() => {
     document.title = "Blog Admin - Sage";
@@ -111,6 +123,22 @@ export default function AdminBlog() {
     },
   });
 
+  const { data: deletedPosts, isLoading: isLoadingDeleted } = useQuery<BlogPost[]>({
+    queryKey: ["/api/admin/posts/deleted"],
+    queryFn: async () => {
+      const res = await adminFetch("/api/admin/posts/deleted");
+      if (res.status === 401) {
+        localStorage.removeItem("sage_admin_token");
+        navigate("/admin");
+        throw new Error("Unauthorized");
+      }
+      const text = await res.text();
+      if (!res.ok) throw new Error(`Failed to fetch deleted posts (${res.status}): ${text}`);
+      if (!text) return [] as BlogPost[];
+      return JSON.parse(text) as BlogPost[];
+    },
+  });
+
   const deleteMutation = useMutation({
     mutationFn: async (id: number) => {
       const res = await adminFetch(`/api/admin/posts/${id}`, { method: "DELETE" });
@@ -120,7 +148,35 @@ export default function AdminBlog() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/posts"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/posts/deleted"] });
       queryClient.invalidateQueries({ queryKey: ["/api/posts"] });
+    },
+  });
+
+  const restoreMutation = useMutation({
+    mutationFn: async (id: number) => {
+      const res = await adminFetch(`/api/admin/posts/${id}/restore`, { method: "POST" });
+      const text = await res.text();
+      if (!res.ok) throw new Error(`Failed to restore post (${res.status}): ${text}`);
+      return text ? JSON.parse(text) : { success: true };
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/posts"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/posts/deleted"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/posts"] });
+    },
+  });
+
+  const permanentDeleteMutation = useMutation({
+    mutationFn: async (id: number) => {
+      const res = await adminFetch(`/api/admin/posts/${id}/permanent`, { method: "DELETE" });
+      const text = await res.text();
+      if (!res.ok) throw new Error(`Failed to permanently delete post (${res.status}): ${text}`);
+      return text ? JSON.parse(text) : { success: true };
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/posts/deleted"] });
+      setPermanentDeleteTarget(null);
     },
   });
 
@@ -147,7 +203,7 @@ export default function AdminBlog() {
   }
 
   function handleDelete(post: BlogPost) {
-    if (window.confirm(`Delete "${post.title}"? This cannot be undone.`)) {
+    if (window.confirm(`Move "${post.title}" to trash?`)) {
       deleteMutation.mutate(post.id);
     }
   }
@@ -184,104 +240,240 @@ export default function AdminBlog() {
       </header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h2 className="text-2xl font-bold text-forest-900 font-recoleta">All Posts</h2>
-            <p className="text-gray-500 text-sm mt-1">{posts?.length ?? 0} posts total</p>
-          </div>
-          <Link href="/admin/blog/new">
-            <Button className="bg-forest-900 hover:bg-forest-800 text-white gap-2">
-              <PlusCircle className="h-4 w-4" />
-              New Post
-            </Button>
-          </Link>
-        </div>
-
-        {isLoading && (
-          <div className="space-y-3">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="bg-white rounded-xl p-4 animate-pulse">
-                <div className="h-5 bg-gray-200 rounded w-1/2 mb-2" />
-                <div className="h-4 bg-gray-200 rounded w-1/4" />
-              </div>
-            ))}
-          </div>
-        )}
-
-        {!isLoading && posts && posts.length === 0 && (
-          <div className="text-center py-20 bg-white rounded-2xl border border-dashed border-gray-300">
-            <p className="text-gray-500 mb-4">No posts yet.</p>
+        <Tabs defaultValue="posts">
+          <div className="flex items-center justify-between mb-8">
+            <div>
+              <TabsList className="bg-white border border-gray-200">
+                <TabsTrigger value="posts" className="gap-2">
+                  All Posts
+                  {posts && posts.length > 0 && (
+                    <span className="ml-1 bg-gray-100 text-gray-600 text-xs rounded-full px-1.5 py-0.5 font-medium">
+                      {posts.length}
+                    </span>
+                  )}
+                </TabsTrigger>
+                <TabsTrigger value="trash" className="gap-2">
+                  <Trash2 className="h-3.5 w-3.5" />
+                  Trash
+                  {deletedPosts && deletedPosts.length > 0 && (
+                    <span className="ml-1 bg-red-100 text-red-600 text-xs rounded-full px-1.5 py-0.5 font-medium">
+                      {deletedPosts.length}
+                    </span>
+                  )}
+                </TabsTrigger>
+              </TabsList>
+            </div>
             <Link href="/admin/blog/new">
               <Button className="bg-forest-900 hover:bg-forest-800 text-white gap-2">
                 <PlusCircle className="h-4 w-4" />
-                Create your first post
+                New Post
               </Button>
             </Link>
           </div>
-        )}
 
-        {!isLoading && posts && posts.length > 0 && (
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-            <table className="w-full">
-              <thead className="bg-gray-50 border-b border-gray-100">
-                <tr>
-                  <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Title</th>
-                  <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider hidden md:table-cell">Status</th>
-                  <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider hidden lg:table-cell">Published</th>
-                  <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider hidden lg:table-cell">Author</th>
-                  <th className="text-right px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100">
-                {posts.map((post) => (
-                  <tr key={post.id} className="hover:bg-gray-50 transition-colors">
-                    <td className="px-6 py-4">
-                      <div>
-                        <p className="font-medium text-forest-900 text-sm line-clamp-1">{post.title}</p>
-                        <p className="text-xs text-gray-400 mt-0.5">/blog/{post.slug}</p>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 hidden md:table-cell">
-                      <Badge
-                        variant={post.status === "published" ? "default" : "secondary"}
-                        className={post.status === "published"
-                          ? "bg-green-100 text-green-800 border-green-200"
-                          : "bg-gray-100 text-gray-600 border-gray-200"}
-                      >
-                        {post.status === "published" ? "Published" : "Draft"}
-                      </Badge>
-                    </td>
-                    <td className="px-6 py-4 hidden lg:table-cell text-sm text-gray-500">
-                      {formatDate(post.publishedDate as unknown as string)}
-                    </td>
-                    <td className="px-6 py-4 hidden lg:table-cell text-sm text-gray-500">
-                      {post.author}
-                    </td>
-                    <td className="px-6 py-4">
-                      <div className="flex items-center justify-end gap-2">
-                        <Link href={`/admin/blog/${post.id}/edit`}>
-                          <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-gray-500 hover:text-forest-900">
-                            <Edit className="h-4 w-4" />
-                          </Button>
-                        </Link>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="h-8 w-8 p-0 text-gray-400 hover:text-red-600"
-                          onClick={() => handleDelete(post)}
-                          disabled={deleteMutation.isPending}
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    </td>
-                  </tr>
+          <TabsContent value="posts">
+            {isLoading && (
+              <div className="space-y-3">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="bg-white rounded-xl p-4 animate-pulse">
+                    <div className="h-5 bg-gray-200 rounded w-1/2 mb-2" />
+                    <div className="h-4 bg-gray-200 rounded w-1/4" />
+                  </div>
                 ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+              </div>
+            )}
+
+            {!isLoading && posts && posts.length === 0 && (
+              <div className="text-center py-20 bg-white rounded-2xl border border-dashed border-gray-300">
+                <p className="text-gray-500 mb-4">No posts yet.</p>
+                <Link href="/admin/blog/new">
+                  <Button className="bg-forest-900 hover:bg-forest-800 text-white gap-2">
+                    <PlusCircle className="h-4 w-4" />
+                    Create your first post
+                  </Button>
+                </Link>
+              </div>
+            )}
+
+            {!isLoading && posts && posts.length > 0 && (
+              <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                <table className="w-full">
+                  <thead className="bg-gray-50 border-b border-gray-100">
+                    <tr>
+                      <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Title</th>
+                      <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider hidden md:table-cell">Status</th>
+                      <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider hidden lg:table-cell">Published</th>
+                      <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider hidden lg:table-cell">Author</th>
+                      <th className="text-right px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-100">
+                    {posts.map((post) => (
+                      <tr key={post.id} className="hover:bg-gray-50 transition-colors">
+                        <td className="px-6 py-4">
+                          <div>
+                            <p className="font-medium text-forest-900 text-sm line-clamp-1">{post.title}</p>
+                            <p className="text-xs text-gray-400 mt-0.5">/blog/{post.slug}</p>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 hidden md:table-cell">
+                          <Badge
+                            variant={post.status === "published" ? "default" : "secondary"}
+                            className={post.status === "published"
+                              ? "bg-green-100 text-green-800 border-green-200"
+                              : "bg-gray-100 text-gray-600 border-gray-200"}
+                          >
+                            {post.status === "published" ? "Published" : "Draft"}
+                          </Badge>
+                        </td>
+                        <td className="px-6 py-4 hidden lg:table-cell text-sm text-gray-500">
+                          {formatDate(post.publishedDate as unknown as string)}
+                        </td>
+                        <td className="px-6 py-4 hidden lg:table-cell text-sm text-gray-500">
+                          {post.author}
+                        </td>
+                        <td className="px-6 py-4">
+                          <div className="flex items-center justify-end gap-2">
+                            <Link href={`/admin/blog/${post.id}/edit`}>
+                              <Button variant="ghost" size="sm" className="h-8 w-8 p-0 text-gray-500 hover:text-forest-900">
+                                <Edit className="h-4 w-4" />
+                              </Button>
+                            </Link>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-8 w-8 p-0 text-gray-400 hover:text-red-600"
+                              onClick={() => handleDelete(post)}
+                              disabled={deleteMutation.isPending}
+                              title="Move to trash"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </TabsContent>
+
+          <TabsContent value="trash">
+            {isLoadingDeleted && (
+              <div className="space-y-3">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="bg-white rounded-xl p-4 animate-pulse">
+                    <div className="h-5 bg-gray-200 rounded w-1/2 mb-2" />
+                    <div className="h-4 bg-gray-200 rounded w-1/4" />
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {!isLoadingDeleted && deletedPosts && deletedPosts.length === 0 && (
+              <div className="text-center py-20 bg-white rounded-2xl border border-dashed border-gray-300">
+                <Trash2 className="h-10 w-10 text-gray-300 mx-auto mb-3" />
+                <p className="text-gray-500">Trash is empty.</p>
+              </div>
+            )}
+
+            {!isLoadingDeleted && deletedPosts && deletedPosts.length > 0 && (
+              <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                <div className="bg-amber-50 border-b border-amber-100 px-6 py-3">
+                  <p className="text-xs text-amber-700 font-medium">
+                    Trashed posts are hidden from the public blog. Restore them to make them visible again, or permanently delete them to remove them forever.
+                  </p>
+                </div>
+                <table className="w-full">
+                  <thead className="bg-gray-50 border-b border-gray-100">
+                    <tr>
+                      <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Title</th>
+                      <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider hidden md:table-cell">Status</th>
+                      <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider hidden lg:table-cell">Deleted On</th>
+                      <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider hidden lg:table-cell">Author</th>
+                      <th className="text-right px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-100">
+                    {deletedPosts.map((post) => (
+                      <tr key={post.id} className="hover:bg-gray-50 transition-colors opacity-75">
+                        <td className="px-6 py-4">
+                          <div>
+                            <p className="font-medium text-gray-600 text-sm line-clamp-1">{post.title}</p>
+                            <p className="text-xs text-gray-400 mt-0.5">/blog/{post.slug}</p>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 hidden md:table-cell">
+                          <Badge
+                            variant="secondary"
+                            className="bg-gray-100 text-gray-500 border-gray-200"
+                          >
+                            {post.status === "published" ? "Published" : "Draft"}
+                          </Badge>
+                        </td>
+                        <td className="px-6 py-4 hidden lg:table-cell text-sm text-gray-500">
+                          {formatDate(post.deletedAt as unknown as string)}
+                        </td>
+                        <td className="px-6 py-4 hidden lg:table-cell text-sm text-gray-500">
+                          {post.author}
+                        </td>
+                        <td className="px-6 py-4">
+                          <div className="flex items-center justify-end gap-2">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-8 px-3 text-xs text-gray-500 hover:text-green-700 hover:bg-green-50 gap-1.5"
+                              onClick={() => restoreMutation.mutate(post.id)}
+                              disabled={restoreMutation.isPending || permanentDeleteMutation.isPending}
+                              title="Restore post"
+                            >
+                              <RotateCcw className="h-3.5 w-3.5" />
+                              Restore
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-8 px-3 text-xs text-gray-400 hover:text-red-600 hover:bg-red-50 gap-1.5"
+                              onClick={() => setPermanentDeleteTarget(post)}
+                              disabled={restoreMutation.isPending || permanentDeleteMutation.isPending}
+                              title="Permanently delete"
+                            >
+                              <Flame className="h-3.5 w-3.5" />
+                              Delete Forever
+                            </Button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </TabsContent>
+        </Tabs>
       </main>
+
+      <AlertDialog open={!!permanentDeleteTarget} onOpenChange={(open) => { if (!open) setPermanentDeleteTarget(null); }}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Permanently delete this post?</AlertDialogTitle>
+            <AlertDialogDescription>
+              <strong>"{permanentDeleteTarget?.title}"</strong> will be permanently removed and cannot be recovered. This action is irreversible.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel disabled={permanentDeleteMutation.isPending}>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              className="bg-red-600 hover:bg-red-700 text-white"
+              disabled={permanentDeleteMutation.isPending}
+              onClick={() => permanentDeleteTarget && permanentDeleteMutation.mutate(permanentDeleteTarget.id)}
+            >
+              {permanentDeleteMutation.isPending ? "Deleting…" : "Delete Forever"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
