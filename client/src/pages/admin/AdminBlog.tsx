@@ -4,7 +4,7 @@ import { Link, useLocation } from "wouter";
 import { queryClient } from "@/lib/queryClient";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { PlusCircle, Edit, Trash2, LogOut, Eye, Download } from "lucide-react";
+import { PlusCircle, Edit, Trash2, LogOut, Eye, Download, Database } from "lucide-react";
 import type { BlogPost } from "../../../../shared/schema";
 
 function getToken(): string {
@@ -25,6 +25,63 @@ async function adminFetch(url: string, options?: RequestInit): Promise<Response>
 function formatDate(dateStr: string | null | undefined): string {
   if (!dateStr) return "—";
   return new Date(dateStr).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
+}
+
+interface HealthData {
+  status: "ok" | "degraded";
+  version: string;
+  timestamp: number;
+  database: "connected" | "unreachable";
+}
+
+function DatabaseHealthBadge() {
+  const { data, isLoading, isError } = useQuery<HealthData>({
+    queryKey: ["/api/health"],
+    queryFn: async () => {
+      const res = await fetch("/api/health");
+      const json = await res.json();
+      return json as HealthData;
+    },
+    refetchInterval: 30000,
+    retry: 1,
+  });
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gray-100 text-gray-500 text-xs font-medium">
+        <Database className="h-3 w-3" />
+        <span>Checking…</span>
+      </div>
+    );
+  }
+
+  const isHealthy = !isError && data?.database === "connected";
+
+  return (
+    <div
+      className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium ${
+        isHealthy
+          ? "bg-green-100 text-green-800"
+          : "bg-red-100 text-red-800"
+      }`}
+      title={isHealthy ? "Database connected" : "Database unreachable"}
+    >
+      <Database className="h-3 w-3" />
+      <span className="relative flex h-2 w-2">
+        <span
+          className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${
+            isHealthy ? "bg-green-500" : "bg-red-500"
+          }`}
+        />
+        <span
+          className={`relative inline-flex rounded-full h-2 w-2 ${
+            isHealthy ? "bg-green-500" : "bg-red-500"
+          }`}
+        />
+      </span>
+      <span>{isHealthy ? "DB Connected" : "DB Unreachable"}</span>
+    </div>
+  );
 }
 
 export default function AdminBlog() {
@@ -107,6 +164,7 @@ export default function AdminBlog() {
             <h1 className="text-lg font-semibold text-gray-700">Blog Admin</h1>
           </div>
           <div className="flex items-center gap-3">
+            <DatabaseHealthBadge />
             <Link href="/blog">
               <Button variant="ghost" size="sm" className="gap-2 text-gray-600">
                 <Eye className="h-4 w-4" />
