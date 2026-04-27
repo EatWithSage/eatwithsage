@@ -129,6 +129,27 @@ Preferred communication style: Simple, everyday language.
 - **Neon Database**: PostgreSQL-compatible serverless database (inferred from @neondatabase/serverless)
 - **Database Migrations**: Drizzle Kit for schema migrations and database management
 
+## Database Migration Workflow
+
+Schema changes are tracked through Drizzle migrations stored in the `migrations/` folder. Use these commands:
+
+- **`npm run db:generate`** — Compares `shared/schema.ts` against the last migration snapshot and generates a new SQL migration file if there are changes. Run this after modifying `shared/schema.ts`.
+- **`npm run db:migrate`** — Applies any pending migration files to the database. Safe to run repeatedly; already-applied migrations are skipped via the `drizzle.__drizzle_migrations` tracking table.
+- **`npm run db:push`** — Directly syncs the database schema from `shared/schema.ts` without using migration files. Useful for quick development iteration but bypasses the migration history.
+
+### Typical workflow for a schema change:
+1. Edit `shared/schema.ts` with the new table/column
+2. Run `npm run db:generate` to create the migration file
+3. Review the generated SQL in `migrations/`
+4. Run `npm run db:migrate` to apply it to the database
+
+The `drizzle.config.ts` points to `./migrations` as the output directory and `./shared/schema.ts` as the source of truth.
+
+### Bootstrapping an existing database
+The initial migration SQL uses `CREATE TABLE IF NOT EXISTS`, making it safe to run against both fresh and pre-existing databases. For a brand new environment, simply run `npm run db:migrate` — it will create the `blog_posts` table and mark the migration as applied in the tracking table. For an environment where `blog_posts` was already created via raw SQL (before migrations were set up), `npm run db:migrate` is still safe: the `IF NOT EXISTS` guard means the `CREATE TABLE` statement is skipped silently, and the migration is recorded as applied.
+
+> **Note for production**: `db:generate` + `db:migrate` is the recommended path for all schema changes. Use `db:push` for local development iteration only, as it bypasses migration history.
+
 ## UI & Component Libraries
 - **Radix UI**: Headless, accessible component primitives for complex UI patterns
 - **Tailwind CSS**: Utility-first CSS framework for rapid styling
