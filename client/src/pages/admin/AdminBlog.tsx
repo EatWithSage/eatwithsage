@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { PlusCircle, Edit, Trash2, LogOut, Eye, Download, Database, RotateCcw, Flame } from "lucide-react";
 import type { BlogPost } from "../../../../shared/schema";
+import { useToast } from "@/hooks/use-toast";
 
 function getToken(): string {
   return localStorage.getItem("sage_admin_token") || "";
@@ -131,6 +132,7 @@ function DatabaseHealthBadge() {
 export default function AdminBlog() {
   const [, navigate] = useLocation();
   const [permanentDeleteTarget, setPermanentDeleteTarget] = useState<BlogPost | null>(null);
+  const { toast } = useToast();
 
   useEffect(() => {
     document.title = "Blog Admin - Sage";
@@ -197,6 +199,10 @@ export default function AdminBlog() {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/posts"] });
       queryClient.invalidateQueries({ queryKey: ["/api/admin/posts/deleted"] });
       queryClient.invalidateQueries({ queryKey: ["/api/posts"] });
+      toast({ title: "Post restored successfully" });
+    },
+    onError: (error: Error) => {
+      toast({ title: "Failed to restore post", description: error.message, variant: "destructive" });
     },
   });
 
@@ -210,6 +216,10 @@ export default function AdminBlog() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/posts/deleted"] });
       setPermanentDeleteTarget(null);
+      toast({ title: "Post permanently deleted" });
+    },
+    onError: (error: Error) => {
+      toast({ title: "Failed to delete post", description: error.message, variant: "destructive" });
     },
   });
 
