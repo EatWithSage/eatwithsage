@@ -189,7 +189,7 @@ describe("GET /api/admin/posts/export", () => {
       const res = await request(app).get("/api/admin/posts/export").set(AUTH);
       const disposition = res.headers["content-disposition"] as string;
       expect(disposition).toMatch(/attachment/);
-      expect(disposition).toMatch(/filename="blog-posts-export-\d{4}-\d{2}-\d{2}\.json"/);
+      expect(disposition).toMatch(/filename="blog-posts-all-export-\d{4}-\d{2}-\d{2}\.json"/);
     });
 
     it("returns an empty array when there are no posts", async () => {
@@ -302,16 +302,21 @@ describe("GET /api/admin/posts/export", () => {
       expect(statuses).toContain("archived");
     });
 
-    it("excludes soft-deleted posts from the export", async () => {
+    it("includes soft-deleted posts in the export with a non-null deletedAt field", async () => {
       const live = await storage.createBlogPost({ title: "Live Post", slug: "live-post", author: "Sage", status: "published" });
       const toDelete = await storage.createBlogPost({ title: "Deleted Post", slug: "deleted-post", author: "Sage", status: "draft" });
       await storage.deleteBlogPost(toDelete.id);
 
       const res = await request(app).get("/api/admin/posts/export").set(AUTH);
       const posts = JSON.parse(res.text);
-      expect(posts).toHaveLength(1);
-      expect(posts[0].id).toBe(live.id);
-      expect(posts[0].title).toBe("Live Post");
+      expect(posts).toHaveLength(2);
+      const titles = posts.map((p: { title: string }) => p.title);
+      expect(titles).toContain("Live Post");
+      expect(titles).toContain("Deleted Post");
+      const deleted = posts.find((p: { title: string }) => p.title === "Deleted Post");
+      expect(deleted.deletedAt).not.toBeNull();
+      const livePost = posts.find((p: { title: string; id: number }) => p.id === live.id);
+      expect(livePost.deletedAt).toBeNull();
     });
 
     it("returns 500 when storage throws an unexpected error", async () => {

@@ -211,11 +211,15 @@ app.delete("/api/admin/posts/:id", requireAdmin, async (req, res) => {
 
 app.get("/api/admin/posts/export", requireAdmin, async (req, res) => {
   try {
-    const posts = await storage.getBlogPosts();
-    const filename = `blog-posts-export-${new Date().toISOString().slice(0, 10)}.json`;
+    const [activePosts, deletedPosts] = await Promise.all([
+      storage.getBlogPosts(),
+      storage.getSoftDeletedBlogPosts(),
+    ]);
+    const allPosts = [...activePosts, ...deletedPosts];
+    const filename = `blog-posts-all-export-${new Date().toISOString().slice(0, 10)}.json`;
     res.setHeader("Content-Disposition", `attachment; filename="${filename}"`);
     res.setHeader("Content-Type", "application/json");
-    res.send(JSON.stringify(posts, null, 2));
+    res.send(JSON.stringify(allPosts, null, 2));
   } catch (error) {
     console.error("Error exporting posts:", error);
     res.status(500).json({ success: false, message: "Internal server error" });

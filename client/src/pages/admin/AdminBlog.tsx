@@ -271,9 +271,9 @@ export default function AdminBlog() {
                 View Blog
               </Button>
             </Link>
-            <Button variant="ghost" size="sm" onClick={() => handleExport("json")} className="gap-2 text-gray-600">
+            <Button variant="ghost" size="sm" onClick={() => handleExport("json")} className="gap-2 text-gray-600" title="Exports all posts including trashed ones">
               <Download className="h-4 w-4" />
-              Export JSON
+              Export All JSON
             </Button>
             <Button variant="ghost" size="sm" onClick={() => handleExport("csv")} className="gap-2 text-gray-600">
               <Download className="h-4 w-4" />
