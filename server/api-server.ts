@@ -9,6 +9,30 @@ import { storage } from "./storage";
 import { pool } from "./db";
 import { runMigrations } from "./migrate";
 
+const RETENTION_DAYS = parseInt(process.env.TRASH_RETENTION_DAYS || "30", 10);
+const CLEANUP_INTERVAL_MS = 24 * 60 * 60 * 1000;
+
+const cleanupState = {
+  retentionDays: RETENTION_DAYS,
+  lastRunAt: null as Date | null,
+  nextRunAt: null as Date | null,
+  lastPurgedCount: 0,
+};
+
+async function runCleanup() {
+  try {
+    const count = await storage.purgeOldDeletedPosts(cleanupState.retentionDays);
+    cleanupState.lastRunAt = new Date();
+    cleanupState.nextRunAt = new Date(Date.now() + CLEANUP_INTERVAL_MS);
+    cleanupState.lastPurgedCount = count;
+    if (count > 0) {
+      console.log(`Trash cleanup: permanently removed ${count} post(s) older than ${cleanupState.retentionDays} days`);
+    }
+  } catch (err) {
+    console.error("Trash cleanup failed:", err);
+  }
+}
+
 const uploadsDir = path.join(process.cwd(), "uploads");
 if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
 
@@ -180,6 +204,92 @@ app.delete("/api/admin/posts/:id", requireAdmin, async (req, res) => {
   }
 });
 
+app.get("/api/admin/posts/export", requireAdmin, async (req, res) => {
+  try {
+    const posts = await storage.getBlogPosts();
+    const filename = `blog-posts-export-${new Date().toISOString().slice(0, 10)}.json`;
+    res.setHeader("Content-Disposition", `attachment; filename="${filename}"`);
+    res.setHeader("Content-Type", "application/json");
+    res.send(JSON.stringify(posts, null, 2));
+  } catch (error) {
+    console.error("Error exporting posts:", error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+});
+
+app.get("/api/admin/posts/deleted", requireAdmin, async (req, res) => {
+  try {
+    const posts = await storage.getSoftDeletedBlogPosts();
+    res.json(posts);
+  } catch (error) {
+    console.error("Error fetching deleted posts:", error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+});
+
+app.post("/api/admin/posts/:id/restore", requireAdmin, async (req, res) => {
+  try {
+    const id = parseInt(req.params.id, 10);
+    if (isNaN(id)) {
+      return res.status(400).json({ success: false, message: "Invalid post ID" });
+    }
+    const post = await storage.restoreBlogPost(id);
+    if (!post) {
+      return res.status(404).json({ success: false, message: "Deleted post not found" });
+    }
+    res.json(post);
+  } catch (error) {
+    console.error("Error restoring post:", error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+});
+
+app.delete("/api/admin/posts/:id/permanent", requireAdmin, async (req, res) => {
+  try {
+    const id = parseInt(req.params.id, 10);
+    if (isNaN(id)) {
+      return res.status(400).json({ success: false, message: "Invalid post ID" });
+    }
+    const deleted = await storage.permanentlyDeleteBlogPost(id);
+    if (!deleted) {
+      return res.status(404).json({ success: false, message: "Deleted post not found" });
+    }
+    res.json({ success: true, message: "Post permanently deleted" });
+  } catch (error) {
+    console.error("Error permanently deleting post:", error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+});
+
+app.get("/api/admin/trash/cleanup-status", requireAdmin, async (req, res) => {
+  try {
+    const eligibleCount = await storage.countPostsEligibleForPurge(cleanupState.retentionDays);
+    res.json({
+      retentionDays: cleanupState.retentionDays,
+      eligibleForPurge: eligibleCount,
+      lastRunAt: cleanupState.lastRunAt,
+      nextRunAt: cleanupState.nextRunAt,
+      lastPurgedCount: cleanupState.lastPurgedCount,
+    });
+  } catch (error) {
+    console.error("Error fetching cleanup status:", error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+});
+
+app.post("/api/admin/trash/cleanup", requireAdmin, async (req, res) => {
+  try {
+    const count = await storage.purgeOldDeletedPosts(cleanupState.retentionDays);
+    cleanupState.lastRunAt = new Date();
+    cleanupState.nextRunAt = new Date(Date.now() + CLEANUP_INTERVAL_MS);
+    cleanupState.lastPurgedCount = count;
+    res.json({ success: true, purgedCount: count, retentionDays: cleanupState.retentionDays });
+  } catch (error) {
+    console.error("Error running cleanup:", error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+});
+
 app.post("/api/admin/upload", requireAdmin, upload.single("image"), (req, res) => {
   if (!req.file) {
     return res.status(400).json({ success: false, message: "No image file provided" });
@@ -218,6 +328,9 @@ async function start() {
 
   app.listen(port, "0.0.0.0", () => {
     console.log(`API server running on port ${port} (${isProduction ? "production" : "development"})`);
+    runCleanup();
+    setInterval(runCleanup, CLEANUP_INTERVAL_MS);
+    console.log(`Trash cleanup scheduled every 24h (retention: ${RETENTION_DAYS} days)`);
   });
 }
 

@@ -1,6 +1,6 @@
 import { db } from "./db";
 import { blogPosts, type BlogPost, type InsertBlogPost } from "@shared/schema";
-import { eq, desc, and, lte, isNull, isNotNull } from "drizzle-orm";
+import { eq, desc, and, lte, lt, isNull, isNotNull, sql } from "drizzle-orm";
 
 export interface IStorage {
   getBlogPosts(): Promise<BlogPost[]>;
@@ -13,6 +13,8 @@ export interface IStorage {
   deleteBlogPost(id: number): Promise<boolean>;
   restoreBlogPost(id: number): Promise<BlogPost | undefined>;
   permanentlyDeleteBlogPost(id: number): Promise<boolean>;
+  purgeOldDeletedPosts(olderThanDays: number): Promise<number>;
+  countPostsEligibleForPurge(olderThanDays: number): Promise<number>;
 }
 
 export class DbStorage implements IStorage {
@@ -100,6 +102,24 @@ export class DbStorage implements IStorage {
       .where(and(eq(blogPosts.id, id), isNotNull(blogPosts.deletedAt)))
       .returning();
     return results.length > 0;
+  }
+
+  async purgeOldDeletedPosts(olderThanDays: number): Promise<number> {
+    const cutoff = new Date(Date.now() - olderThanDays * 24 * 60 * 60 * 1000);
+    const results = await db
+      .delete(blogPosts)
+      .where(and(isNotNull(blogPosts.deletedAt), lt(blogPosts.deletedAt, cutoff)))
+      .returning();
+    return results.length;
+  }
+
+  async countPostsEligibleForPurge(olderThanDays: number): Promise<number> {
+    const cutoff = new Date(Date.now() - olderThanDays * 24 * 60 * 60 * 1000);
+    const results = await db
+      .select({ count: sql<number>`count(*)::int` })
+      .from(blogPosts)
+      .where(and(isNotNull(blogPosts.deletedAt), lt(blogPosts.deletedAt, cutoff)));
+    return results[0]?.count ?? 0;
   }
 }
 
