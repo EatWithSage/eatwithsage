@@ -1,8 +1,17 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import express from 'express';
+import { app } from '../server/api-server';
+import { runMigrations } from '../server/migrate';
 
-const app = express();
-// app.use(...); app.get('/api/hello', ...); etc.
+let initialized = false;
 
-// IMPORTANT: no app.listen() on Vercel
-export default (req: VercelRequest, res: VercelResponse) => app(req, res);
+export default async (req: VercelRequest, res: VercelResponse) => {
+  if (!initialized) {
+    try {
+      await runMigrations();
+    } catch (err) {
+      console.error('Migration failed (continuing):', err);
+    }
+    initialized = true;
+  }
+  return app(req as any, res as any);
+};

@@ -38,8 +38,12 @@ async function runCleanup() {
   }
 }
 
-const uploadsDir = path.join(process.cwd(), "uploads");
-if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
+const uploadsDir = process.env.VERCEL
+  ? path.join("/tmp", "uploads")
+  : path.join(process.cwd(), "uploads");
+try {
+  if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
+} catch (_) {}
 
 const upload = multer({
   storage: multer.diskStorage({
@@ -308,7 +312,7 @@ app.post("/api/admin/upload", requireAdmin, upload.single("image"), (req, res) =
   res.json({ success: true, url });
 });
 
-if (process.env.NODE_ENV === "production") {
+if (process.env.NODE_ENV === "production" && !process.env.VERCEL) {
   const distDir = path.resolve(process.cwd(), "dist");
   if (fs.existsSync(distDir)) {
     app.use(express.static(distDir, { index: false }));
@@ -344,6 +348,6 @@ async function start() {
   });
 }
 
-if (process.env.NODE_ENV !== "test") {
+if (process.env.NODE_ENV !== "test" && !process.env.VERCEL) {
   start();
 }
