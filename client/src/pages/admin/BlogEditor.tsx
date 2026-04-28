@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Switch } from "@/components/ui/switch";
 import { ArrowLeft, Save, Eye, Upload, X, ImageIcon, Bold, Italic, Underline as UnderlineIcon, List, ListOrdered, Quote, Link as LinkIcon, Unlink, AlignLeft, AlignCenter, AlignRight, Heading1, Heading2, Heading3, Eraser } from "lucide-react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
@@ -512,20 +511,36 @@ export default function BlogEditor() {
                   {statusValue === "published" ? "Visible on the public blog" : "Hidden from public view"}
                 </p>
               </div>
-              <div className="flex items-center gap-3">
-                <span className="text-sm text-gray-500">Draft</span>
-                <Switch
-                  checked={statusValue === "published"}
-                  onCheckedChange={(checked) => {
-                    setValue("status", checked ? "published" : "draft");
-                    if (checked && !form.getValues("publishedDate")) {
+              <div className="flex items-center rounded-lg border border-gray-200 overflow-hidden">
+                <button
+                  type="button"
+                  onClick={() => setValue("status", "draft")}
+                  className={`px-4 py-2 text-sm font-medium transition-colors ${
+                    statusValue !== "published"
+                      ? "bg-gray-700 text-white"
+                      : "bg-white text-gray-500 hover:bg-gray-50"
+                  }`}
+                >
+                  Draft
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setValue("status", "published");
+                    if (!form.getValues("publishedDate")) {
                       const now = new Date();
                       now.setSeconds(0, 0);
                       setValue("publishedDate", now.toISOString().slice(0, 16));
                     }
                   }}
-                />
-                <span className="text-sm text-gray-700 font-medium">Published</span>
+                  className={`px-4 py-2 text-sm font-medium transition-colors ${
+                    statusValue === "published"
+                      ? "bg-forest-600 text-white"
+                      : "bg-white text-gray-500 hover:bg-gray-50"
+                  }`}
+                >
+                  Published
+                </button>
               </div>
             </div>
 

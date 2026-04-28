@@ -111,12 +111,6 @@ export default function BlogPostPage() {
                 </div>
               )}
 
-              {post.excerpt && (
-                <p className="text-xl text-gray-600 mb-8 font-medium leading-relaxed">
-                  {post.excerpt}
-                </p>
-              )}
-
               {post.content && (
                 <div
                   className="prose prose-lg max-w-none text-gray-700 
