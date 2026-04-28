@@ -105,9 +105,9 @@ function WysiwygEditor({
     }
     if (url) {
       const href = /^https?:\/\//i.test(url) ? url : `https://${url}`;
-      chain.setLink({ href }).run();
+      chain.extendMarkRange("link").setLink({ href }).run();
     } else {
-      chain.unsetLink().run();
+      chain.extendMarkRange("link").unsetLink().run();
     }
     setShowLinkInput(false);
     setLinkUrl("");
@@ -171,11 +171,17 @@ function WysiwygEditor({
         <span className="w-px h-5 bg-gray-300 mx-1" />
 
         <ToolBtn title="Insert / edit link" active={editor.isActive("link")} onClick={() => {
-          const existing = editor.getAttributes("link").href || "";
-          const { from, to } = editor.state.selection;
-          savedSelectionRef.current = { from, to };
-          setLinkUrl(existing);
-          setShowLinkInput((v) => !v);
+          if (showLinkInput) {
+            setShowLinkInput(false);
+            setLinkUrl("");
+            savedSelectionRef.current = null;
+          } else {
+            const existing = editor.getAttributes("link").href || "";
+            const { from, to } = editor.state.selection;
+            savedSelectionRef.current = { from, to };
+            setLinkUrl(existing);
+            setShowLinkInput(true);
+          }
         }}>
           <LinkIcon className={iconSize} />
         </ToolBtn>
