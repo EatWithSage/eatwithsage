@@ -129,3 +129,9 @@
   pointer-events: none;
   height: 0;
 }
+
+/* Disable fi ligature in Recoleta font to prevent emoji fallback rendering */
+.font-recoleta {
+  font-variant-ligatures: none;
+  font-feature-settings: "liga" 0, "clig" 0;
+}
