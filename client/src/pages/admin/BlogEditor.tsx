@@ -211,10 +211,10 @@ function WysiwygEditor({
             placeholder="https://example.com"
             className="flex-1 text-sm bg-transparent outline-none placeholder-amber-400"
           />
-          <button type="button" onMouseDown={(e) => { e.preventDefault(); applyLink(); }} className="text-xs font-medium text-amber-700 hover:text-amber-900 px-2 py-0.5 rounded hover:bg-amber-100">
+          <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={applyLink} className="text-xs font-medium text-amber-700 hover:text-amber-900 px-2 py-0.5 rounded hover:bg-amber-100">
             Apply
           </button>
-          <button type="button" onMouseDown={(e) => { e.preventDefault(); setShowLinkInput(false); setLinkUrl(""); savedSelectionRef.current = null; }} className="text-gray-400 hover:text-gray-600">
+          <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => { setShowLinkInput(false); setLinkUrl(""); savedSelectionRef.current = null; }} className="text-gray-400 hover:text-gray-600">
             <X className="h-3.5 w-3.5" />
           </button>
         </div>
