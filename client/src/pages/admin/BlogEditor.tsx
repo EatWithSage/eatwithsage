@@ -63,6 +63,7 @@ function WysiwygEditor({
   const [showLinkInput, setShowLinkInput] = useState(false);
   const linkInputRef = useRef<HTMLInputElement>(null);
   const prevValueRef = useRef(value);
+  const savedSelectionRef = useRef<{ from: number; to: number } | null>(null);
 
   const editor = useEditor({
     extensions: [
@@ -97,14 +98,20 @@ function WysiwygEditor({
   const applyLink = useCallback(() => {
     if (!editor) return;
     const url = linkUrl.trim();
+    const saved = savedSelectionRef.current;
+    let chain = editor.chain().focus();
+    if (saved) {
+      chain = chain.setTextSelection(saved) as typeof chain;
+    }
     if (url) {
       const href = /^https?:\/\//i.test(url) ? url : `https://${url}`;
-      editor.chain().focus().extendMarkToNextWord().setLink({ href }).run();
+      chain.setLink({ href }).run();
     } else {
-      editor.chain().focus().unsetLink().run();
+      chain.unsetLink().run();
     }
     setShowLinkInput(false);
     setLinkUrl("");
+    savedSelectionRef.current = null;
   }, [editor, linkUrl]);
 
   if (!editor) return null;
@@ -165,6 +172,8 @@ function WysiwygEditor({
 
         <ToolBtn title="Insert / edit link" active={editor.isActive("link")} onClick={() => {
           const existing = editor.getAttributes("link").href || "";
+          const { from, to } = editor.state.selection;
+          savedSelectionRef.current = { from, to };
           setLinkUrl(existing);
           setShowLinkInput((v) => !v);
         }}>
@@ -192,14 +201,14 @@ function WysiwygEditor({
             type="url"
             value={linkUrl}
             onChange={(e) => setLinkUrl(e.target.value)}
-            onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); applyLink(); } if (e.key === "Escape") { setShowLinkInput(false); setLinkUrl(""); } }}
+            onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); applyLink(); } if (e.key === "Escape") { setShowLinkInput(false); setLinkUrl(""); savedSelectionRef.current = null; } }}
             placeholder="https://example.com"
             className="flex-1 text-sm bg-transparent outline-none placeholder-amber-400"
           />
           <button type="button" onClick={applyLink} className="text-xs font-medium text-amber-700 hover:text-amber-900 px-2 py-0.5 rounded hover:bg-amber-100">
             Apply
           </button>
-          <button type="button" onClick={() => { setShowLinkInput(false); setLinkUrl(""); }} className="text-gray-400 hover:text-gray-600">
+          <button type="button" onClick={() => { setShowLinkInput(false); setLinkUrl(""); savedSelectionRef.current = null; }} className="text-gray-400 hover:text-gray-600">
             <X className="h-3.5 w-3.5" />
           </button>
         </div>
