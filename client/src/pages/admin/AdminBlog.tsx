@@ -160,6 +160,9 @@ export default function AdminBlog() {
     },
   });
 
+  const publishedCount = posts ? posts.filter((p) => p.status === "published").length : 0;
+  const draftCount = posts ? posts.filter((p) => p.status === "draft").length : 0;
+
   const { data: deletedPosts, isLoading: isLoadingDeleted } = useQuery<BlogPost[]>({
     queryKey: ["/api/admin/posts/deleted"],
     queryFn: async () => {
@@ -307,8 +310,18 @@ export default function AdminBlog() {
                 <TabsTrigger value="posts" className="gap-2">
                   All Posts
                   {posts && posts.length > 0 && (
-                    <span className="ml-1 bg-gray-100 text-gray-600 text-xs rounded-full px-1.5 py-0.5 font-medium">
-                      {posts.length}
+                    <span className="ml-1 flex items-center gap-1 text-xs font-medium">
+                      <span className="bg-gray-100 text-gray-600 rounded-full px-1.5 py-0.5">
+                        {posts.length}
+                      </span>
+                      <span className="hidden sm:inline text-gray-400">·</span>
+                      <span className="hidden sm:inline bg-green-100 text-green-700 rounded-full px-1.5 py-0.5">
+                        {publishedCount} published
+                      </span>
+                      <span className="hidden sm:inline text-gray-400">·</span>
+                      <span className="hidden sm:inline bg-yellow-100 text-yellow-700 rounded-full px-1.5 py-0.5">
+                        {draftCount} drafts
+                      </span>
                     </span>
                   )}
                 </TabsTrigger>
