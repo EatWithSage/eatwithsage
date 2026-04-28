@@ -504,21 +504,19 @@ export default function BlogEditor() {
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 space-y-5">
             <h3 className="font-semibold text-forest-900">Post Settings</h3>
 
-            <div className="flex items-center justify-between">
-              <div>
-                <Label className="text-gray-700 font-medium">Status</Label>
-                <p className="text-sm text-gray-500 mt-0.5">
-                  {statusValue === "published" ? "Visible on the public blog" : "Hidden from public view"}
-                </p>
-              </div>
-              <div className="flex items-center rounded-lg border border-gray-200 overflow-hidden">
+            <div>
+              <Label className="text-gray-700 font-medium">Status</Label>
+              <p className="text-sm text-gray-500 mt-0.5 mb-3">
+                {statusValue === "published" ? "Visible on the public blog" : "Hidden from public view"}
+              </p>
+              <div className="flex rounded-full border border-gray-200 overflow-hidden w-fit">
                 <button
                   type="button"
                   onClick={() => setValue("status", "draft")}
-                  className={`px-4 py-2 text-sm font-medium transition-colors ${
+                  className={`px-6 py-2 text-sm font-medium transition-colors ${
                     statusValue !== "published"
-                      ? "bg-gray-700 text-white"
-                      : "bg-white text-gray-500 hover:bg-gray-50"
+                      ? "bg-[hsl(150,40%,30%)] text-white"
+                      : "bg-white text-gray-400 hover:text-gray-600"
                   }`}
                 >
                   Draft
@@ -533,10 +531,10 @@ export default function BlogEditor() {
                       setValue("publishedDate", now.toISOString().slice(0, 16));
                     }
                   }}
-                  className={`px-4 py-2 text-sm font-medium transition-colors ${
+                  className={`px-6 py-2 text-sm font-medium transition-colors ${
                     statusValue === "published"
-                      ? "bg-forest-600 text-white"
-                      : "bg-white text-gray-500 hover:bg-gray-50"
+                      ? "bg-[hsl(150,40%,30%)] text-white"
+                      : "bg-white text-gray-400 hover:text-gray-600"
                   }`}
                 >
                   Published
