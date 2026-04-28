@@ -372,7 +372,17 @@ export default function AdminBlog() {
                       <tr key={post.id} className="hover:bg-gray-50 transition-colors">
                         <td className="px-6 py-4">
                           <div>
-                            <p className="font-medium text-forest-900 text-sm line-clamp-1">{post.title}</p>
+                            <div className="flex items-center gap-2">
+                              <p className="font-medium text-forest-900 text-sm line-clamp-1">{post.title}</p>
+                              <Badge
+                                variant={post.status === "published" ? "default" : "secondary"}
+                                className={`md:hidden shrink-0 ${post.status === "published"
+                                  ? "bg-forest-100 text-forest-800 border-forest-200"
+                                  : "bg-gray-100 text-gray-600 border-gray-200"}`}
+                              >
+                                {post.status === "published" ? "Published" : "Draft"}
+                              </Badge>
+                            </div>
                             <p className="text-xs text-gray-400 mt-0.5">/blog/{post.slug}</p>
                           </div>
                         </td>
@@ -380,7 +390,7 @@ export default function AdminBlog() {
                           <Badge
                             variant={post.status === "published" ? "default" : "secondary"}
                             className={post.status === "published"
-                              ? "bg-green-100 text-green-800 border-green-200"
+                              ? "bg-forest-100 text-forest-800 border-forest-200"
                               : "bg-gray-100 text-gray-600 border-gray-200"}
                           >
                             {post.status === "published" ? "Published" : "Draft"}
