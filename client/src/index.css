@@ -1,4 +1,10 @@
-@import url('https://fonts.cdnfonts.com/css/recoleta');
+@font-face {
+  font-family: 'Recoleta';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./assets/fonts/Recoleta-Regular.woff') format('woff');
+}
 
 @tailwind base;
 @tailwind components;
