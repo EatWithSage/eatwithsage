@@ -60,20 +60,51 @@ app.use(cors({ origin: true, credentials: true }));
 app.use(express.json({ limit: "5mb" }));
 app.use(express.urlencoded({ extended: false, limit: "5mb" }));
 
+async function checkCloudinaryHealth(): Promise<"connected" | "unconfigured" | "unreachable"> {
+  if (
+    !process.env.CLOUDINARY_CLOUD_NAME ||
+    !process.env.CLOUDINARY_API_KEY ||
+    !process.env.CLOUDINARY_API_SECRET
+  ) {
+    return "unconfigured";
+  }
+  try {
+    await cloudinary.api.ping();
+    return "connected";
+  } catch (err) {
+    console.error("Health check: Cloudinary unreachable", err);
+    return "unreachable";
+  }
+}
+
 app.get("/api/health", async (_req, res) => {
   const timestamp = Date.now();
-  try {
-    await pool.query("SELECT 1");
-    res.json({ status: "ok", version: "2.0", timestamp, database: "connected" });
-  } catch (err) {
-    console.error("Health check: database unreachable", err);
-    res.status(503).json({
-      status: "degraded",
-      version: "2.0",
-      timestamp,
-      database: "unreachable",
-    });
+  const [dbStatus, cloudinaryStatus] = await Promise.allSettled([
+    pool.query("SELECT 1"),
+    checkCloudinaryHealth(),
+  ]);
+
+  const database =
+    dbStatus.status === "fulfilled" ? "connected" : "unreachable";
+  const cloudinary_status: string =
+    cloudinaryStatus.status === "fulfilled"
+      ? cloudinaryStatus.value
+      : "unreachable";
+
+  if (database === "unreachable") {
+    console.error("Health check: database unreachable");
   }
+
+  const allOk = database === "connected" && cloudinary_status === "connected";
+  const statusCode = allOk ? 200 : 503;
+
+  res.status(statusCode).json({
+    status: allOk ? "ok" : "degraded",
+    version: "2.0",
+    timestamp,
+    database,
+    cloudinary: cloudinary_status,
+  });
 });
 
 app.use((req, res, next) => {
