@@ -107,6 +107,7 @@ export default function BlogPostPage() {
                     src={post.coverImage}
                     alt={post.title}
                     className="w-full h-auto max-h-96 object-cover"
+                    loading="eager"
                   />
                 </div>
               )}
