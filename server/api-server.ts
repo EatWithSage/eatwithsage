@@ -302,7 +302,7 @@ app.post("/api/admin/upload", requireAdmin, upload.single("image"), (req, res) =
     return res.status(400).json({ success: false, message: "No image file provided" });
   }
   const stream = cloudinary.uploader.upload_stream(
-    { folder: "sage-blog", resource_type: "image" },
+    { folder: "sage-blog", resource_type: "image", transformation: [] },
     (error, result) => {
       if (error || !result) {
         console.error("Cloudinary upload error:", error);
