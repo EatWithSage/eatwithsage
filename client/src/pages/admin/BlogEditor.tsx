@@ -92,9 +92,9 @@ function WysiwygEditor({
   const iconSize = "h-4 w-4";
 
   return (
-    <div className="border border-gray-200 rounded-xl overflow-hidden">
+    <div className="border border-gray-200 rounded-xl">
       {/* Toolbar */}
-      <div className="flex flex-wrap items-center gap-0.5 px-2 py-1.5 border-b border-gray-200 bg-gray-50">
+      <div className="sticky top-16 z-40 flex flex-wrap items-center gap-0.5 px-2 py-1.5 border-b border-gray-200 bg-gray-50 rounded-t-xl shadow-sm">
         <ToolBtn title="Bold" active={editor.isActive("bold")} onClick={() => editor.chain().focus().toggleBold().run()}>
           <Bold className={iconSize} />
         </ToolBtn>
@@ -171,7 +171,7 @@ function WysiwygEditor({
       </div>
 
       {/* Editor content */}
-      <div className="bg-white min-h-[320px]" onClick={() => editor.commands.focus()}>
+      <div className="bg-white min-h-[320px] rounded-b-xl overflow-hidden" onClick={() => editor.commands.focus()}>
         <EditorContent editor={editor} />
       </div>
     </div>
