@@ -9,6 +9,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import { ArrowLeft, Save, Eye, Upload, X, ImageIcon, Bold, Italic, Underline as UnderlineIcon, List, ListOrdered, Quote, Link as LinkIcon, Unlink, AlignLeft, AlignCenter, AlignRight, Heading1, Heading2, Heading3, Eraser } from "lucide-react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
@@ -60,6 +67,8 @@ function WysiwygEditor({
   onChange,
 }: { value: string; onChange: (v: string) => void }) {
   const prevValueRef = useRef(value);
+  const [linkDialogOpen, setLinkDialogOpen] = useState(false);
+  const [linkUrl, setLinkUrl] = useState("");
 
   const editor = useEditor({
     extensions: [
@@ -145,15 +154,8 @@ function WysiwygEditor({
 
         <ToolBtn title="Insert / edit link" active={editor.isActive("link")} onClick={() => {
           const existing = editor.getAttributes("link").href || "";
-          const url = window.prompt("Enter link URL (leave blank to remove):", existing);
-          if (url === null) return;
-          const trimmed = url.trim();
-          if (trimmed) {
-            const href = /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
-            editor.chain().focus().extendMarkRange("link").setLink({ href }).run();
-          } else {
-            editor.chain().focus().extendMarkRange("link").unsetLink().run();
-          }
+          setLinkUrl(existing);
+          setLinkDialogOpen(true);
         }}>
           <LinkIcon className={iconSize} />
         </ToolBtn>
@@ -174,8 +176,53 @@ function WysiwygEditor({
       <div className="bg-white min-h-[320px] rounded-b-xl overflow-hidden" onClick={() => editor.commands.focus()}>
         <EditorContent editor={editor} />
       </div>
+
+      {/* Link dialog */}
+      <Dialog open={linkDialogOpen} onOpenChange={(open) => { if (!open) setLinkDialogOpen(false); }}>
+        <DialogContent className="sm:max-w-md" onOpenAutoFocus={(e) => e.preventDefault()}>
+          <DialogHeader>
+            <DialogTitle>Insert Link</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-2 py-2">
+            <Label htmlFor="link-url-input" className="text-gray-700 font-medium">URL</Label>
+            <Input
+              id="link-url-input"
+              value={linkUrl}
+              onChange={(e) => setLinkUrl(e.target.value)}
+              placeholder="https://example.com"
+              autoFocus
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  applyLink();
+                }
+              }}
+            />
+            <p className="text-xs text-gray-400">Leave blank to remove the link</p>
+          </div>
+          <DialogFooter className="gap-2 sm:gap-0">
+            <Button type="button" variant="outline" onClick={() => setLinkDialogOpen(false)}>
+              Cancel
+            </Button>
+            <Button type="button" className="bg-forest-900 hover:bg-forest-800 text-white" onClick={applyLink}>
+              Apply
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
+
+  function applyLink() {
+    const trimmed = linkUrl.trim();
+    if (trimmed) {
+      const href = /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
+      editor.chain().focus().extendMarkRange("link").setLink({ href }).run();
+    } else {
+      editor.chain().focus().extendMarkRange("link").unsetLink().run();
+    }
+    setLinkDialogOpen(false);
+  }
 }
 
 const editorSchema = z.object({
