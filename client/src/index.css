@@ -137,7 +137,8 @@
 }
 
 /* Disable fi ligature in Recoleta font to prevent emoji fallback rendering */
-.font-recoleta {
+.font-recoleta,
+.prose :is(h1, h2, h3, h4, h5, h6) {
   font-variant-ligatures: none;
   font-feature-settings: "liga" 0, "clig" 0;
 }
