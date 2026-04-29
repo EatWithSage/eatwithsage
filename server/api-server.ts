@@ -4,10 +4,17 @@ import { z } from "zod";
 import multer from "multer";
 import path from "path";
 import fs from "fs";
+import { v2 as cloudinary } from "cloudinary";
 import { demoFormSchema, insertBlogPostSchema } from "../shared/schema.js";
 import { storage } from "./storage.js";
 import { pool } from "./db.js";
 import { runMigrations } from "./migrate.js";
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 const CLEANUP_INTERVAL_MS = 24 * 60 * 60 * 1000;
 
@@ -38,21 +45,8 @@ async function runCleanup() {
   }
 }
 
-const uploadsDir = process.env.VERCEL
-  ? path.join("/tmp", "uploads")
-  : path.join(process.cwd(), "uploads");
-try {
-  if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
-} catch (_) {}
-
 const upload = multer({
-  storage: multer.diskStorage({
-    destination: uploadsDir,
-    filename: (_req, file, cb) => {
-      const ext = path.extname(file.originalname);
-      cb(null, `${Date.now()}-${Math.random().toString(36).slice(2)}${ext}`);
-    },
-  }),
+  storage: multer.memoryStorage(),
   limits: { fileSize: 5 * 1024 * 1024 },
   fileFilter: (_req, file, cb) => {
     if (file.mimetype.startsWith("image/")) cb(null, true);
@@ -65,7 +59,6 @@ const app = express();
 app.use(cors({ origin: true, credentials: true }));
 app.use(express.json({ limit: "5mb" }));
 app.use(express.urlencoded({ extended: false, limit: "5mb" }));
-app.use("/uploads", express.static(uploadsDir));
 
 app.get("/api/health", async (_req, res) => {
   const timestamp = Date.now();
@@ -308,8 +301,17 @@ app.post("/api/admin/upload", requireAdmin, upload.single("image"), (req, res) =
   if (!req.file) {
     return res.status(400).json({ success: false, message: "No image file provided" });
   }
-  const url = `/uploads/${req.file.filename}`;
-  res.json({ success: true, url });
+  const stream = cloudinary.uploader.upload_stream(
+    { folder: "sage-blog", resource_type: "image" },
+    (error, result) => {
+      if (error || !result) {
+        console.error("Cloudinary upload error:", error);
+        return res.status(500).json({ success: false, message: "Image upload failed" });
+      }
+      res.json({ success: true, url: result.secure_url });
+    }
+  );
+  stream.end(req.file.buffer);
 });
 
 if (process.env.NODE_ENV === "production" && !process.env.VERCEL) {

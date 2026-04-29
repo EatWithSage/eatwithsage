@@ -170,6 +170,11 @@ The initial migration SQL uses `CREATE TABLE IF NOT EXISTS`, making it safe to r
 - **Hookform/Resolvers**: Integration bridge for Zod schema validation
 - **Zod**: Runtime type validation and schema definition
 
+## Media & File Storage
+- **Cloudinary**: Cloud image hosting for blog cover images. Uploaded via the admin editor, stored permanently as `https://res.cloudinary.com/...` URLs in the `cover_image` DB column.
+- **Required secrets**: `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET` — must be set in both Replit Secrets and Vercel environment variables.
+- Images are uploaded to the `sage-blog` folder in Cloudinary.
+
 ## Deployment & Hosting
 - **Node.js Runtime**: Express server with ES modules support
 - **Static Asset Serving**: Production build serves React SPA with API routes
