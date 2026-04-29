@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { Link, useLocation, useParams } from "wouter";
 import { useForm, useController } from "react-hook-form";
@@ -59,11 +59,7 @@ function WysiwygEditor({
   value,
   onChange,
 }: { value: string; onChange: (v: string) => void }) {
-  const [linkUrl, setLinkUrl] = useState("");
-  const [showLinkInput, setShowLinkInput] = useState(false);
-  const linkInputRef = useRef<HTMLInputElement>(null);
   const prevValueRef = useRef(value);
-  const savedSelectionRef = useRef<{ from: number; to: number } | null>(null);
 
   const editor = useEditor({
     extensions: [
@@ -90,29 +86,6 @@ function WysiwygEditor({
     }
     prevValueRef.current = value;
   }, [value, editor]);
-
-  useEffect(() => {
-    if (showLinkInput) setTimeout(() => linkInputRef.current?.focus(), 0);
-  }, [showLinkInput]);
-
-  const applyLink = useCallback(() => {
-    if (!editor) return;
-    const url = linkUrl.trim();
-    const saved = savedSelectionRef.current;
-    let chain = editor.chain().focus();
-    if (saved) {
-      chain = chain.setTextSelection(saved) as typeof chain;
-    }
-    if (url) {
-      const href = /^https?:\/\//i.test(url) ? url : `https://${url}`;
-      chain.extendMarkRange("link").setLink({ href }).run();
-    } else {
-      chain.extendMarkRange("link").unsetLink().run();
-    }
-    setShowLinkInput(false);
-    setLinkUrl("");
-    savedSelectionRef.current = null;
-  }, [editor, linkUrl]);
 
   if (!editor) return null;
 
@@ -171,16 +144,15 @@ function WysiwygEditor({
         <span className="w-px h-5 bg-gray-300 mx-1" />
 
         <ToolBtn title="Insert / edit link" active={editor.isActive("link")} onClick={() => {
-          if (showLinkInput) {
-            setShowLinkInput(false);
-            setLinkUrl("");
-            savedSelectionRef.current = null;
+          const existing = editor.getAttributes("link").href || "";
+          const url = window.prompt("Enter link URL (leave blank to remove):", existing);
+          if (url === null) return;
+          const trimmed = url.trim();
+          if (trimmed) {
+            const href = /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
+            editor.chain().focus().extendMarkRange("link").setLink({ href }).run();
           } else {
-            const existing = editor.getAttributes("link").href || "";
-            const { from, to } = editor.state.selection;
-            savedSelectionRef.current = { from, to };
-            setLinkUrl(existing);
-            setShowLinkInput(true);
+            editor.chain().focus().extendMarkRange("link").unsetLink().run();
           }
         }}>
           <LinkIcon className={iconSize} />
@@ -197,28 +169,6 @@ function WysiwygEditor({
           <Eraser className={iconSize} />
         </ToolBtn>
       </div>
-
-      {/* Link input popover */}
-      {showLinkInput && (
-        <div className="flex items-center gap-2 px-3 py-2 bg-amber-50 border-b border-amber-200">
-          <LinkIcon className="h-3.5 w-3.5 text-amber-600 shrink-0" />
-          <input
-            ref={linkInputRef}
-            type="url"
-            value={linkUrl}
-            onChange={(e) => setLinkUrl(e.target.value)}
-            onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); applyLink(); } if (e.key === "Escape") { setShowLinkInput(false); setLinkUrl(""); savedSelectionRef.current = null; } }}
-            placeholder="https://example.com"
-            className="flex-1 text-sm bg-transparent outline-none placeholder-amber-400"
-          />
-          <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={applyLink} className="text-xs font-medium text-amber-700 hover:text-amber-900 px-2 py-0.5 rounded hover:bg-amber-100">
-            Apply
-          </button>
-          <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => { setShowLinkInput(false); setLinkUrl(""); savedSelectionRef.current = null; }} className="text-gray-400 hover:text-gray-600">
-            <X className="h-3.5 w-3.5" />
-          </button>
-        </div>
-      )}
 
       {/* Editor content */}
       <div className="bg-white min-h-[320px]" onClick={() => editor.commands.focus()}>
