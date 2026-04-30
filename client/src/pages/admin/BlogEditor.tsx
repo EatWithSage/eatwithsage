@@ -223,7 +223,7 @@ function WysiwygEditor({
 
         <span className="w-px h-5 bg-gray-300 mx-1" />
 
-        <ToolBtn title="Insert image" onClick={() => imageInputRef.current?.click()}>
+        <ToolBtn title="Insert image" onClick={() => { if (!isUploadingImage) imageInputRef.current?.click(); }}>
           {isUploadingImage
             ? <Loader2 className={`${iconSize} animate-spin`} />
             : <ImageIcon className={iconSize} />}
