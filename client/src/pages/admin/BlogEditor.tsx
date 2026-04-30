@@ -16,7 +16,8 @@ import {
   DialogTitle,
   DialogFooter,
 } from "@/components/ui/dialog";
-import { ArrowLeft, Save, Eye, Upload, X, ImageIcon, Bold, Italic, Underline as UnderlineIcon, List, ListOrdered, Quote, Link as LinkIcon, Unlink, AlignLeft, AlignCenter, AlignRight, Heading1, Heading2, Heading3, Eraser } from "lucide-react";
+import { ArrowLeft, Save, Eye, Upload, X, ImageIcon, Bold, Italic, Underline as UnderlineIcon, List, ListOrdered, Quote, Link as LinkIcon, Unlink, AlignLeft, AlignCenter, AlignRight, Heading1, Heading2, Heading3, Eraser, Loader2 } from "lucide-react";
+import { Node, mergeAttributes } from "@tiptap/core";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import TipTapLink from "@tiptap/extension-link";
@@ -62,11 +63,36 @@ function ToolBtn({
   );
 }
 
+const InlineImage = Node.create({
+  name: "image",
+  group: "block",
+  atom: true,
+  addAttributes() {
+    return {
+      src: { default: null },
+      alt: { default: null },
+      title: { default: null },
+    };
+  },
+  parseHTML() { return [{ tag: "img[src]" }]; },
+  renderHTML({ HTMLAttributes }) {
+    return ["img", mergeAttributes({ class: "max-w-full rounded-xl shadow-md mx-auto block my-4" }, HTMLAttributes)];
+  },
+  addCommands() {
+    return {
+      setImage: (options: { src: string; alt?: string; title?: string }) => ({ commands }: any) =>
+        commands.insertContent({ type: "image", attrs: options }),
+    } as any;
+  },
+});
+
 function WysiwygEditor({
   value,
   onChange,
 }: { value: string; onChange: (v: string) => void }) {
   const prevValueRef = useRef(value);
+  const imageInputRef = useRef<HTMLInputElement>(null);
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
   const [linkDialogOpen, setLinkDialogOpen] = useState(false);
   const [linkUrl, setLinkUrl] = useState("");
 
@@ -77,6 +103,7 @@ function WysiwygEditor({
       TipTapLink.configure({ openOnClick: false, HTMLAttributes: { target: "_blank", rel: "noopener noreferrer" } }),
       TextAlign.configure({ types: ["heading", "paragraph"] }),
       Placeholder.configure({ placeholder: "Write your post content here..." }),
+      InlineImage,
     ],
     content: value || "",
     editorProps: { attributes: { class: "wysiwyg-content p-4 focus:outline-none" } },
@@ -97,6 +124,27 @@ function WysiwygEditor({
   }, [value, editor]);
 
   if (!editor) return null;
+
+  async function handleInlineImageUpload(file: File) {
+    setIsUploadingImage(true);
+    try {
+      const formData = new FormData();
+      formData.append("image", file);
+      const token = localStorage.getItem("sage_admin_token") || "";
+      const res = await fetch("/api/admin/upload", {
+        method: "POST",
+        headers: { "X-Admin-Token": token },
+        body: formData,
+      });
+      const data = await res.json();
+      if (data.success && data.url) {
+        (editor.chain().focus() as any).setImage({ src: data.url, alt: file.name }).run();
+      }
+    } finally {
+      setIsUploadingImage(false);
+      if (imageInputRef.current) imageInputRef.current.value = "";
+    }
+  }
 
   const iconSize = "h-4 w-4";
 
@@ -170,7 +218,23 @@ function WysiwygEditor({
         <ToolBtn title="Clear formatting" onClick={() => editor.chain().focus().clearNodes().unsetAllMarks().run()}>
           <Eraser className={iconSize} />
         </ToolBtn>
+
+        <span className="w-px h-5 bg-gray-300 mx-1" />
+
+        <ToolBtn title="Insert image" onClick={() => imageInputRef.current?.click()}>
+          {isUploadingImage
+            ? <Loader2 className={`${iconSize} animate-spin`} />
+            : <ImageIcon className={iconSize} />}
+        </ToolBtn>
       </div>
+
+      <input
+        ref={imageInputRef}
+        type="file"
+        accept="image/*"
+        className="hidden"
+        onChange={(e) => { const f = e.target.files?.[0]; if (f) handleInlineImageUpload(f); }}
+      />
 
       {/* Editor content */}
       <div className="bg-white min-h-[320px] rounded-b-xl overflow-hidden" onClick={() => editor.commands.focus()}>
