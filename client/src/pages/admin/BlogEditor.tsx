@@ -82,9 +82,11 @@ function WysiwygEditor({
   const { toast } = useToast();
   const prevValueRef = useRef(value);
   const imageInputRef = useRef<HTMLInputElement>(null);
+  const urlInputRef = useRef<HTMLInputElement>(null);
   const [isUploadingImage, setIsUploadingImage] = useState(false);
   const [linkDialogOpen, setLinkDialogOpen] = useState(false);
   const [linkUrl, setLinkUrl] = useState("");
+  const [savedRange, setSavedRange] = useState<{ from: number; to: number } | null>(null);
 
   const editor = useEditor({
     extensions: [
@@ -200,6 +202,8 @@ function WysiwygEditor({
           <PopoverAnchor asChild>
             <span>
               <ToolBtn title="Insert / edit link" active={editor.isActive("link")} onClick={() => {
+                const { from, to } = editor.state.selection;
+                setSavedRange({ from, to });
                 const existing = editor.getAttributes("link").href || "";
                 setLinkUrl(existing);
                 setLinkDialogOpen(true);
@@ -208,17 +212,17 @@ function WysiwygEditor({
               </ToolBtn>
             </span>
           </PopoverAnchor>
-          <PopoverContent className="w-80" align="start" onOpenAutoFocus={(e) => e.preventDefault()}>
+          <PopoverContent className="w-80" align="start" onOpenAutoFocus={(e) => e.preventDefault()} onAnimationEnd={() => urlInputRef.current?.focus()}>
             <div className="space-y-3">
               <p className="font-semibold text-sm text-gray-800">Insert Link</p>
               <div className="space-y-1">
                 <Label htmlFor="link-url-input" className="text-gray-700 font-medium">URL</Label>
                 <Input
+                  ref={urlInputRef}
                   id="link-url-input"
                   value={linkUrl}
                   onChange={(e) => setLinkUrl(e.target.value)}
                   placeholder="https://example.com"
-                  autoFocus
                   onKeyDown={(e) => {
                     if (e.key === "Enter") { e.preventDefault(); applyLink(); }
                     if (e.key === "Escape") { setLinkDialogOpen(false); }
@@ -270,11 +274,15 @@ function WysiwygEditor({
 
   function applyLink() {
     const trimmed = linkUrl.trim();
+    const chain = editor.chain().focus();
+    if (savedRange) {
+      chain.setTextSelection(savedRange);
+    }
     if (trimmed) {
       const href = /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
-      editor.chain().focus().extendMarkRange("link").setLink({ href }).run();
+      chain.extendMarkRange("link").setLink({ href }).run();
     } else {
-      editor.chain().focus().extendMarkRange("link").unsetLink().run();
+      chain.extendMarkRange("link").unsetLink().run();
     }
     setLinkDialogOpen(false);
   }
