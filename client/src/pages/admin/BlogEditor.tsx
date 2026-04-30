@@ -10,13 +10,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from "@/components/ui/dialog";
+import { Popover, PopoverContent } from "@/components/ui/popover";
+import * as PopoverPrimitive from "@radix-ui/react-popover";
 import { ArrowLeft, Save, Eye, Upload, X, ImageIcon, Bold, Italic, Underline as UnderlineIcon, List, ListOrdered, Quote, Link as LinkIcon, Unlink, AlignLeft, AlignCenter, AlignRight, Heading1, Heading2, Heading3, Eraser, Loader2 } from "lucide-react";
 import { Node, mergeAttributes } from "@tiptap/core";
 import { useEditor, EditorContent } from "@tiptap/react";
@@ -202,13 +197,43 @@ function WysiwygEditor({
 
         <span className="w-px h-5 bg-gray-300 mx-1" />
 
-        <ToolBtn title="Insert / edit link" active={editor.isActive("link")} onClick={() => {
-          const existing = editor.getAttributes("link").href || "";
-          setLinkUrl(existing);
-          setLinkDialogOpen(true);
-        }}>
-          <LinkIcon className={iconSize} />
-        </ToolBtn>
+        <Popover open={linkDialogOpen} onOpenChange={setLinkDialogOpen}>
+          <PopoverPrimitive.Anchor asChild>
+            <span>
+              <ToolBtn title="Insert / edit link" active={editor.isActive("link")} onClick={() => {
+                const existing = editor.getAttributes("link").href || "";
+                setLinkUrl(existing);
+                setLinkDialogOpen(true);
+              }}>
+                <LinkIcon className={iconSize} />
+              </ToolBtn>
+            </span>
+          </PopoverPrimitive.Anchor>
+          <PopoverContent className="w-80" align="start" onOpenAutoFocus={(e) => e.preventDefault()}>
+            <div className="space-y-3">
+              <p className="font-semibold text-sm text-gray-800">Insert Link</p>
+              <div className="space-y-1">
+                <Label htmlFor="link-url-input" className="text-gray-700 font-medium">URL</Label>
+                <Input
+                  id="link-url-input"
+                  value={linkUrl}
+                  onChange={(e) => setLinkUrl(e.target.value)}
+                  placeholder="https://example.com"
+                  autoFocus
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") { e.preventDefault(); applyLink(); }
+                    if (e.key === "Escape") { setLinkDialogOpen(false); }
+                  }}
+                />
+                <p className="text-xs text-gray-400">Leave blank to remove the link</p>
+              </div>
+              <div className="flex justify-end gap-2">
+                <Button type="button" variant="outline" size="sm" onClick={() => setLinkDialogOpen(false)}>Cancel</Button>
+                <Button type="button" size="sm" className="bg-forest-900 hover:bg-forest-800 text-white" onClick={applyLink}>Apply</Button>
+              </div>
+            </div>
+          </PopoverContent>
+        </Popover>
         {editor.isActive("link") && (
           <ToolBtn title="Remove link" onClick={() => editor.chain().focus().unsetLink().run()}>
             <Unlink className={iconSize} />
@@ -243,39 +268,6 @@ function WysiwygEditor({
         <EditorContent editor={editor} />
       </div>
 
-      {/* Link dialog */}
-      <Dialog open={linkDialogOpen} onOpenChange={(open) => { if (!open) setLinkDialogOpen(false); }}>
-        <DialogContent className="sm:max-w-md" onOpenAutoFocus={(e) => e.preventDefault()}>
-          <DialogHeader>
-            <DialogTitle>Insert Link</DialogTitle>
-          </DialogHeader>
-          <div className="space-y-2 py-2">
-            <Label htmlFor="link-url-input" className="text-gray-700 font-medium">URL</Label>
-            <Input
-              id="link-url-input"
-              value={linkUrl}
-              onChange={(e) => setLinkUrl(e.target.value)}
-              placeholder="https://example.com"
-              autoFocus
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  e.preventDefault();
-                  applyLink();
-                }
-              }}
-            />
-            <p className="text-xs text-gray-400">Leave blank to remove the link</p>
-          </div>
-          <DialogFooter className="gap-2 sm:gap-0">
-            <Button type="button" variant="outline" onClick={() => setLinkDialogOpen(false)}>
-              Cancel
-            </Button>
-            <Button type="button" className="bg-forest-900 hover:bg-forest-800 text-white" onClick={applyLink}>
-              Apply
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 
