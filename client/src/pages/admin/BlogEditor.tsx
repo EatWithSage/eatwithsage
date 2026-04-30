@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/hooks/use-toast";
 import {
   Dialog,
   DialogContent,
@@ -78,18 +79,13 @@ const InlineImage = Node.create({
   renderHTML({ HTMLAttributes }) {
     return ["img", mergeAttributes({ class: "max-w-full rounded-xl shadow-md mx-auto block my-4" }, HTMLAttributes)];
   },
-  addCommands() {
-    return {
-      setImage: (options: { src: string; alt?: string; title?: string }) => ({ commands }: any) =>
-        commands.insertContent({ type: "image", attrs: options }),
-    } as any;
-  },
 });
 
 function WysiwygEditor({
   value,
   onChange,
 }: { value: string; onChange: (v: string) => void }) {
+  const { toast } = useToast();
   const prevValueRef = useRef(value);
   const imageInputRef = useRef<HTMLInputElement>(null);
   const [isUploadingImage, setIsUploadingImage] = useState(false);
@@ -130,16 +126,22 @@ function WysiwygEditor({
     try {
       const formData = new FormData();
       formData.append("image", file);
-      const token = localStorage.getItem("sage_admin_token") || "";
       const res = await fetch("/api/admin/upload", {
         method: "POST",
-        headers: { "X-Admin-Token": token },
+        headers: { Authorization: `Bearer ${getToken()}` },
         body: formData,
       });
       const data = await res.json();
-      if (data.success && data.url) {
-        (editor.chain().focus() as any).setImage({ src: data.url, alt: file.name }).run();
+      if (res.ok && data.success && data.url) {
+        editor.chain().focus().insertContent({
+          type: "image",
+          attrs: { src: data.url, alt: file.name },
+        }).run();
+      } else {
+        toast({ title: "Image upload failed", description: data.message || "Please try again.", variant: "destructive" });
       }
+    } catch {
+      toast({ title: "Image upload failed", description: "Network error — please try again.", variant: "destructive" });
     } finally {
       setIsUploadingImage(false);
       if (imageInputRef.current) imageInputRef.current.value = "";
