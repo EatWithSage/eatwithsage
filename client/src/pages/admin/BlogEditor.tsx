@@ -233,11 +233,9 @@ function WysiwygEditor({
             </div>
           </PopoverContent>
         </Popover>
-        {editor.isActive("link") && (
-          <ToolBtn title="Remove link" onClick={() => editor.chain().focus().unsetLink().run()}>
-            <Unlink className={iconSize} />
-          </ToolBtn>
-        )}
+        <ToolBtn title="Remove link" onClick={() => editor.chain().focus().unsetLink().run()}>
+          <Unlink className={iconSize} />
+        </ToolBtn>
 
         <span className="w-px h-5 bg-gray-300 mx-1" />
 
