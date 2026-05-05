@@ -11,7 +11,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { Popover, PopoverAnchor, PopoverContent } from "@/components/ui/popover";
-import { ArrowLeft, Save, Eye, Upload, X, ImageIcon, Bold, Italic, Underline as UnderlineIcon, List, ListOrdered, Quote, Link as LinkIcon, Unlink, AlignLeft, AlignCenter, AlignRight, Heading1, Heading2, Heading3, Eraser, Loader2 } from "lucide-react";
+import { ArrowLeft, Save, Eye, Upload, X, ImageIcon, Video, Bold, Italic, Underline as UnderlineIcon, List, ListOrdered, Quote, Link as LinkIcon, Unlink, AlignLeft, AlignCenter, AlignRight, Heading1, Heading2, Heading3, Eraser, Loader2 } from "lucide-react";
 import { Node, mergeAttributes } from "@tiptap/core";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
@@ -293,6 +293,7 @@ const editorSchema = z.object({
   slug: z.string().min(1, "Slug is required").regex(/^[a-z0-9-]+$/, "Slug can only contain lowercase letters, numbers, and hyphens"),
   excerpt: z.string().optional(),
   content: z.string().optional(),
+  videoUrl: z.string().optional(),
   coverImage: z.string().optional().refine(
     (val) => !val || val.startsWith("/") || /^https?:\/\//.test(val),
     "Must be a valid URL or uploaded image"
@@ -347,6 +348,7 @@ export default function BlogEditor() {
       slug: "",
       excerpt: "",
       content: "",
+      videoUrl: "",
       coverImage: "",
       author: "Sage",
       tags: "",
@@ -367,6 +369,7 @@ export default function BlogEditor() {
         slug: existingPost.slug,
         excerpt: existingPost.excerpt || "",
         content: existingPost.content || "",
+        videoUrl: existingPost.videoUrl || "",
         coverImage: existingPost.coverImage || "",
         author: existingPost.author,
         tags: existingPost.tags?.join(", ") || "",
@@ -382,7 +385,34 @@ export default function BlogEditor() {
   const [slugManuallyEdited, setSlugManuallyEdited] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState("");
+  const [isUploadingVideo, setIsUploadingVideo] = useState(false);
+  const [videoUploadError, setVideoUploadError] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const videoInputRef = useRef<HTMLInputElement>(null);
+
+  async function handleVideoUpload(file: File) {
+    setIsUploadingVideo(true);
+    setVideoUploadError("");
+    try {
+      const formData = new FormData();
+      formData.append("video", file);
+      const res = await fetch("/api/admin/upload-video", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${getToken()}` },
+        body: formData,
+      });
+      const rawText = await res.text();
+      if (!rawText) throw new Error("Upload failed: empty response");
+      const data = JSON.parse(rawText);
+      if (!res.ok || !data.success) throw new Error(data.message || "Upload failed");
+      setValue("videoUrl", data.url);
+    } catch (err: unknown) {
+      setVideoUploadError(err instanceof Error ? err.message : "Upload failed");
+    } finally {
+      setIsUploadingVideo(false);
+      if (videoInputRef.current) videoInputRef.current.value = "";
+    }
+  }
 
   async function handleImageUpload(file: File) {
     setIsUploading(true);
@@ -424,6 +454,7 @@ export default function BlogEditor() {
         slug: data.slug,
         excerpt: data.excerpt || null,
         content: data.content || null,
+        videoUrl: data.videoUrl || null,
         coverImage: data.coverImage || null,
         author: data.author,
         tags: tagsArray,
@@ -568,6 +599,89 @@ export default function BlogEditor() {
                 rows={3}
                 className="mt-1"
               />
+            </div>
+          </div>
+
+          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 space-y-4">
+            <div>
+              <h3 className="font-semibold text-forest-900 mb-1">Video</h3>
+              <p className="text-sm text-gray-500 mb-4">
+                If set, the video plays at the top of the post with the content below as a transcript or commentary.
+              </p>
+
+              <input
+                ref={videoInputRef}
+                type="file"
+                accept="video/*"
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) handleVideoUpload(file);
+                  e.target.value = "";
+                }}
+              />
+
+              <div className="flex gap-2">
+                <Input
+                  {...form.register("videoUrl")}
+                  placeholder="Paste YouTube, Vimeo, or direct video URL…"
+                  className="flex-1"
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => videoInputRef.current?.click()}
+                  disabled={isUploadingVideo}
+                  className="shrink-0 gap-2"
+                >
+                  {isUploadingVideo ? (
+                    <><div className="h-4 w-4 animate-spin rounded-full border-2 border-sage-400 border-t-transparent" /> Uploading…</>
+                  ) : (
+                    <><Video className="h-4 w-4" /> Upload</>
+                  )}
+                </Button>
+                {watch("videoUrl") && (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="icon"
+                    onClick={() => setValue("videoUrl", "")}
+                    className="shrink-0"
+                  >
+                    <X className="h-4 w-4" />
+                  </Button>
+                )}
+              </div>
+
+              {videoUploadError && <p className="text-red-500 text-sm mt-2">{videoUploadError}</p>}
+
+              {watch("videoUrl") && (
+                <div className="mt-3 rounded-xl overflow-hidden border border-gray-200 aspect-video bg-black">
+                  {/youtube\.com|youtu\.be/i.test(watch("videoUrl") || "") ? (
+                    <iframe
+                      src={`https://www.youtube.com/embed/${(watch("videoUrl") || "").match(/(?:v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/)?.[1]}`}
+                      className="w-full h-full"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      title="Video preview"
+                    />
+                  ) : /vimeo\.com/i.test(watch("videoUrl") || "") ? (
+                    <iframe
+                      src={`https://player.vimeo.com/video/${(watch("videoUrl") || "").match(/vimeo\.com\/(\d+)/)?.[1]}`}
+                      className="w-full h-full"
+                      allowFullScreen
+                      title="Video preview"
+                    />
+                  ) : (
+                    <video
+                      src={watch("videoUrl")}
+                      controls
+                      className="w-full h-full"
+                      preload="metadata"
+                    />
+                  )}
+                </div>
+              )}
             </div>
           </div>
 

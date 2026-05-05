@@ -26,6 +26,8 @@ Preferred communication style: Simple, everyday language.
   - `POST /api/admin/posts` — create post (admin auth required)
   - `PATCH /api/admin/posts/:id` — update post (admin auth required)
   - `DELETE /api/admin/posts/:id` — delete post (admin auth required)
+  - `POST /api/admin/upload` — upload cover image to Cloudinary (admin auth required)
+  - `POST /api/admin/upload-video` — upload video to Cloudinary (admin auth required, 200 MB limit)
 - **Admin Auth**: Bearer token using `ADMIN_PASSWORD` env var (`sage-admin-2024`)
 - **Storage**: In-memory storage (`MemStorage`) in `server/storage.ts`
 - **Development/Production Split**: Vite dev server integration in development, static file serving in production

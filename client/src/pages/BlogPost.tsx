@@ -12,6 +12,46 @@ function formatDate(dateStr: string | null | undefined): string {
   return d.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
 }
 
+function parseVideoEmbed(url: string): { type: "iframe" | "video"; src: string } | null {
+  if (!url) return null;
+  const ytMatch = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/shorts\/)([a-zA-Z0-9_-]{11})/);
+  if (ytMatch) return { type: "iframe", src: `https://www.youtube.com/embed/${ytMatch[1]}?rel=0` };
+  const vimeoMatch = url.match(/vimeo\.com\/(\d+)/);
+  if (vimeoMatch) return { type: "iframe", src: `https://player.vimeo.com/video/${vimeoMatch[1]}` };
+  if (/\.(mp4|webm|mov|ogg)(\?.*)?$/i.test(url) || url.includes("res.cloudinary.com")) {
+    return { type: "video", src: url };
+  }
+  return null;
+}
+
+function VideoPlayer({ url }: { url: string }) {
+  const parsed = parseVideoEmbed(url);
+  if (!parsed) return null;
+  if (parsed.type === "iframe") {
+    return (
+      <div className="mb-10 rounded-2xl overflow-hidden shadow-lg aspect-video">
+        <iframe
+          src={parsed.src}
+          className="w-full h-full"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          title="Post video"
+        />
+      </div>
+    );
+  }
+  return (
+    <div className="mb-10 rounded-2xl overflow-hidden shadow-lg">
+      <video
+        src={parsed.src}
+        controls
+        className="w-full h-auto max-h-[540px]"
+        preload="metadata"
+      />
+    </div>
+  );
+}
+
 export default function BlogPostPage() {
   const params = useParams<{ slug: string }>();
   const slug = params.slug;
@@ -101,7 +141,9 @@ export default function BlogPostPage() {
                 )}
               </div>
 
-              {post.coverImage && (
+              {post.videoUrl && <VideoPlayer url={post.videoUrl} />}
+
+              {!post.videoUrl && post.coverImage && (
                 <div className="mb-10 rounded-2xl overflow-hidden shadow-lg">
                   <img
                     src={post.coverImage}

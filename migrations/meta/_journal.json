@@ -15,6 +15,13 @@
       "when": 1777262008895,
       "tag": "0001_mean_orphan",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1778021692157,
+      "tag": "0002_slippery_thor_girl",
+      "breakpoints": true
     }
   ]
 }

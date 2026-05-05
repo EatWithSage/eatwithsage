@@ -54,6 +54,15 @@ const upload = multer({
   },
 });
 
+const videoUpload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 200 * 1024 * 1024 },
+  fileFilter: (_req, file, cb) => {
+    if (file.mimetype.startsWith("video/")) cb(null, true);
+    else cb(new Error("Only video files are allowed"));
+  },
+});
+
 const app = express();
 
 app.use(cors({ origin: true, credentials: true }));
@@ -341,6 +350,26 @@ app.post("/api/admin/upload", requireAdmin, upload.single("image"), (req, res) =
       if (error || !result) {
         console.error("Cloudinary upload error:", error);
         return res.status(500).json({ success: false, message: "Image upload failed" });
+      }
+      res.json({ success: true, url: result.secure_url });
+    }
+  );
+  stream.end(req.file.buffer);
+});
+
+app.post("/api/admin/upload-video", requireAdmin, videoUpload.single("video"), (req, res) => {
+  if (!req.file) {
+    return res.status(400).json({ success: false, message: "No video file provided" });
+  }
+  const baseName = path.parse(req.file.originalname).name;
+  const sanitized = baseName.replace(/[^a-zA-Z0-9_-]/g, "_").toLowerCase();
+  const publicId = `${sanitized}_${Date.now()}`;
+  const stream = cloudinary.uploader.upload_stream(
+    { folder: "sage-blog-videos", public_id: publicId, resource_type: "video" },
+    (error, result) => {
+      if (error || !result) {
+        console.error("Cloudinary video upload error:", error);
+        return res.status(500).json({ success: false, message: "Video upload failed" });
       }
       res.json({ success: true, url: result.secure_url });
     }
