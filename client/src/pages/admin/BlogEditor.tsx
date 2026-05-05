@@ -212,7 +212,7 @@ function WysiwygEditor({
               </ToolBtn>
             </span>
           </PopoverAnchor>
-          <PopoverContent className="w-80" align="start" onOpenAutoFocus={(e) => e.preventDefault()} onAnimationEnd={() => urlInputRef.current?.focus()}>
+          <PopoverContent className="w-80 bg-white border border-gray-300 shadow-xl" align="start" onOpenAutoFocus={(e) => e.preventDefault()} onAnimationEnd={() => urlInputRef.current?.focus()}>
             <div className="space-y-3">
               <p className="font-semibold text-sm text-gray-800">Insert Link</p>
               <div className="space-y-1">
