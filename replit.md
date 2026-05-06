@@ -181,3 +181,10 @@ The initial migration SQL uses `CREATE TABLE IF NOT EXISTS`, making it safe to r
 - **Node.js Runtime**: Express server with ES modules support
 - **Static Asset Serving**: Production build serves React SPA with API routes
 - **Environment Configuration**: Environment variables for database URLs and email service credentials
+
+## Gotchas
+
+- **NEVER run `db:push` or `db:push --force` against any database.** `db:push` skips the migration history and can drop/recreate columns or tables, wiping all data. Always use `db:generate` → `db:migrate`. The post-merge script (`scripts/post-merge.sh`) is set to `npm run db:migrate` — do not change it back to `drizzle-kit push`.
+- **Schema changes break production until the migration runs.** Adding a column to `shared/schema.ts` causes Drizzle to SELECT that column in every query. If the column doesn't exist yet in the Vercel Neon database, all blog queries fail and posts disappear. Always generate a migration file (`db:generate`) alongside any schema change so `runMigrations()` in `api/index.ts` can apply it on the next deploy.
+- **The `migrations/` folder must stay committed and bundled.** Vercel serverless functions only include files explicitly listed in `includeFiles`. The `vercel.json` already includes `"migrations/**"` — do not remove this or the production migration runner will silently find no files to apply.
+- **Dev and production use separate databases.** The Replit dev environment uses a local `heliumdb` instance; eatwithsage.com uses a Neon PostgreSQL database configured in Vercel environment variables. Running scripts locally never touches production data.
