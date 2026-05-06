@@ -2,6 +2,7 @@ import { drizzle } from "drizzle-orm/node-postgres";
 import { migrate } from "drizzle-orm/node-postgres/migrator";
 import { Pool } from "pg";
 import { fileURLToPath } from "url";
+import path from "path";
 
 export async function runMigrations() {
   if (!process.env.DATABASE_URL) {
@@ -16,7 +17,8 @@ export async function runMigrations() {
   try {
     const db = drizzle(pool);
     console.log("Running migrations...");
-    await migrate(db, { migrationsFolder: "./migrations" });
+    const migrationsFolder = path.join(path.dirname(fileURLToPath(import.meta.url)), "../migrations");
+    await migrate(db, { migrationsFolder });
     console.log("Migrations complete.");
   } finally {
     await pool.end();
