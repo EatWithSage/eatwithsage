@@ -394,18 +394,28 @@ export default function BlogEditor() {
     setIsUploadingVideo(true);
     setVideoUploadError("");
     try {
-      const formData = new FormData();
-      formData.append("video", file);
-      const res = await fetch("/api/admin/upload-video", {
-        method: "POST",
+      const sigRes = await fetch("/api/admin/upload-video-signature", {
         headers: { Authorization: `Bearer ${getToken()}` },
-        body: formData,
       });
-      const rawText = await res.text();
-      if (!rawText) throw new Error("Upload failed: empty response");
-      const data = JSON.parse(rawText);
-      if (!res.ok || !data.success) throw new Error(data.message || "Upload failed");
-      setValue("videoUrl", data.url);
+      if (!sigRes.ok) throw new Error("Failed to get upload credentials");
+      const { timestamp, signature, api_key, cloud_name, folder } = await sigRes.json();
+
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("timestamp", String(timestamp));
+      formData.append("signature", signature);
+      formData.append("api_key", api_key);
+      formData.append("folder", folder);
+
+      const uploadRes = await fetch(
+        `https://api.cloudinary.com/v1_1/${cloud_name}/video/upload`,
+        { method: "POST", body: formData }
+      );
+      const data = await uploadRes.json();
+      if (!uploadRes.ok || !data.secure_url) {
+        throw new Error(data.error?.message || "Upload failed");
+      }
+      setValue("videoUrl", data.secure_url);
     } catch (err: unknown) {
       setVideoUploadError(err instanceof Error ? err.message : "Upload failed");
     } finally {

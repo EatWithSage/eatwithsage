@@ -4,6 +4,7 @@ import { z } from "zod";
 import multer from "multer";
 import path from "path";
 import fs from "fs";
+import crypto from "crypto";
 import { v2 as cloudinary } from "cloudinary";
 import { demoFormSchema, insertBlogPostSchema } from "../shared/schema.js";
 import { storage } from "./storage.js";
@@ -336,6 +337,23 @@ app.post("/api/admin/trash/cleanup", requireAdmin, async (req, res) => {
   }
 });
 
+
+app.get("/api/admin/upload-video-signature", requireAdmin, (req, res) => {
+  const timestamp = Math.round(Date.now() / 1000);
+  const folder = "sage-blog-videos";
+  const paramsToSign = `folder=${folder}&timestamp=${timestamp}`;
+  const signature = crypto
+    .createHash("sha1")
+    .update(paramsToSign + process.env.CLOUDINARY_API_SECRET)
+    .digest("hex");
+  res.json({
+    timestamp,
+    signature,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    folder,
+  });
+});
 
 app.post("/api/admin/upload", requireAdmin, upload.single("image"), (req, res) => {
   if (!req.file) {
