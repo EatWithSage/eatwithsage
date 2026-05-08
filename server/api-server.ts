@@ -202,8 +202,9 @@ app.post("/api/admin/posts", requireAdmin, async (req, res) => {
     if (error instanceof z.ZodError) {
       res.status(400).json({ success: false, message: "Invalid post data", errors: error.errors });
     } else {
+      const detail = error instanceof Error ? error.message : String(error);
       console.error("Error creating post:", error);
-      res.status(500).json({ success: false, message: "Internal server error" });
+      res.status(500).json({ success: false, message: `Server error: ${detail}` });
     }
   }
 });
@@ -224,8 +225,9 @@ app.patch("/api/admin/posts/:id", requireAdmin, async (req, res) => {
     if (error instanceof z.ZodError) {
       res.status(400).json({ success: false, message: "Invalid post data", errors: error.errors });
     } else {
+      const detail = error instanceof Error ? error.message : String(error);
       console.error("Error updating post:", error);
-      res.status(500).json({ success: false, message: "Internal server error" });
+      res.status(500).json({ success: false, message: `Server error: ${detail}` });
     }
   }
 });

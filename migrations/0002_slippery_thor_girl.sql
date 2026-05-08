@@ -1,1 +1,1 @@
-ALTER TABLE "blog_posts" ADD COLUMN "video_url" text;
+ALTER TABLE "blog_posts" ADD COLUMN IF NOT EXISTS "video_url" text;
