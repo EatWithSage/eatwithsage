@@ -101,8 +101,12 @@ app.get("/api/health", async (_req, res) => {
       ? cloudinaryStatus.value
       : "unreachable";
 
+  const dbError = dbStatus.status === "rejected"
+    ? (dbStatus.reason instanceof Error ? dbStatus.reason.message : String(dbStatus.reason))
+    : null;
+
   if (database === "unreachable") {
-    console.error("Health check: database unreachable");
+    console.error("Health check: database unreachable", dbError);
   }
 
   const allOk = database === "connected" && cloudinary_status === "connected";
@@ -113,6 +117,7 @@ app.get("/api/health", async (_req, res) => {
     version: "2.0",
     timestamp,
     database,
+    ...(dbError ? { databaseError: dbError } : {}),
     cloudinary: cloudinary_status,
   });
 });
