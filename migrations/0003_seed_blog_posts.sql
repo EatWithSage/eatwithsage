@@ -1,3 +1,5 @@
+-- Seed blog posts (idempotent - uses ON CONFLICT DO NOTHING)
+
 INSERT INTO blog_posts (title, slug, excerpt, content, author, status, cover_image, published_date, post_date, created_at, updated_at)
   VALUES (
     'The Impact of a ''Fertilizer Shock'' on Healthy Eating and Grocers',
