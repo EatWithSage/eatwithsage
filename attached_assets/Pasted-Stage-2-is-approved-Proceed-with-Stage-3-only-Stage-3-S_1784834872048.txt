@@ -1,0 +1,187 @@
+Stage 2 is approved.
+
+Proceed with Stage 3 only.
+
+## Stage 3 Scope
+
+Implement:
+
+1. Four Retailer Outcomes
+2. Shopper Experience
+3. Shopper Insights
+
+Do not implement Stage 4 or Stage 5 components.
+
+## Four Retailer Outcomes
+
+Use “New Media Platform” as the dominant benefit.
+
+Eyebrow:
+
+Retailer Value
+
+Headline:
+
+One Platform Four Sources of Value
+
+Intro:
+
+Sage turns a more useful weekly shopping experience into new opportunities across media, ecommerce, loyalty and shopper understanding.
+
+### New Media Platform
+
+Create retailer-controlled media opportunities around high-intent weekly food decisions.
+
+This should be the largest or most visually prominent outcome.
+
+### Ecommerce Engine
+
+Connect personalized recommendations with the retailer’s assortment and ecommerce journey.
+
+### Shopper Loyalty
+
+Give households a useful reason to return to the grocer’s digital experience every week.
+
+### New Shopper Insights
+
+Learn more about household preferences, meal occasions, unmet needs and future purchase intent.
+
+Use descriptive copy only.
+
+Do not add:
+
+* Revenue estimates
+* Conversion claims
+* Basket-size claims
+* Loyalty lift claims
+* ROAS claims
+* Incrementality claims
+* Unsupported performance metrics
+
+## Shopper Experience
+
+Eyebrow:
+
+Shopper Experience
+
+Headline:
+
+A Better Shopping Experience Not Just More Advertising
+
+Intro:
+
+The media opportunity only works when the underlying shopper experience is genuinely useful.
+
+### 0-Touch Meal Planning
+
+Sage automatically prepares a personalized week of meals with little or no planning required from the shopper.
+
+### Everyday Convenience
+
+Households spend less time deciding what to eat, finding recipes and assembling a grocery list.
+
+### A Better Grocery Ecommerce Experience
+
+Shoppers move from personalized recommendations to a complete, editable basket without searching for every ingredient individually.
+
+Featured shopper-facing line:
+
+Your Week Planned and Ready to Shop
+
+Supporting copy:
+
+Personalized for your household. Connected to your grocer. Ready when you are.
+
+Do not describe Sage as a meal-planning app or meal-planning application.
+
+## Shopper Insights
+
+Eyebrow:
+
+Shopper Insights
+
+Headline:
+
+Understand the Decisions Behind the Basket
+
+Intro:
+
+Transaction data can show what a shopper purchased. Sage can help reveal the needs and intentions that shaped the purchase.
+
+Potential signals may include:
+
+* Household food preferences
+* Dietary requirements
+* Meal occasions
+* Convenience needs
+* Product and ingredient interest
+* Accepted and rejected recommendations
+* Substitutions
+* Future purchase intent
+
+Featured statement:
+
+Move from knowing what shoppers bought to understanding what they are trying to accomplish.
+
+Add a restrained privacy statement:
+
+Designed to operate within the retailer’s customer, consent and data-governance framework.
+
+Do not imply that Sage or the retailer automatically owns all shopper data.
+
+## Visual Direction
+
+Use the existing CSS/HTML placeholder approach and the fictional retailer name:
+
+Harvest & Main
+
+Use neutral `.example` URLs only.
+
+The visuals should:
+
+* Remain under the retailer’s brand
+* Avoid the appearance of a standalone Sage consumer application
+* Avoid real retailer or competitor logos
+* Avoid fabricated dashboards or performance metrics
+* Preserve the current Sage visual system
+* Include TODO comments for future approved assets
+
+## Scope Protection
+
+Only modify:
+
+* `retailer-outcomes.tsx`
+* `shopper-experience.tsx`
+* `shopper-insights.tsx`
+* Homepage-specific supporting components or assets required for these sections
+
+Do not modify:
+
+* Navigation
+* Hero
+* Retail Media Opportunity
+* How Sage Works
+* Ecommerce Engine
+* Footer
+* Shared Final CTA
+* `/product`
+* `/about`
+* Industry pages
+* Blog pages
+* Stage 4 stubs
+
+## Stage 3 Handoff
+
+After implementation:
+
+1. Run the build and all tests.
+2. List every file created or modified.
+3. Paste the exact final copy used in all three sections.
+4. Describe each visual placeholder.
+5. Confirm that New Media Platform is visually dominant.
+6. Confirm that no unsupported metrics or ownership claims were added.
+7. Confirm that no real retailer or competitor logos were used.
+8. Confirm that no non-homepage route changed.
+9. Provide desktop and mobile previews where the tooling permits.
+10. Create a checkpoint.
+11. Stop before Stage 4.
