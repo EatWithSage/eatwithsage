@@ -71,14 +71,14 @@ export default function HowSageWorks() {
               <div className="w-3 h-3 rounded-full bg-white/20" />
             </div>
             <div className="flex-1 bg-white/10 rounded-md px-4 py-1.5 text-sm text-white/60 font-mono">
-              freshmart.com/meal-planner
+              harvestandmain.example/weekly-shop
             </div>
           </div>
 
           {/* Fictional retailer top bar */}
           <div className="bg-sage-600 px-6 py-3 flex items-center justify-between">
             <span className="text-white font-bold font-recoleta text-lg tracking-wide">
-              FreshMart
+              Harvest &amp; Main
             </span>
             <span className="text-sage-100 text-sm">
               Weekly Meal Planner — Powered by your preferences
@@ -108,7 +108,7 @@ export default function HowSageWorks() {
             </div>
             <p className="text-center text-xs text-gray-400 mt-6">
               {/* TODO: replace with retailer-approved interface screenshot */}
-              Visual placeholder — fictional retailer brand "FreshMart". No real retailer logo used.
+              Visual placeholder — fictional retailer brand "Harvest &amp; Main". No real retailer logo used.
             </p>
           </div>
         </div>

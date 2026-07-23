@@ -68,7 +68,7 @@ export default function EcommerceEngine() {
 
               {/* Fictional retailer header */}
               <div className="bg-sage-600 px-5 py-3 flex items-center justify-between">
-                <span className="text-white font-bold font-recoleta">FreshMart</span>
+                <span className="text-white font-bold font-recoleta">Harvest &amp; Main</span>
                 <div className="flex items-center gap-2 text-sage-100 text-sm">
                   <ShoppingCart className="w-4 h-4" />
                   <span>4 items</span>
@@ -102,7 +102,7 @@ export default function EcommerceEngine() {
                 </div>
                 <p className="text-center text-xs text-gray-400 mt-5">
                   {/* TODO: replace with retailer-approved interface screenshot */}
-                  Visual placeholder — fictional retailer brand "FreshMart". No real retailer logo used.
+                  Visual placeholder — fictional retailer brand "Harvest &amp; Main". No real retailer logo used.
                 </p>
               </div>
             </div>
