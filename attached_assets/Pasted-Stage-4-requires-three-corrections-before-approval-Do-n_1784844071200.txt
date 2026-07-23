@@ -1,0 +1,77 @@
+Stage 4 requires three corrections before approval. Do not begin Stage 5.
+
+## 1. Headline
+
+Change the White-Label Platform headline from:
+
+Built by Sage. Branded as You.
+
+to the exact approved wording:
+
+Built by Sage Branded as You
+
+Do not change any other White-Label Platform copy.
+
+## 2. Section Order
+
+Change the closing homepage order from:
+
+WhiteLabelPlatform
+DemoForm
+HomepageFinalCTA
+Footer
+
+to:
+
+WhiteLabelPlatform
+HomepageFinalCTA
+DemoForm
+Footer
+
+Keep the Homepage Final CTA button pointed to `#demo`.
+
+After this change, the button should scroll forward to the form rather than backward.
+
+Do not modify the Demo Form component or its copy.
+
+## 3. Placeholder Retailer Names
+
+The current names were not definitively checked and should not be presented as cleared fictional brands.
+
+Replace:
+
+* Harvest & Main
+* Maple & Grove
+* Cedar & Stone
+
+with:
+
+* Retailer Brand A
+* Retailer Brand B
+* Retailer Brand C
+
+Apply this replacement only within the Stage 4 White-Label Platform visual.
+
+Do not change the previously approved Harvest & Main placeholders in Stages 2 and 3 during this correction pass. Document consistent placeholder naming as a possible Stage 5 cleanup item.
+
+Retain the three distinct visual treatments so the graphic continues to demonstrate one underlying platform adapted across three retailer identities.
+
+Update the visible caption so it reads:
+
+Visual placeholder showing three example retailer brands. No real retailer logos used.
+
+Do not claim that the placeholder names have received trademark clearance.
+
+## Verification
+
+After making these corrections:
+
+1. Confirm the exact final White-Label Platform headline.
+2. Confirm the final homepage section order.
+3. Confirm the CTA still points to the existing `#demo` element.
+4. Confirm the three Stage 4 labels are Retailer Brand A, Retailer Brand B and Retailer Brand C.
+5. Run the build and all tests.
+6. List every file modified.
+7. Confirm no other copy, layout or non-homepage route changed.
+8. Create a new checkpoint.
+9. Stop before Stage 5.

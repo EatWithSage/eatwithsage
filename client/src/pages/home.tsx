@@ -50,11 +50,11 @@ export default function Home() {
           {/* §9 White-label platform — Stage 4 */}
           <WhiteLabelPlatform />
 
-          {/* Primary demo form / scheduler */}
-          <DemoForm />
-
           {/* §10 Final CTA — Stage 4 */}
           <HomepageFinalCTA />
+
+          {/* Primary demo form / scheduler */}
+          <DemoForm />
         </main>
         <Footer />
       </div>

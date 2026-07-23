@@ -14,7 +14,7 @@ const points = [
 // TODO: replace mock brand names and colors with approved retailer-branded assets.
 const retailers = [
   {
-    name: "Harvest & Main",
+    name: "Retailer Brand A",
     sub: "Weekly Meal Planner",
     headerBg: "bg-sage-600",
     accentBg: "bg-sage-500",
@@ -23,22 +23,22 @@ const retailers = [
     meals: ["Herb-roasted chicken", "Pasta primavera", "Grilled salmon"],
   },
   {
-    name: "Maple & Grove",
+    name: "Retailer Brand B",
     sub: "Your Weekly Plan",
     headerBg: "bg-amber-700",
     accentBg: "bg-amber-500",
     pillBg: "bg-amber-50",
     pillText: "text-amber-800",
-    meals: ["Maple-glazed pork", "Vegetable stir-fry", "Lentil soup"],
+    meals: ["Seasonal grain bowl", "Vegetable stir-fry", "Lentil soup"],
   },
   {
-    name: "Cedar & Stone",
+    name: "Retailer Brand C",
     sub: "Shop Your Week",
     headerBg: "bg-slate-700",
     accentBg: "bg-slate-500",
     pillBg: "bg-slate-100",
     pillText: "text-slate-700",
-    meals: ["Cedar-smoked trout", "Grain bowls", "Roasted root vegetables"],
+    meals: ["Roasted root vegetables", "Grain bowls", "Baked salmon"],
   },
 ];
 
@@ -53,7 +53,7 @@ export default function WhiteLabelPlatform() {
             White-Label Platform
           </p>
           <h2 className="text-4xl font-bold font-recoleta text-forest-900 leading-tight mb-6">
-            Built by Sage. Branded as You.
+            Built by Sage Branded as You
           </h2>
           <p className="text-xl text-gray-600 leading-relaxed">
             Sage works behind the scenes so the grocer remains at the center of the customer
@@ -124,7 +124,7 @@ export default function WhiteLabelPlatform() {
 
             <p className="text-center text-xs text-gray-400 mt-5">
               {/* TODO: replace with approved retailer-branded interface screenshots */}
-              Visual placeholder — fictional retailer brands only. No real retailer logos used.
+              Visual placeholder showing three example retailer brands. No real retailer logos used.
             </p>
           </div>
 
