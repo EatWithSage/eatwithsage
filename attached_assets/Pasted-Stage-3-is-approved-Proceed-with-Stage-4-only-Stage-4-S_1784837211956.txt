@@ -1,0 +1,136 @@
+Stage 3 is approved.
+
+Proceed with Stage 4 only.
+
+## Stage 4 Scope
+
+Implement:
+
+1. White-Label Platform
+2. Homepage-Specific Final CTA
+
+Do not begin Stage 5.
+
+## White-Label Platform
+
+Eyebrow:
+
+White-Label Platform
+
+Headline:
+
+Built by Sage Branded as You
+
+Intro:
+
+Sage works behind the scenes so the grocer remains at the center of the customer relationship.
+
+Supporting points:
+
+* Retailer-branded shopper experience
+* Retailer assortment and product catalog
+* Connection to the retailer’s ecommerce journey
+* Configurable content and media opportunities
+* Designed to complement existing loyalty and retail media programs
+* Consistent with the retailer’s brand and customer experience
+
+Featured statement:
+
+Shoppers engage with their grocer—not with a separate Sage destination.
+
+## White-Label Visual
+
+Use the existing CSS/HTML placeholder approach.
+
+Show the same underlying interface adapted across three fictional grocery brands to demonstrate that Sage operates behind the scenes.
+
+Use three clearly fictional retailer names. Retain:
+
+Harvest & Main
+
+Add two additional fictional names that have been checked to avoid known active grocery banners.
+
+Do not use:
+
+* Real retailer names
+* Competitor names
+* Real logos
+* `.com` placeholder URLs
+* Fabricated metrics
+* A standalone Sage consumer interface
+
+Use `.example` URLs only if a URL is shown.
+
+Add TODO comments for future approved retailer-branded assets.
+
+## Homepage Final CTA
+
+Create the homepage-specific component in:
+
+`homepage-final-cta.tsx`
+
+Do not modify the shared:
+
+`final-cta.tsx`
+
+Use:
+
+Headline:
+
+Turn Your Weekly Shopper Experience Into a New Media Opportunity
+
+Supporting copy:
+
+See how Sage can help your grocery brand create new media opportunities, strengthen ecommerce, deepen shopper relationships and uncover new sources of shopper insight.
+
+Primary CTA:
+
+Request a Retailer Demo
+
+The CTA must point to the existing homepage demo form with `id="demo"`.
+
+Do not add a second CTA unless needed for layout consistency.
+
+## Scope Protection
+
+Only modify:
+
+* `white-label-platform.tsx`
+* `homepage-final-cta.tsx`
+* Homepage-specific supporting components or assets required for these sections
+
+Do not modify:
+
+* Navigation
+* Hero
+* Retail Media Opportunity
+* How Sage Works
+* Ecommerce Engine
+* Retailer Outcomes
+* Shopper Experience
+* Shopper Insights
+* Shared Final CTA
+* Footer
+* `/product`
+* `/about`
+* Industry pages
+* Blog pages
+
+## Stage 4 Handoff
+
+After implementation:
+
+1. Run the build and all tests.
+2. List every file created or modified.
+3. Paste the exact final copy used in both sections.
+4. List the three fictional retailer names used and confirm they are not known active grocery banners.
+5. Describe the white-label visual and how it demonstrates one platform across multiple brands.
+6. Confirm that no real retailer or competitor logos were used.
+7. Confirm that the homepage CTA points to `#demo`.
+8. Confirm that the shared `final-cta.tsx` was not modified.
+9. Confirm that no unsupported metrics or claims were added.
+10. Confirm that no non-homepage route changed.
+11. Report console and accessibility findings.
+12. Provide desktop and mobile previews where tooling permits.
+13. Create a checkpoint.
+14. Stop before Stage 5.
