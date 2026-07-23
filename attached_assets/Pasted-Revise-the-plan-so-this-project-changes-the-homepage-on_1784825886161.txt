@@ -1,0 +1,105 @@
+Revise the plan so this project changes the homepage only.
+
+## Scope
+
+Only modify:
+
+* The homepage route
+* Homepage-specific components
+* Homepage-specific copy
+* Homepage-specific metadata
+* Shared components only when they can be configured without changing any other page
+
+Do not change the appearance, copy, links or behavior of:
+
+* `/product`
+* `/about`
+* Industry pages
+* Blog pages
+* Any other route
+
+## Navigation CTA
+
+“Request a Demo” should appear on the homepage only for now.
+
+Because `navigation.tsx` is shared, do not add the CTA globally.
+
+Implement it through either:
+
+1. A homepage-only prop passed to the shared navigation component, or
+2. A homepage-specific navigation wrapper
+
+Verify that all other pages render exactly as they do today.
+
+## Footer
+
+Do not make the footer bug fixes in this homepage project.
+
+Leave unchanged:
+
+* Broken industry links
+* Copyright year
+* Footer logo filename
+* Product hash links
+
+Document these as separate follow-up items only.
+
+## Final CTA
+
+Do not modify the shared `/about` CTA.
+
+Create a homepage-specific CTA component or pass homepage-specific content through props without changing any other page.
+
+## Task #67
+
+Re-scope Task #67 to homepage-only work.
+
+First review the code already implemented under the old scope. Identify and revert any changes that affected shared navigation, the shared footer or any non-homepage page.
+
+Then complete only:
+
+* Homepage component architecture
+* Homepage-only navigation CTA
+* Hero rewrite
+* Retail media opportunity section
+
+## Revised Five-Stage Scope
+
+### Stage 1
+
+* Review and revert out-of-scope shared changes
+* Create homepage component architecture
+* Homepage-only navigation CTA
+* Hero
+* Retail media opportunity
+
+### Stage 2
+
+* How Sage Works
+* Ecommerce Engine
+* Visual placeholders
+
+### Stage 3
+
+* Four Retailer Outcomes
+* Shopper Experience
+* Shopper Insights
+
+### Stage 4
+
+* White-Label Platform
+* Homepage-specific Final CTA
+
+Do not modify the shared footer.
+
+### Stage 5
+
+* Homepage SEO metadata
+* Homepage responsive testing
+* Homepage accessibility
+* Homepage analytics verification
+* Regression testing to confirm all other pages remain unchanged
+
+After each stage, create a checkpoint and provide the changed-file list and desktop/mobile previews.
+
+Proceed with Stage 1 only.

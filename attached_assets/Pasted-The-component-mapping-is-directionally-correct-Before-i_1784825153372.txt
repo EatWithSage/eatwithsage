@@ -1,0 +1,117 @@
+The component mapping is directionally correct. Before implementation, revise the plan with the following constraints.
+
+## Shared Component Protection
+
+Do not directly change a shared component in a way that alters other pages unless the change is explicitly intended sitewide.
+
+### Navigation
+
+`navigation.tsx` is shared.
+
+Add the “Request a Demo” CTA in a configurable way. Confirm whether it will appear across the entire site or only on the homepage before implementation.
+
+Preserve:
+
+* Existing navigation routes
+* Mobile navigation behavior
+* Current accessibility behavior
+* Existing analytics or event tracking
+
+### Final CTA
+
+`final-cta.tsx` is also used on `/about`.
+
+Do not overwrite its current copy globally.
+
+Either:
+
+1. Add props for page-specific headline, body copy and CTA labels, or
+2. Create a homepage-specific CTA component.
+
+Confirm that `/about` remains visually and textually unchanged.
+
+### Footer
+
+Before modifying `footer.tsx`, list the specific bugs you found.
+
+Fix only confirmed bugs. Do not redesign the footer or change its links, copy or sitewide behavior without separate approval.
+
+## Homepage-Specific Components
+
+Do not substantially rewrite `product-overview.tsx` or add extensive homepage-specific conditionals if it is used on `/product`.
+
+Create separate homepage components for the new narrative, such as:
+
+* `homepage/retail-media-opportunity.tsx`
+* `homepage/how-sage-works.tsx`
+* `homepage/ecommerce-engine.tsx`
+* `homepage/retailer-outcomes.tsx`
+* `homepage/shopper-experience.tsx`
+* `homepage/shopper-insights.tsx`
+* `homepage/white-label-platform.tsx`
+* `homepage/homepage-final-cta.tsx`
+
+Reuse smaller presentational elements where appropriate, but keep homepage copy and structure independent from the `/product` page.
+
+## Revised Homepage Structure
+
+Use this section order:
+
+1. Header and navigation
+2. Hero
+3. Retail media opportunity
+4. How Sage works: personalized, shoppable and monetizable
+5. Ecommerce engine
+6. Four retailer outcomes
+7. Shopper experience
+8. Shopper insights
+9. White-label platform
+10. Final CTA
+11. Footer
+
+Do not create a separate full section titled “New Media Platform” if it repeats the retail media opportunity or four retailer outcomes sections.
+
+Instead, make “New Media Platform” the dominant card or subsection within the four retailer outcomes section.
+
+## Implementation Sequence
+
+Update the task plan into these stages:
+
+### Stage 1
+
+* Shared-component audit
+* Homepage component architecture
+* Header
+* Hero
+* Retail media opportunity
+
+### Stage 2
+
+* How Sage works
+* Ecommerce engine
+* Initial product visuals or placeholders
+
+### Stage 3
+
+* Four retailer outcomes
+* Shopper experience
+* Shopper insights
+
+### Stage 4
+
+* White-label platform
+* Final CTA
+* Footer bug fixes
+
+### Stage 5
+
+* Homepage metadata
+* Mobile responsiveness
+* Accessibility
+* Analytics verification
+* Performance review
+* Regression testing on `/product`, `/about` and other pages using shared components
+
+Create a checkpoint after each stage.
+
+For now, update the plan and task files only. Do not begin implementation until the revised architecture and shared-component protections are documented.

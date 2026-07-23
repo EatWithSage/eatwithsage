@@ -10,7 +10,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export function Navigation() {
+interface NavigationProps {
+  showDemoCta?: boolean;
+}
+
+export function Navigation({ showDemoCta = false }: NavigationProps) {
   const [location] = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
@@ -52,7 +56,7 @@ export function Navigation() {
           </div>
           
           {/* Desktop Navigation */}
-          <div className="hidden md:block">
+          <div className="hidden md:flex items-center">
             <div className="ml-10 flex items-baseline space-x-8">
               <Link 
                 href="/" 
@@ -124,6 +128,17 @@ export function Navigation() {
                 Blog
               </Link>
             </div>
+
+            {/* Homepage-only "Request a Demo" CTA */}
+            {showDemoCta && (
+              <a
+                href="#demo"
+                className="ml-8 bg-sage-500 text-white px-5 py-2 rounded-lg text-sm font-semibold font-recoleta hover:bg-sage-600 transition-colors"
+                data-testid="link-nav-request-demo"
+              >
+                Request a Demo
+              </a>
+            )}
           </div>
           
           {/* Mobile menu button */}
@@ -227,6 +242,18 @@ export function Navigation() {
                   >
                     Blog
                   </Link>
+
+                  {/* Homepage-only "Request a Demo" CTA */}
+                  {showDemoCta && (
+                    <a
+                      href="#demo"
+                      className="block mx-3 mt-2 bg-sage-500 text-white px-4 py-3 rounded-lg text-sm font-semibold font-recoleta text-center hover:bg-sage-600 transition-colors"
+                      onClick={() => setMobileOpen(false)}
+                      data-testid="link-mobile-request-demo"
+                    >
+                      Request a Demo
+                    </a>
+                  )}
                 </div>
               </SheetContent>
             </Sheet>

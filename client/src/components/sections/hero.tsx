@@ -1,67 +1,78 @@
-import React from "react";
-import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
-import { CheckCircle, Shield, Clock } from "lucide-react";
+import { Tv2, ShoppingCart, Users } from "lucide-react";
 
-const scrollToDemo = () => {
-  const demoSection = document.getElementById('demo');
-  if (demoSection) {
-    demoSection.scrollIntoView({ behavior: 'smooth' });
-  }
+const scrollTo = (id: string) => {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth' });
 };
 
 export default function Hero() {
   return (
     <section className="relative bg-gradient-to-br from-sage-50 to-cream-50 overflow-hidden pt-32">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
-        <div className="lg:grid lg:grid-cols-12 lg:gap-8 items-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
+        <div className="lg:grid lg:grid-cols-12 lg:gap-12 items-center">
           <div className="lg:col-span-6">
-            <h1 className="text-4xl lg:text-6xl font-bold font-recoleta text-forest-900 leading-tight mb-6">
-              Your Recipe for <span className="text-sage-500">Brand Loyalty</span>
+            {/* Eyebrow */}
+            <div className="inline-block bg-sage-100 text-sage-700 text-sm font-semibold font-recoleta px-4 py-1.5 rounded-full mb-6 tracking-wide">
+              White-Labeled Retail Media for Grocery
+            </div>
+
+            <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold font-recoleta text-forest-900 leading-tight mb-6">
+              Turn Weekly Food Decisions Into a New{" "}
+              <span className="text-sage-500">Retail Media Platform</span>
             </h1>
+
             <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-              Build your brand with Sage's white-labeled meal planning app. Our AI-powered weekly meal planner creates healthy meal plans that drive brand loyalty, increase margins, and generate customer insights for powerful relationships.
+              Sage gives grocers a white-labeled platform that transforms those decisions into
+              personalized, shoppable and monetizable digital experiences—all under the retailer's brand.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 mb-12">
-              <Button 
-                onClick={scrollToDemo}
-                className="bg-sage-500 text-white px-12 py-6 rounded-xl font-semibold hover:bg-sage-600 transition-colors h-auto text-lg tracking-wider"
+
+            <div className="flex flex-col sm:flex-row gap-4 mb-10">
+              <Button
+                onClick={() => scrollTo('demo')}
+                className="bg-sage-500 text-white px-10 py-6 rounded-xl font-semibold hover:bg-sage-600 transition-colors h-auto text-lg tracking-wider"
                 data-testid="button-request-demo"
               >
-                Request Demo
+                Request a Demo
               </Button>
-              <Button 
-                asChild 
-                variant="outline" 
-                className="border-2 border-sage-500 text-sage-500 px-12 py-6 rounded-xl font-semibold hover:bg-sage-50 transition-colors h-auto text-lg tracking-wider"
-                data-testid="button-learn-more"
+              <Button
+                onClick={() => scrollTo('how-sage-works')}
+                variant="outline"
+                className="border-2 border-sage-500 text-sage-500 px-10 py-6 rounded-xl font-semibold hover:bg-sage-50 transition-colors h-auto text-lg tracking-wider"
+                data-testid="button-see-how-it-works"
               >
-                <Link href="/product">Learn More</Link>
+                See How It Works
               </Button>
             </div>
-            
-            {/* Trust indicators */}
+
+            {/* Benefit hierarchy trust indicators */}
             <div className="flex flex-col sm:flex-row gap-6 text-sm text-gray-500">
-              <div className="flex items-center">
-                <CheckCircle className="w-5 h-5 text-sage-500 mr-2" />
-                Build Customer Loyalty
+              <div className="flex items-center gap-2">
+                <Tv2 className="w-5 h-5 text-sage-500 flex-shrink-0" />
+                New Media Platform
               </div>
-              <div className="flex items-center">
-                <Shield className="w-5 h-5 text-sage-500 mr-2" />
-                Lower Customer Acquisition Costs
+              <div className="flex items-center gap-2">
+                <ShoppingCart className="w-5 h-5 text-sage-500 flex-shrink-0" />
+                Ecommerce Engine
               </div>
-              <div className="flex items-center">
-                <Clock className="w-5 h-5 text-sage-500 mr-2" />
-                Increase Total Sales
+              <div className="flex items-center gap-2">
+                <Users className="w-5 h-5 text-sage-500 flex-shrink-0" />
+                Shopper Loyalty
               </div>
             </div>
+
+            {/* Supporting line */}
+            <p className="mt-6 text-sm font-medium text-forest-900 tracking-wide">
+              Your brand. Your shoppers. Your digital experience.
+            </p>
           </div>
-          
+
           <div className="lg:col-span-6 mt-12 lg:mt-0">
-            <img 
-              src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&h=600" 
-              alt="Sage meal planning interface showing personalized recommendations and shopping lists" 
-              className="rounded-2xl shadow-2xl w-full" 
+            {/* TODO: replace with retailer-branded visual when approved */}
+            <img
+              src="/sage-healthy-meal-plans-app.jpg"
+              alt="Sage white-labeled grocery shopping experience showing personalized weekly meal and product recommendations under a retailer's brand"
+              className="rounded-2xl shadow-2xl w-full"
               data-testid="img-hero-product"
             />
           </div>
