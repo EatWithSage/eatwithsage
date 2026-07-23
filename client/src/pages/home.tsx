@@ -17,10 +17,10 @@ import HomepageFinalCTA from "@/components/sections/homepage/homepage-final-cta"
 export default function Home() {
   return (
     <>
-      <title>Sage — White-Labeled Retail Media for Grocery Retailers</title>
+      <title>Sage | White-Labeled Retail Media Platform for Grocers</title>
       <meta
         name="description"
-        content="Sage gives grocery retailers a white-labeled platform that transforms weekly food decisions into personalized, shoppable and monetizable digital experiences—all under the retailer's brand."
+        content="Sage helps grocers turn weekly food decisions into personalized, shoppable and monetizable digital experiences under their own brand."
       />
 
       <div className="min-h-screen bg-cream-50">

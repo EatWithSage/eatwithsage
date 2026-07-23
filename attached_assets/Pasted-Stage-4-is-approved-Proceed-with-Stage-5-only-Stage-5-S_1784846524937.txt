@@ -1,0 +1,246 @@
+Stage 4 is approved.
+
+Proceed with Stage 5 only.
+
+## Stage 5 Scope
+
+Complete final homepage QA and homepage-specific optimization:
+
+1. Homepage SEO metadata
+2. Responsive review
+3. Accessibility review
+4. Analytics verification
+5. Performance review
+6. Homepage functionality testing
+7. Regression testing confirming non-homepage routes remain unchanged
+
+Do not redesign sections or rewrite approved copy during Stage 5.
+
+## 1. Homepage SEO Metadata
+
+Review and confirm the homepage uses:
+
+Title:
+
+Sage | White-Labeled Retail Media Platform for Grocers
+
+Meta description:
+
+Sage helps grocers turn weekly food decisions into personalized, shoppable and monetizable digital experiences under their own brand.
+
+Also review:
+
+* Canonical URL
+* Open Graph title
+* Open Graph description
+* Open Graph image
+* Twitter/X card metadata
+* Homepage robots directives
+* Structured data already present on the homepage
+
+Do not modify metadata on any non-homepage route.
+
+If the current application architecture cannot reliably render route-specific social metadata, document the limitation rather than changing the entire site architecture.
+
+## 2. Responsive Review
+
+Review the full homepage at representative widths:
+
+* 320px
+* 375px
+* 768px
+* 1024px
+* 1440px
+
+Check every section for:
+
+* Text overflow
+* Horizontal scrolling
+* Crowded or orphaned headlines
+* Button wrapping
+* Card alignment
+* Uneven spacing
+* Placeholder UI overflow
+* Readability of the four hero benefit labels
+* Mobile navigation CTA behavior
+* Correct stacking order
+* Excessive page length or repeated content
+* Adequate spacing before and after the demo form
+
+Make only corrective layout changes required for usability.
+
+Do not change approved copy to solve layout issues unless absolutely necessary. If copy appears to require revision, report it instead of editing it.
+
+## 3. Accessibility Review
+
+Review the homepage for:
+
+* One clear H1
+* Logical heading hierarchy
+* Keyboard-accessible buttons and navigation
+* Visible focus states
+* Valid anchor and scroll targets
+* Color contrast
+* Image alt text accuracy
+* Decorative icon handling
+* Semantic lists
+* Form labels and error messaging
+* Mobile navigation usability
+* Reduced-motion behavior, if animations exist
+* Duplicate IDs
+* Missing landmark labels where materially useful
+
+Run automated accessibility tooling if available.
+
+Document:
+
+* Tool used
+* Issues found
+* Issues corrected
+* Issues deferred
+
+Do not make sitewide accessibility changes unless required to prevent a homepage regression.
+
+## 4. CTA and Functionality Verification
+
+Verify:
+
+* Header “Request a Demo” CTA appears only on the homepage.
+* Mobile navigation “Request a Demo” CTA appears only on the homepage.
+* Hero “Request a Demo” scrolls to `#demo`.
+* Hero “See How It Works” scrolls to `#how-sage-works`.
+* Homepage Final CTA scrolls forward to `#demo`.
+* Demo form submits successfully or reaches the expected current submission behavior.
+* All homepage navigation links work.
+* No visible CTA points to a missing section.
+* No placeholder button is accidentally interactive.
+* No duplicate `id="demo"` or `id="how-sage-works"` exists.
+
+Do not submit test data to a live CRM unless a safe test method is already available.
+
+## 5. Analytics Verification
+
+Identify the analytics currently used on the homepage.
+
+Verify, without changing non-homepage behavior:
+
+* Homepage pageview tracking
+* Existing demo form tracking
+* Existing CTA tracking, if present
+* Whether the new header CTA is tracked
+* Whether the hero primary CTA is tracked
+* Whether the hero secondary CTA is tracked
+* Whether the Homepage Final CTA is tracked
+
+Do not invent a new event taxonomy during this stage.
+
+If tracking is missing, document the recommended events and implementation locations. Only add tracking if it can reuse the existing analytics conventions without affecting other routes.
+
+## 6. Performance Review
+
+Review:
+
+* Homepage JavaScript errors
+* Missing assets
+* Image loading
+* Image dimensions and layout shift
+* Unused external requests
+* Font loading
+* Total homepage payload where tooling permits
+* Lighthouse or equivalent performance results where available
+
+Do not perform major dependency, bundler or sitewide performance changes.
+
+Correct only clear homepage-specific regressions introduced by this redesign.
+
+## 7. Placeholder and Terminology Scan
+
+Search homepage source files for:
+
+* `FreshMart`
+* `.com` placeholder retailer URLs
+* `meal-planning app`
+* `meal planning app`
+* `meal-planning application`
+* `meal planning application`
+* `Your Recipe for Brand Loyalty`
+* Unsupported metrics or percentage claims
+* TODO comments
+* `return null` homepage section stubs
+
+Report every remaining TODO comment and classify it as:
+
+* Expected visual placeholder
+* Required before production
+* Safe to retain temporarily
+
+Do not remove useful TODO comments simply to make the scan clean.
+
+Note that:
+
+* Harvest & Main remains intentionally in the approved Stage 2 and Stage 3 placeholders.
+* Retailer Brand A, B and C remain intentionally in the Stage 4 white-label visual.
+
+## 8. Regression Testing
+
+Confirm these routes remain visually and functionally unchanged:
+
+* `/product`
+* `/about`
+* `/industry/food-retailers`
+* Other working industry pages
+* `/blog`
+* Individual blog/article pages where practical
+
+Specifically confirm:
+
+* No homepage-only CTA appears in their navigation.
+* No homepage sections appear on those routes.
+* Shared Final CTA behavior remains unchanged.
+* Footer remains unchanged.
+* Their existing metadata remains unchanged.
+
+## 9. Final Homepage Section Order
+
+Confirm the rendered homepage order is:
+
+1. Navigation
+2. Hero
+3. Retail Media Opportunity
+4. How Sage Works
+5. Ecommerce Engine
+6. Retailer Outcomes
+7. Shopper Experience
+8. Shopper Insights
+9. White-Label Platform
+10. Homepage Final CTA
+11. Demo Form
+12. Footer
+
+Report any discrepancy before changing it.
+
+## Stage 5 Handoff
+
+After completing Stage 5, provide:
+
+1. Commit identifier and commit message.
+2. Every file modified.
+3. Exact final homepage section order.
+4. Final title and meta description.
+5. Responsive results at each reviewed width.
+6. Accessibility results and any fixes.
+7. CTA and anchor verification results.
+8. Analytics findings.
+9. Performance findings.
+10. Full placeholder and terminology scan results.
+11. All remaining TODO comments.
+12. Regression results for non-homepage routes.
+13. Build and test results.
+14. Console errors and warnings.
+15. Any issues that should block production.
+16. Any non-blocking follow-up items.
+17. Final checkpoint identifier.
+
+Do not publish or deploy to production.
+
+Stop after the Stage 5 handoff.
