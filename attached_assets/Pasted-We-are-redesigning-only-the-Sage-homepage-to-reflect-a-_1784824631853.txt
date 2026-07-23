@@ -1,0 +1,167 @@
+We are redesigning only the Sage homepage to reflect a new market position.
+
+## Business Context
+
+Sage sells first to grocery retailers.
+
+Sage is a white-labeled platform. The shopper-facing experience appears under the grocer’s brand, not as a separate Sage consumer destination.
+
+The underlying product is not changing. The positioning is changing from a loyalty platform to a white-labeled retail media platform for grocers.
+
+Sage enables grocers to create and monetize a differentiated digital retail media experience, similar in strategic purpose to the owned media advantages created by the largest grocery and retail companies. Do not imply that Sage currently replicates every feature or scale of those companies’ retail media networks.
+
+## Primary Audience
+
+The homepage is written primarily for:
+
+* Grocery executives
+* Retail media leaders
+* Ecommerce leaders
+* Digital and loyalty leaders
+* Innovation and strategy leaders
+
+The page is not primarily written to consumers or CPG advertisers.
+
+## Core Positioning
+
+Sage gives grocers a white-labeled retail media platform that transforms weekly food decisions into personalized, shoppable and monetizable digital experiences.
+
+## Approved Hero
+
+Eyebrow:
+White-Labeled Retail Media for Grocery
+
+Headline:
+Turn Weekly Food Decisions Into a New Retail Media Platform
+
+Supporting copy:
+Sage gives grocers a white-labeled platform that transforms those decisions into personalized, shoppable and monetizable digital experiences—all under the retailer’s brand.
+
+Primary CTA:
+Request a Demo
+
+Secondary CTA:
+See How It Works
+
+Supporting line:
+Your brand. Your shoppers. Your digital experience.
+
+## Retailer Benefit Hierarchy
+
+1. New media platform
+2. Ecommerce engine
+3. Shopper loyalty
+4. New shopper insights
+
+Retail media must be the dominant benefit. Loyalty should be presented as an outcome, not as the primary category.
+
+## Shopper Benefits
+
+* 0-touch meal planning
+* Convenience
+* A better grocery ecommerce experience
+
+Do not refer to Sage as a “meal-planning application” or “meal-planning app.”
+
+Acceptable product descriptions include:
+
+* Personalized weekly shopping experience
+* Automated meal-to-basket experience
+* AI-powered food and shopping assistant
+* Personalized grocery planning experience
+* Household shopping assistant
+* Weekly food decision platform
+
+“0-touch meal planning” may be used as a shopper benefit, but it must be explained in plain language.
+
+## Core Message
+
+The shopper experience creates the retail media value.
+
+The logic of the page should be:
+
+Useful shopper experience
+→ repeated engagement
+→ understanding of household intent
+→ relevant product and brand opportunities
+→ ecommerce basket creation
+→ measurable commerce and retailer value
+
+## White-Label Principle
+
+The grocer owns the shopper relationship and remains visually central.
+
+Sage operates behind the scenes.
+
+Do not design the shopper experience as a standalone Sage consumer application.
+
+Product visuals should use a fictional or customizable grocery banner unless existing approved retailer assets are available.
+
+## Recommended Homepage Order
+
+1. Header and navigation
+2. Hero
+3. Retail media opportunity
+4. How Sage works: personalized, shoppable and monetizable
+5. New media platform
+6. Ecommerce engine
+7. Four retailer outcomes
+8. Shopper experience
+9. Shopper insights
+10. White-label platform
+11. Final call to action
+12. Footer
+
+## Visual Direction
+
+The page should feel like a sophisticated B2B retail technology platform.
+
+Use the existing Sage visual identity unless specifically instructed otherwise.
+
+Show:
+
+* Retailer-branded digital experiences
+* The movement from weekly food decision to ecommerce basket
+* Contextual product discovery
+* Retail media opportunities integrated into useful experiences
+* Shopper intent and commerce insights
+* The same platform adapted to multiple fictional grocer brands
+
+Avoid:
+
+* Generic advertising dashboards as the primary visual
+* A consumer wellness-app appearance
+* Screens overwhelmed by banner ads
+* Excessive healthy-food lifestyle photography
+* Presenting Sage as a destination brand for shoppers
+* Competitor logos unless separately approved
+* Unsupported performance statistics
+* Unsupported claims about attribution, revenue or data ownership
+
+## Copy Rules
+
+Do not rewrite approved copy without identifying the proposed change first.
+
+Do not use:
+
+* Meal-planning application
+* Meal-planning app
+* Your Recipe for Brand Loyalty
+* Loyalty platform as the primary description
+
+Do not make claims that the product capabilities cannot support.
+
+Use clear, concise B2B language. Avoid jargon where possible.
+
+## Technical Requirements
+
+* Redesign only the homepage unless a shared component must be updated.
+* Preserve working forms, analytics, tracking, routing and integrations.
+* Preserve accessibility.
+* Ensure responsive behavior across desktop, tablet and mobile.
+* Maintain or improve page speed.
+* Update homepage title, meta description and social-sharing metadata.
+* Do not publish to production until each stage has been reviewed.
+* Create a checkpoint after each approved stage.
+
+First, create a detailed implementation plan that maps the existing components to this new structure. Identify any missing information, assets or capabilities. Do not start implementing the full page yet.
