@@ -1,0 +1,141 @@
+Stage 1 is approved.
+
+Proceed with Stage 2 only.
+
+## Stage 2 Scope
+
+Implement:
+
+1. How Sage Works
+2. Ecommerce Engine
+3. The initial visual placeholder approach for both sections
+
+Do not implement any Stage 3, Stage 4 or Stage 5 component.
+
+## How Sage Works
+
+Add `id="how-sage-works"` to the section.
+
+After that ID exists, update the hero’s “See How It Works” CTA so it points to `#how-sage-works` instead of `#retail-media-opportunity`.
+
+Use this section structure:
+
+Eyebrow:
+
+How Sage Works
+
+Headline:
+
+From Weekly Food Decisions to Measurable Commerce
+
+Intro:
+
+Sage connects a useful shopper experience with ecommerce and new media opportunities—all under the retailer’s brand.
+
+### Personalized
+
+Sage creates weekly food recommendations around each household’s preferences, dietary needs, schedule and shopping behavior.
+
+### Shoppable
+
+Recommendations are connected to the grocer’s assortment and transformed into a complete, editable ecommerce basket.
+
+### Monetizable
+
+Relevant products and brands can be integrated into the experience, creating new retailer-controlled media opportunities close to the point of purchase.
+
+Do not add performance metrics, attribution claims or assertions that Sage has already produced measurable lift.
+
+## Ecommerce Engine
+
+Use this section structure:
+
+Eyebrow:
+
+Ecommerce Engine
+
+Headline:
+
+Media That Helps Build the Basket
+
+Intro:
+
+Most digital advertising ends with a click. Sage is designed to connect personalized food recommendations, relevant product discovery and the retailer’s ecommerce experience.
+
+Supporting steps:
+
+1. Understand household needs
+2. Recommend a personalized week
+3. Match ingredients to the retailer’s assortment
+4. Let shoppers review or replace products
+5. Continue into the retailer’s existing ecommerce journey
+
+Featured statement:
+
+Sage does not simply send shoppers to ecommerce. It helps create the basket.
+
+The phrase “helps create the basket” is intentional. Do not change it to an absolute claim such as “creates the basket” or “increases basket size.”
+
+## Visual Direction
+
+For How Sage Works, show one connected retailer-branded flow:
+
+Household needs
+→ Personalized recommendations
+→ Relevant product opportunities
+→ Shoppable basket
+
+For Ecommerce Engine, show:
+
+Recommendation
+→ Ingredients
+→ Product selection
+→ Editable basket
+→ Retailer checkout
+
+Use placeholders or existing local assets for now.
+
+Requirements:
+
+* The experience must appear retailer-branded, not like a separate consumer Sage destination.
+* Do not use real retailer logos without approval.
+* Use a fictional grocery brand or neutral retailer interface.
+* Do not use competitor logos.
+* Do not add unsupported dashboard metrics.
+* Clearly mark any temporary visual asset with a TODO comment for future replacement.
+* Preserve the existing Sage visual system.
+
+## Scope Protection
+
+Only modify:
+
+* `how-sage-works.tsx`
+* `ecommerce-engine.tsx`
+* The hero CTA target
+* Homepage-specific supporting assets or components required for these two sections
+
+Do not modify:
+
+* Navigation
+* Footer
+* Shared final CTA
+* `/product`
+* `/about`
+* Industry pages
+* Blog pages
+* Stage 3 or Stage 4 stub components
+
+## Stage 2 Handoff
+
+After implementation:
+
+1. Run the build and all tests.
+2. Confirm the hero secondary CTA points to the new `#how-sage-works` section.
+3. List every file created or modified.
+4. Paste the exact final copy used in both sections.
+5. Identify every placeholder visual or temporary asset.
+6. Confirm that no unsupported metrics or claims were added.
+7. Confirm that no non-homepage route changed.
+8. Provide desktop and mobile previews where the tooling permits.
+9. Create a checkpoint.
+10. Stop before Stage 3.

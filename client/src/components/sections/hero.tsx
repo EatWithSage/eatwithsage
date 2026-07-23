@@ -36,7 +36,7 @@ export default function Hero() {
                 Request a Demo
               </Button>
               <Button
-                onClick={() => scrollTo('retail-media-opportunity')}
+                onClick={() => scrollTo('how-sage-works')}
                 variant="outline"
                 className="border-2 border-sage-500 text-sage-500 px-10 py-6 rounded-xl font-semibold hover:bg-sage-50 transition-colors h-auto text-lg tracking-wider"
                 data-testid="button-see-how-it-works"
