@@ -1,0 +1,110 @@
+Stage 5 implementation is complete. Stop here and do not publish or deploy.
+
+Provide the complete Stage 5 review package:
+
+1. Commit identifier and commit message.
+2. Every file modified during Stage 5.
+3. For each modified file, summarize exactly what changed.
+4. Confirm the exact final homepage section order.
+5. Provide the exact final:
+
+   * Page title
+   * Meta description
+   * Canonical URL
+   * Open Graph title
+   * Open Graph description
+   * Open Graph image
+   * Twitter/X card metadata
+   * Robots directive
+6. Explain the changes made to `index.html`, including every legacy or prohibited phrase removed.
+7. Report responsive review results at:
+
+   * 320px
+   * 375px
+   * 768px
+   * 1024px
+   * 1440px
+8. For each width, identify:
+
+   * Any issue found
+   * Any fix made
+   * Any issue deferred
+9. Report accessibility findings:
+
+   * Tooling used, if any
+   * Heading hierarchy
+   * Keyboard behavior
+   * Focus states
+   * Color contrast
+   * Form labels and errors
+   * Image alt text
+   * Decorative icon handling
+   * Duplicate IDs
+   * Missing or invalid scroll targets
+10. Report CTA verification results for:
+
+    * Header Request a Demo
+    * Mobile navigation Request a Demo
+    * Hero Request a Demo
+    * Hero See How It Works
+    * Homepage Final CTA
+11. Confirm whether the demo form was tested and describe the safe test method used. Do not submit live CRM data.
+12. Report analytics findings:
+
+    * Pageview tracking
+    * Demo form tracking
+    * Header CTA tracking
+    * Hero primary CTA tracking
+    * Hero secondary CTA tracking
+    * Final CTA tracking
+    * Any recommended but unimplemented events
+13. Report performance findings:
+
+    * JavaScript errors
+    * Failed assets
+    * Image loading and dimensions
+    * Layout shift risks
+    * Font loading
+    * External requests
+    * Lighthouse or equivalent results, if available
+14. Provide the complete terminology and placeholder scan results for:
+
+    * `FreshMart`
+    * `.com` placeholder retailer URLs
+    * `meal-planning app`
+    * `meal planning app`
+    * `meal-planning application`
+    * `meal planning application`
+    * `Your Recipe for Brand Loyalty`
+    * Unsupported percentage or performance claims
+    * `return null`
+15. List every remaining TODO comment, its file and whether it is:
+
+    * Expected visual placeholder
+    * Required before production
+    * Safe to retain temporarily
+16. Report regression results for:
+
+    * `/product`
+    * `/about`
+    * `/industry/food-retailers`
+    * Other working industry pages
+    * `/blog`
+    * At least one individual article page
+17. Specifically confirm:
+
+    * No homepage-only navigation CTA appears on non-homepage routes
+    * No homepage section appears on non-homepage routes
+    * The shared Final CTA remains unchanged
+    * The footer remains unchanged
+    * Non-homepage metadata remains unchanged
+18. Report:
+
+    * Build result
+    * Test result
+    * Console errors and warnings
+19. Identify every issue that should block production.
+20. Identify all non-blocking follow-up items.
+21. Provide the final checkpoint identifier.
+
+Do not describe the homepage as production-ready until the review package supports that conclusion.
