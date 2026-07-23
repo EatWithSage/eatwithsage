@@ -29,7 +29,7 @@ export default function RetailerOutcomes() {
             Retailer Value
           </p>
           <h2 className="text-4xl font-bold font-recoleta text-forest-900 leading-tight mb-6">
-            One Platform. Four Sources of Value.
+            One Platform Four Sources of Value
           </h2>
           <p className="text-xl text-gray-600 leading-relaxed">
             Sage turns a more useful weekly shopping experience into new opportunities across
