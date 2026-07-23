@@ -1,0 +1,106 @@
+Stage 1 requires a correction pass before approval. Do not begin Stage 2.
+
+## Reporting Corrections
+
+Update the Stage 1 handoff to state:
+
+* Three files were modified, not two.
+* One shared component, `navigation.tsx`, was modified.
+* The shared modification is additive and defaults to no visible change on non-homepage routes.
+
+Do not state that no shared component was modified.
+
+## Retail Media Opportunity Copy
+
+Revise the section to avoid unsupported claims about ownership of data, shopper relationships or media inventory.
+
+Use the following copy:
+
+Eyebrow:
+
+The Opportunity
+
+Headline:
+
+Turn the Weekly Shopping Journey Into a New Media Opportunity
+
+Intro:
+
+Food decisions happen every week. Sage helps grocers build a more useful digital experience around that recurring journey—creating new opportunities for engagement, ecommerce and relevant brand participation.
+
+Pillar 1 title:
+
+A Recurring High-Intent Occasion
+
+Pillar 1 body:
+
+Shoppers make food decisions every week. That recurring, need-driven occasion gives grocers an opportunity to build engagement around usefulness—not only promotions and discounts.
+
+Pillar 2 title:
+
+Richer Household Intent Signals
+
+Pillar 2 body:
+
+Meal and shopping decisions can reveal preferences, occasions and unmet needs that transaction data alone may not explain. Sage helps grocers turn those signals into more relevant shopper experiences and media opportunities.
+
+Pillar 3 title:
+
+A Platform Under the Retailer’s Brand
+
+Pillar 3 body:
+
+The white-labeled experience keeps the grocer at the center of the shopper relationship while creating retailer-controlled opportunities for product discovery, ecommerce and media integration.
+
+Do not use any of these phrases unless separately validated:
+
+* Own the data
+* The data belongs to the retailer
+* Entirely inside the retailer’s ecosystem
+* Own the relationship
+* Most valuable digital asset
+
+## Hero Benefit Labels
+
+The approved retailer benefit hierarchy contains four items:
+
+* New Media Platform
+* Ecommerce Engine
+* Shopper Loyalty
+* New Shopper Insights
+
+Add “New Shopper Insights” if all four labels can be presented cleanly without overcrowding the hero.
+
+If four labels do not fit well at desktop and mobile sizes, remove the complete label row rather than showing only three of the four approved benefits.
+
+## Secondary CTA
+
+The “See How It Works” CTA currently points to an ID that does not exist.
+
+Until Stage 2 creates `id="how-sage-works"`, change the CTA target to the Retail Media Opportunity section and give that section a stable ID.
+
+Do not leave a visible nonfunctional link.
+
+Stage 2 should later restore the CTA target to `#how-sage-works`.
+
+## Hero Image Accessibility
+
+Review the actual image displayed in the hero.
+
+The alt text must describe what is visibly shown in the current image. Do not describe it as retailer-branded unless the image actually shows retailer branding.
+
+Keep the TODO noting that the image must ultimately be replaced with an approved retailer-branded visual.
+
+## Verification
+
+After making these corrections:
+
+1. Run the build and tests.
+2. Verify both homepage navigation CTAs.
+3. Confirm the secondary hero CTA scrolls to a valid section.
+4. Check the four benefit labels on desktop and mobile, or confirm that the full row was removed.
+5. Provide updated desktop and mobile screenshots.
+6. List the exact files changed in this correction pass.
+7. Create a new checkpoint.
+
+Stop after the Stage 1 correction pass. Do not begin Stage 2.

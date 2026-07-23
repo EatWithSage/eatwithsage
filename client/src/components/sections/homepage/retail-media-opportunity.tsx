@@ -3,27 +3,27 @@ import { RefreshCw, Database, Building2 } from "lucide-react";
 const pillars = [
   {
     icon: RefreshCw,
-    title: "A recurring, high-intent touchpoint",
+    title: "A Recurring High-Intent Occasion",
     body:
-      "Shoppers make food decisions every week. That predictable, need-driven engagement creates a digital relationship that doesn't depend on promotions or discounts to sustain itself.",
+      "Shoppers make food decisions every week. That recurring, need-driven occasion gives grocers an opportunity to build engagement around usefulness—not only promotions and discounts.",
   },
   {
     icon: Database,
-    title: "Household intent data at scale",
+    title: "Richer Household Intent Signals",
     body:
-      "Every food decision surfaces real-time signals—what households buy, when, and why. Those signals belong to the retailer and form the foundation of a differentiated, first-party media offering.",
+      "Meal and shopping decisions can reveal preferences, occasions and unmet needs that transaction data alone may not explain. Sage helps grocers turn those signals into more relevant shopper experiences and media opportunities.",
   },
   {
     icon: Building2,
-    title: "A platform the retailer owns",
+    title: "A Platform Under the Retailer's Brand",
     body:
-      "A white-labeled platform keeps the shopper relationship, the data, and the media inventory entirely inside the retailer's brand ecosystem—not shared with a third-party network.",
+      "The white-labeled experience keeps the grocer at the center of the shopper relationship while creating retailer-controlled opportunities for product discovery, ecommerce and media integration.",
   },
 ];
 
 export default function RetailMediaOpportunity() {
   return (
-    <section className="py-20 bg-white">
+    <section id="retail-media-opportunity" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <div className="max-w-3xl mb-16">
@@ -31,11 +31,12 @@ export default function RetailMediaOpportunity() {
             The Opportunity
           </p>
           <h2 className="text-4xl font-bold font-recoleta text-forest-900 leading-tight mb-6">
-            The Weekly Shopping Journey Is Your Most Valuable Digital Asset
+            Turn the Weekly Shopping Journey Into a New Media Opportunity
           </h2>
           <p className="text-xl text-gray-600 leading-relaxed">
-            Food decisions happen every week. Grocers who build the right platform around that
-            recurring journey own the data, the relationship, and the media value that comes with it.
+            Food decisions happen every week. Sage helps grocers build a more useful digital
+            experience around that recurring journey—creating new opportunities for engagement,
+            ecommerce and relevant brand participation.
           </p>
         </div>
 

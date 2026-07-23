@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Tv2, ShoppingCart, Users } from "lucide-react";
+import { Tv2, ShoppingCart, Users, BarChart2 } from "lucide-react";
 
 const scrollTo = (id: string) => {
   const el = document.getElementById(id);
@@ -36,7 +36,7 @@ export default function Hero() {
                 Request a Demo
               </Button>
               <Button
-                onClick={() => scrollTo('how-sage-works')}
+                onClick={() => scrollTo('retail-media-opportunity')}
                 variant="outline"
                 className="border-2 border-sage-500 text-sage-500 px-10 py-6 rounded-xl font-semibold hover:bg-sage-50 transition-colors h-auto text-lg tracking-wider"
                 data-testid="button-see-how-it-works"
@@ -46,7 +46,7 @@ export default function Hero() {
             </div>
 
             {/* Benefit hierarchy trust indicators */}
-            <div className="flex flex-col sm:flex-row gap-6 text-sm text-gray-500">
+            <div className="flex flex-wrap gap-x-6 gap-y-3 text-sm text-gray-500">
               <div className="flex items-center gap-2">
                 <Tv2 className="w-5 h-5 text-sage-500 flex-shrink-0" />
                 New Media Platform
@@ -58,6 +58,10 @@ export default function Hero() {
               <div className="flex items-center gap-2">
                 <Users className="w-5 h-5 text-sage-500 flex-shrink-0" />
                 Shopper Loyalty
+              </div>
+              <div className="flex items-center gap-2">
+                <BarChart2 className="w-5 h-5 text-sage-500 flex-shrink-0" />
+                New Shopper Insights
               </div>
             </div>
 
@@ -71,7 +75,7 @@ export default function Hero() {
             {/* TODO: replace with retailer-branded visual when approved */}
             <img
               src="/sage-healthy-meal-plans-app.jpg"
-              alt="Sage white-labeled grocery shopping experience showing personalized weekly meal and product recommendations under a retailer's brand"
+              alt="A person with dark hair cooking at a stove in a modern white kitchen, with fresh produce including citrus and vegetables visible on the counter"
               className="rounded-2xl shadow-2xl w-full"
               data-testid="img-hero-product"
             />
