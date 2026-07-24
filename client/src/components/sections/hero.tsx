@@ -73,12 +73,14 @@ export default function Hero() {
 
           <div className="lg:col-span-6 mt-12 lg:mt-0">
             {/* TODO: replace with retailer-branded visual when approved */}
-            <img
-              src="/sage-healthy-meal-plans-app.jpg"
-              alt="A person with dark hair cooking at a stove in a modern white kitchen, with fresh produce including citrus and vegetables visible on the counter"
-              className="rounded-2xl shadow-2xl w-full"
-              data-testid="img-hero-product"
-            />
+            <div style={{ aspectRatio: "512 / 341" }} className="w-full">
+              <img
+                src="/sage-healthy-meal-plans-app.jpg"
+                alt="A person with dark hair cooking at a stove in a modern white kitchen, with fresh produce including citrus and vegetables visible on the counter"
+                className="rounded-2xl shadow-2xl w-full h-full object-cover"
+                data-testid="img-hero-product"
+              />
+            </div>
           </div>
         </div>
       </div>

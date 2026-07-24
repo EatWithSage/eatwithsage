@@ -1,0 +1,121 @@
+Stage 5 QA is accepted, with a narrower final deployment-readiness pass.
+
+Do not publish or deploy yet.
+
+## Metadata Severity Correction
+
+Do not classify the following as automatic production blockers:
+
+* Missing canonical URL
+* Missing Open Graph metadata
+* Missing Twitter/X metadata
+* The broader SPA route-metadata architecture
+
+They are legitimate SEO and social-sharing limitations, but the broader route-level architecture predates this homepage project.
+
+Do not add a homepage canonical globally to `index.html` if that same HTML shell is returned for non-homepage routes. That could incorrectly signal that `/product`, `/about`, blog pages and industry pages are duplicates of the homepage.
+
+## Final Deployment-Readiness Scope
+
+Complete only the following checks and corrections.
+
+### 1. Route-Aware Homepage Metadata Feasibility
+
+Inspect the existing server and build architecture.
+
+Determine whether the server can return homepage-specific static metadata only when the requested path is exactly `/`, without changing the metadata returned for any non-homepage route.
+
+If this can be done with a small, isolated change, add the following for `/` only:
+
+Canonical URL:
+
+https://eatwithsage.com/
+
+Open Graph title:
+
+Sage | White-Labeled Retail Media Platform for Grocers
+
+Open Graph description:
+
+Sage helps grocers turn weekly food decisions into personalized, shoppable and monetizable digital experiences under their own brand.
+
+Open Graph type:
+
+website
+
+Open Graph URL:
+
+https://eatwithsage.com/
+
+Twitter card:
+
+summary_large_image
+
+Use the current approved homepage social image only if one already exists and is appropriate for the new positioning. Do not reuse an image containing outdated loyalty or meal-planning-app language.
+
+If no approved social image exists, report that as a follow-up rather than inventing one.
+
+If route-aware metadata requires SSR, prerendering, major server restructuring or changes to non-homepage routes, do not implement it during this project. Document the recommended future approach instead.
+
+### 2. Hero Image Layout Stability
+
+Update the homepage hero image so the browser can reserve its space before loading.
+
+Use either:
+
+* Accurate HTML `width` and `height` attributes based on the source image dimensions, or
+* A stable `aspect-ratio` wrapper
+
+Do not crop or visually alter the image as part of this correction.
+
+### 3. Production Build
+
+Run the actual production build command defined by the project.
+
+Report:
+
+* Command used
+* Exit status
+* Build errors
+* Build warnings
+* Output location
+
+Running the development server is not a substitute for this check.
+
+### 4. Manual Visual Review Checklist
+
+Do not claim that code inspection alone verifies responsive appearance.
+
+Provide a checklist for a human reviewer to verify in the Replit preview or deployed staging environment:
+
+* Full homepage at approximately 320px mobile width
+* Full homepage at approximately 375px mobile width
+* Tablet layout
+* Desktop layout
+* Open mobile navigation
+* All four hero benefit labels
+* Every visual placeholder
+* White-label three-brand panel
+* Homepage Final CTA followed by the demo form
+* No horizontal scrolling
+* No clipped text
+* No unreadably small placeholder text
+
+No additional design or copy changes should be made without reporting the specific issue first.
+
+## Final Handoff
+
+After completing this pass, provide:
+
+1. Commit identifier and message.
+2. Files modified.
+3. Whether route-aware homepage metadata was technically feasible.
+4. Metadata added, if any.
+5. Confirmation that no global homepage canonical was applied to non-homepage routes.
+6. Hero image layout-stability fix.
+7. Production build command and result.
+8. Any remaining launch blockers.
+9. Non-blocking follow-up items.
+10. Final checkpoint identifier.
+
+Do not deploy.
