@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Tv2, ShoppingCart, Users, BarChart2 } from "lucide-react";
+import { Tv2, ShoppingCart, BarChart2, Store } from "lucide-react";
 
 const scrollTo = (id: string) => {
   const el = document.getElementById(id);
@@ -18,13 +18,11 @@ export default function Hero() {
             </div>
 
             <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold font-recoleta text-forest-900 leading-tight mb-6">
-              Turn Weekly Food Decisions Into a New{" "}
-              <span className="text-sage-500">Retail Media Platform</span>
+              Turn Weekly Food Decisions Into High-Intent Retail Media
             </h1>
 
             <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-              Sage gives grocers a white-labeled platform that transforms those decisions into
-              personalized, shoppable and monetizable digital experiences—all under the retailer's brand.
+              Shoppers love the white-labeled, 0-touch meal solutions. Grocers profit through highly personalized, data-driven, monetizable retail media. All under the retailer's brand.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 mb-10">
@@ -56,19 +54,14 @@ export default function Hero() {
                 Ecommerce Engine
               </div>
               <div className="flex items-center gap-2">
-                <Users className="w-5 h-5 text-sage-500 flex-shrink-0" />
-                Shopper Loyalty
-              </div>
-              <div className="flex items-center gap-2">
                 <BarChart2 className="w-5 h-5 text-sage-500 flex-shrink-0" />
                 New Shopper Insights
               </div>
+              <div className="flex items-center gap-2">
+                <Store className="w-5 h-5 text-sage-500 flex-shrink-0" />
+                Your brand
+              </div>
             </div>
-
-            {/* Supporting line */}
-            <p className="mt-6 text-sm font-medium text-forest-900 tracking-wide">
-              Your brand. Your shoppers. Your digital experience.
-            </p>
           </div>
 
           <div className="lg:col-span-6 mt-12 lg:mt-0">
