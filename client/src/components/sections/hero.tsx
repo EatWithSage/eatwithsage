@@ -44,7 +44,7 @@ export default function Hero() {
             </div>
 
             {/* Benefit hierarchy trust indicators */}
-            <div className="flex flex-wrap gap-x-6 gap-y-3 text-sm text-gray-500">
+            <div className="grid grid-cols-2 gap-x-6 gap-y-3 text-sm text-gray-500">
               <div className="flex items-center gap-2">
                 <Tv2 className="w-5 h-5 text-sage-500 flex-shrink-0" />
                 New Media Platform

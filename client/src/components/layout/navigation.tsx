@@ -40,13 +40,13 @@ export function Navigation({ showDemoCta = false }: NavigationProps) {
   }, [lastScrollY]);
 
   return (
-    <nav className={`bg-cream-50 fixed top-0 w-full z-50 shadow-sm transition-transform duration-300 ${
+    <nav style={{ backgroundColor: '#FFF5E4' }} className={`fixed top-0 w-full z-50 shadow-sm transition-transform duration-300 ${
       isVisible ? 'translate-y-0' : '-translate-y-full'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-32">
           <div className="flex items-center">
-            <Link href="/" className="flex items-center" style={{ backgroundColor: '#FFF5E4' }} data-testid="link-home">
+            <Link href="/" className="flex items-center" data-testid="link-home">
               <img 
                 src="/Sage-healthy-meal-plan-app-logo_1755077718089.png" 
                 alt="Sage logo - stylized plant with leaves and text representing healthy meal planning" 
