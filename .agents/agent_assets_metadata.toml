@@ -1,0 +1,8 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "OXMhxDrZk7RpkFsE_qx9U"
+uri = "file://client/public/og-image.png"
+type = "image"
+title = "Current /og-image.png — review for positioning alignment"

@@ -1,0 +1,72 @@
+Complete the final deployment-readiness handoff and stop. Do not deploy.
+
+Provide:
+
+1. New commit identifier and commit message.
+2. Every file modified in this pass.
+3. Exact production build command used.
+4. Production build result:
+
+   * Exit status
+   * Warnings
+   * Output directory
+5. Test result.
+6. Confirm the hero image source dimensions are 512 × 341.
+7. Describe the exact layout-stability fix applied in `hero.tsx`.
+8. Confirm the hero image was not cropped or otherwise visually altered.
+9. Explain the metadata architecture findings:
+
+   * `client/index.html` is the actual Vite production template
+   * The root `index.html` edited earlier is not the production template
+   * `vercel.json` rewrites all routes to the same SPA shell
+   * Route-specific static canonical tags are therefore not safe without broader architectural work
+10. List the existing Open Graph and Twitter/X tags found in `client/index.html`.
+11. Paste the exact final values now used for:
+
+* `<title>`
+* Meta description
+* `og:title`
+* `og:description`
+* `og:type`
+* `og:url`
+* `og:image`
+* Twitter card
+* Twitter title
+* Twitter description
+* Twitter image
+
+12. Confirm whether a canonical tag was added.
+13. Confirm that no global homepage canonical was applied to non-homepage routes.
+14. Describe `/og-image.png`:
+
+* File dimensions
+* What it visibly contains, if reviewed
+* Whether it contains outdated loyalty or meal-planning language
+* Whether it is appropriate for the new homepage positioning
+
+15. Explain the GTM finding:
+
+* Container ID
+* Where it is loaded
+* Whether pageview or CTA event behavior was actually verified
+
+16. Identify any earlier Stage 5 conclusions that must be corrected because the wrong `index.html` file was initially reviewed.
+17. Confirm whether the root `index.html` changes should be retained, reverted or treated as unused.
+18. Confirm no non-homepage route or shared component changed during this pass.
+19. List every remaining launch blocker.
+20. List all non-blocking follow-up items.
+21. Provide the final checkpoint identifier.
+22. Include the manual visual review checklist for:
+
+* 320px
+* 375px
+* Tablet
+* Desktop
+* Open mobile navigation
+* Full-page section order
+* White-label three-brand panel
+* Final CTA followed by demo form
+* No horizontal scrolling
+* No clipped or unreadably small text
+
+Do not describe the homepage as ready to deploy unless the evidence supports that conclusion.
